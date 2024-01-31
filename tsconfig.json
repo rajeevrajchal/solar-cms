@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "#root/*": ["."],
+      "@*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@layout/*": ["./src/layout/*"],
+      "@module/*": ["./src/module/*"],
+      "@hook/*": ["./src/hook/*"],
+      "@model/*": ["./src/model/*"],
+      "@enum/*": ["./src/enum/*"],
+      "@service/*": ["./src/service/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@type/*": ["src/type/*"],
+      "@constant/*": ["./src/constant/*"],
+      "@routes/*": ["src/routes/*"],
+      "@validations": ["src/module/auth/validations/*"],
+      "@plugins": ["./src/plugins/*"],
+      "@utils": ["./src/utils/*"],
+      "@api": ["./src/api/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
