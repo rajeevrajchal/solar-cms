@@ -44,10 +44,6 @@ interface LocationSelectorProps {
 const LocationSelector = (props: LocationSelectorProps) => {
   const { location, changeLocation } = props;
 
-  console.log("the location is", {
-    location,
-    changeLocation,
-  });
   return (
     <MapContainer
       center={location}

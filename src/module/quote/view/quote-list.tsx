@@ -2,6 +2,16 @@ import Table from "@components/table";
 import { DataTableColumn } from "mantine-datatable";
 import QuoteHeader from "../components/quote-header";
 import useQuotes from "@hook/data/quote/use-quotes";
+import { formatCurrency } from "@utils/functions/format-currency";
+import {
+  QUOTE_STATUS,
+  QUOTE_STATUS_COLOR,
+  QUOTE_STATUS_NAME,
+} from "@enum/quote-status.enum";
+import CustomBadge from "@components/custom-badge";
+import { formatDate } from "@utils/functions/format-date";
+import QuoteListAction from "../components/quote-list-action";
+import { QUOTE } from "@model/quote";
 
 const columns: DataTableColumn[] = [
   {
@@ -10,22 +20,71 @@ const columns: DataTableColumn[] = [
     sortable: true,
     textAlign: "left",
     ellipsis: true,
+    width: 300,
   },
   {
-    accessor: "code",
-    title: "Code",
+    accessor: "status",
+    title: "Status",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+    render: (record: any) => {
+      const { status } = record;
+      const statusColor =
+        QUOTE_STATUS_COLOR[status.toLowerCase() as QUOTE_STATUS];
+      return (
+        <CustomBadge color={statusColor}>
+          {QUOTE_STATUS_NAME[status.toLowerCase() as QUOTE_STATUS]}
+        </CustomBadge>
+      );
+    },
+  },
+  {
+    accessor: "customer.name",
+    title: "Customer",
     sortable: true,
     textAlign: "left",
     ellipsis: true,
   },
   {
-    accessor: "id",
-    title: "Action",
+    accessor: "creator.name",
+    title: "Creator",
+    sortable: true,
     textAlign: "left",
-    width: 100,
     ellipsis: true,
-    render: () => {
-      return <p>Action</p>;
+  },
+  {
+    accessor: "discount",
+    title: "Discount",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+    render: (record: any) => `${record.discount} %`,
+  },
+  {
+    accessor: "net_total",
+    title: "Total",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+    render: (record: any) => formatCurrency(record.net_total),
+  },
+  {
+    accessor: "createdAt",
+    title: "Created At",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+    render: (record: any) => formatDate(record.createdAt),
+  },
+  {
+    accessor: "id",
+    title: "",
+    textAlign: "left",
+    width: 50,
+    ellipsis: true,
+    render: (record) => {
+      return <QuoteListAction quote={record as QUOTE} />;
     },
   },
 ];

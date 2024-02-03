@@ -12,7 +12,12 @@ const ProjectService = {
       method: METHOD.GET,
     });
   },
-
+  remain_for_quote: () => {
+    return useAxios({
+      url: `project/remain-for-quote`,
+      method: METHOD.GET,
+    });
+  },
   create: (payload: Partial<PROJECTS>) =>
     useAxios({
       url: `project`,

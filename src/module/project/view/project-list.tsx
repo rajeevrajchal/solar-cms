@@ -175,8 +175,7 @@ const ProjectList = () => {
       width: 50,
       ellipsis: true,
       render: (record: any) => {
-        const { id, engineer_id, creator_id, status } = record;
-        console.log("record", record);
+        const { id, engineer_id, creator_id, status, quote } = record;
         return (
           <ProjectListAction
             project_user={{
@@ -185,6 +184,7 @@ const ProjectList = () => {
             }}
             status={status}
             project_id={id}
+            hasQuote={quote?.length > 0 ? true : false}
           />
         );
       },

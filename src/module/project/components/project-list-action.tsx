@@ -40,10 +40,11 @@ interface ProjectListActionProps {
   };
   status: string;
   hideDetail?: boolean;
+  hasQuote?: boolean;
 }
 
 const ProjectListAction = (props: ProjectListActionProps) => {
-  const { project_id, project_user, status, hideDetail } = props;
+  const { project_id, project_user, status, hideDetail, hasQuote } = props;
   const { deleteProject, assignOwnerToProject } = useProjectMutate();
   const { loginUser } = useAuth();
   const [searchParam, setSearchParam] = useSearchParams();
@@ -111,6 +112,15 @@ const ProjectListAction = (props: ProjectListActionProps) => {
           ],
           status.toLowerCase()
         ) || !project_user?.engineer_id,
+    },
+    {
+      leftSection: <MdInsights />,
+      children: <Text tt="capitalize">Create Quote</Text>,
+      allow: [USER_ROLE.SALE],
+      href: AppRoute.create_quote(project_id),
+      component: "a",
+      disable:
+        hasQuote || !includes([STATUS.CUSTOMER_INQUIRY], status.toLowerCase()),
     },
     {
       leftSection: <MdDelete />,

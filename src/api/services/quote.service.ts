@@ -1,6 +1,14 @@
-import { QUOTE } from "@model/quote";
 import useAxios, { METHOD } from "@plugins/call.axios";
 import { buildQueryString } from "@utils/functions/build-query-string";
+import { omit } from "lodash";
+
+export type QUOTE_INPUT = {
+  project_id: string;
+  discount?: number;
+  adjustment?: number;
+  installation_cost: number;
+  quote_id?: string;
+};
 
 const QuoteService = {
   list: (params: { search?: string }) =>
@@ -8,20 +16,20 @@ const QuoteService = {
       url: `quote${buildQueryString(params)}`,
       method: METHOD.GET,
     }),
-  create: (payload: Partial<QUOTE>) =>
+  create: (payload: Partial<QUOTE_INPUT>) =>
     useAxios({
       url: `quote`,
       method: METHOD.POST,
-      data: payload,
+      data: omit(payload, ["quote_id"]),
     }),
-  update: (payload: Partial<QUOTE>, quote_id: string) =>
+  update: (payload: Partial<QUOTE_INPUT>) =>
     useAxios({
-      url: `quote/${quote_id}`,
+      url: `quote/${payload.quote_id}`,
       method: METHOD.PATCH,
-      data: payload,
+      data: omit(payload, ["quote_id"]),
     }),
-  detail: (quote_id: string | null) => {
-    if (quote_id || quote_id !== null) {
+  detail: (quote_id: string | null | undefined) => {
+    if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({
         url: `quote/${quote_id}`,
         method: METHOD.GET,

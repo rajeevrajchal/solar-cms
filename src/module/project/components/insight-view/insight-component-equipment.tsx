@@ -31,7 +31,6 @@ const InsightComponentEquipment = (props: InsightComponentEquipmentProps) => {
       equipments: [initialEquipment],
     },
     onSubmit: (values) => {
-      console.log("the values", values);
       assignEquipmentInProject.mutate({
         ...values,
         id: project.id,

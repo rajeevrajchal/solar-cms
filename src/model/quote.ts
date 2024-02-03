@@ -1,4 +1,5 @@
 import { QUOTE_STATUS } from "@enum/quote-status.enum";
+import { PROJECTS } from "./project";
 
 export type QUOTE = {
   id: string;
@@ -17,4 +18,5 @@ export type QUOTE = {
   deletedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
+  project: PROJECTS;
 };

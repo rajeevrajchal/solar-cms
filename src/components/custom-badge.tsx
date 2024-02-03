@@ -2,7 +2,7 @@ import { Badge, Tooltip } from "@mantine/core";
 import type { BadgeProps } from "@mantine/core";
 
 interface CustomBadgeProps extends BadgeProps {
-  tooltip: string;
+  tooltip?: string;
 }
 
 const CustomBadge = (props: CustomBadgeProps) => {

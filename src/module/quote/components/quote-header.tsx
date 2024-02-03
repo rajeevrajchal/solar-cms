@@ -24,29 +24,8 @@ const QuoteHeader = () => {
       <SearchInput />
       <Select
         searchable
-        placeholder="Choose Type"
-        data={[
-          {
-            label: "Panel",
-            value: "panel",
-          },
-          {
-            label: "Battery",
-            value: "battery",
-          },
-          {
-            label: "MPU",
-            value: "mpu",
-          },
-          {
-            label: "Invertor",
-            value: "invertor",
-          },
-          {
-            label: "Wire",
-            value: "wire",
-          },
-        ]}
+        placeholder="Select Status"
+        data={[]}
         clearable
         value={searchParams.get("status") || ""}
         onChange={(value: string | null) => handleStatusFilter("status", value)}
@@ -58,7 +37,7 @@ const QuoteHeader = () => {
         leftSection={<IoMdAdd size={14} />}
         variant="light"
         component="a"
-        href={AppRoute.create_inventory}
+        href={AppRoute.create_quote()}
       >
         Create Quote
       </Button>

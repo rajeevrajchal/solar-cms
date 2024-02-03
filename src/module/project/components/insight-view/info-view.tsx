@@ -45,7 +45,6 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
       },
     },
     onSubmit: (values) => {
-      console.log("the values are", values);
       projectInsight.mutate({
         id: project.id,
         ...values,

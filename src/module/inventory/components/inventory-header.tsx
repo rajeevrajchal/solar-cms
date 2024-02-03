@@ -91,7 +91,6 @@ const InventoryHeader = () => {
       <UploadCSV
         loading={prase_csv.isPending}
         onSubmit={(value) => {
-          console.log("the values", value);
           prase_csv.mutate({
             file: value,
           });
