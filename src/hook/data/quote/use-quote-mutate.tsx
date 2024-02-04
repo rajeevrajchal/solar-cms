@@ -32,7 +32,18 @@ const useQuoteMutate = () => {
     },
   });
 
-  return { createQuote, updateQuote };
+  const downloadQuote = useMutation({
+    mutationFn: (quote_id: string | undefined) =>
+      QuoteService.download(quote_id),
+    onSuccess: () => {
+      toast.success("Quote downloaded.");
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to download");
+    },
+  });
+
+  return { createQuote, updateQuote, downloadQuote };
 };
 
 export default useQuoteMutate;

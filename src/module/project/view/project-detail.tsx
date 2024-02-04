@@ -208,7 +208,15 @@ const ProjectDetail = () => {
             label: "Quote",
             icon: <IoReceiptOutline />,
             value: "quote",
-            component: <ProjectQuote quote={project.quote} />,
+            component: (
+              <ProjectQuote
+                project_id={project.id}
+                quote={{
+                  ...project.quote[0],
+                  project: project,
+                }}
+              />
+            ),
           },
         ]}
         initial="setup"

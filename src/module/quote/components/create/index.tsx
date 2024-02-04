@@ -8,6 +8,7 @@ import { QUOTE } from "@model/quote";
 import { useState } from "react";
 import AppRoute from "@routes/route.constant";
 import { QUOTE_STATUS } from "@enum/quote-status.enum";
+import { isEmpty } from "lodash";
 
 interface CreateQuoteFormProps {
   data?: Partial<QUOTE>;
@@ -17,7 +18,7 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
   const { data } = props;
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { createQuote, updateQuote } = useQuoteMutate();
+  const { createQuote, updateQuote, downloadQuote } = useQuoteMutate();
   const [edit, setEdit] = useState<boolean>(data?.id ? false : true);
 
   const projectForm = useFormik({
@@ -68,41 +69,51 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
             Create Quote
           </Text>
         )}
-        {data?.id && data?.status?.toLowerCase() !== QUOTE_STATUS.ACCEPTED && (
-          <Flex align="center" justify="flex-end" gap="md">
-            {edit ? (
+        <Flex align="center" justify="flex-end" gap="md">
+          {data?.id &&
+            data?.status?.toLowerCase() !== QUOTE_STATUS.ACCEPTED && (
               <>
-                <Button
-                  variant="subtle"
-                  disabled={createQuote.isPending}
-                  onClick={
-                    data?.id
-                      ? () => setEdit(false)
-                      : () => navigate(AppRoute.quote)
-                  }
-                >
-                  Cancel
-                </Button>
-                <Button
-                  disabled={createQuote.isPending}
-                  loading={createQuote.isPending}
-                  variant="outlined"
-                  onClick={() => projectForm.handleSubmit()}
-                >
-                  {data?.id ? "Update" : "Create"}
-                </Button>
+                {edit ? (
+                  <>
+                    <Button
+                      variant="subtle"
+                      disabled={createQuote.isPending}
+                      onClick={
+                        data?.id
+                          ? () => setEdit(false)
+                          : () => navigate(AppRoute.quote)
+                      }
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      disabled={createQuote.isPending}
+                      loading={createQuote.isPending}
+                      variant="outlined"
+                      onClick={() => projectForm.handleSubmit()}
+                    >
+                      {data?.id ? "Update" : "Create"}
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    variant="light"
+                    disabled={createQuote.isPending}
+                    onClick={() => setEdit(true)}
+                  >
+                    Edit
+                  </Button>
+                )}
               </>
-            ) : (
-              <Button
-                variant="light"
-                disabled={createQuote.isPending}
-                onClick={() => setEdit(true)}
-              >
-                Edit
-              </Button>
             )}
-          </Flex>
-        )}
+          {!isEmpty(data) && (
+            <>
+              <Button onClick={() => downloadQuote.mutate(data?.id)}>
+                Download
+              </Button>
+            </>
+          )}
+        </Flex>
       </Flex>
       <QuoteInfo
         isEdit={edit}
