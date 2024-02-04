@@ -25,7 +25,7 @@ const useQuotes = () => {
 
   return {
     loading: quotes.isLoading || quotes.isFetching,
-    quotes: quotes.data || [],
+    quotes: (quotes.data as any) || [],
   };
 };
 

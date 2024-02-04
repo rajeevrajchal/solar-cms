@@ -48,11 +48,26 @@ const useInventoryMutate = () => {
       queryClient.refetchQueries({
         queryKey: ["inventories"],
       });
-      toast.success("Inventory created successfully");
+      toast.success("Inventory deleted successfully");
       navigate(-1);
     },
     onError: (error) => {
-      toast.error(error?.message || "Failed to create");
+      toast.error(error?.message || "Failed to update");
+    },
+  });
+
+  const delete_inventory = useMutation({
+    mutationFn: (inventory_id: string | null) =>
+      InventoryService.delete(inventory_id),
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["inventories"],
+      });
+      toast.success("Inventory deleted successfully");
+      navigate(-1);
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to delete");
     },
   });
 
@@ -85,6 +100,7 @@ const useInventoryMutate = () => {
     create_as_draft,
     prase_csv,
     download_csv,
+    delete_inventory,
   };
 };
 

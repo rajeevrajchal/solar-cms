@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Modal, Stack, Text } from "@mantine/core";
+import { Button, Flex, Modal, Stack, Text } from "@mantine/core";
 import { ReactElement } from "react";
 
 interface ModalProps {
@@ -29,22 +29,20 @@ const ConfirmationModal = (props: ModalProps) => {
         ) : (
           <Text> Are you sure you want to delete this ?</Text>
         )}
-        <Center>
-          <Flex gap="md">
-            <Button variant="light" onClick={close} disabled={loading}>
-              No
-            </Button>
-            <Button
-              color="red"
-              variant="light"
-              onClick={confirm}
-              loading={loading}
-              disabled={loading}
-            >
-              Yes
-            </Button>
-          </Flex>
-        </Center>
+        <Flex gap="md" justify="flex-end" align="center">
+          <Button variant="light" onClick={close} disabled={loading}>
+            No
+          </Button>
+          <Button
+            color="red"
+            variant="light"
+            onClick={confirm}
+            loading={loading}
+            disabled={loading}
+          >
+            Yes
+          </Button>
+        </Flex>
       </Stack>
     </Modal>
   );

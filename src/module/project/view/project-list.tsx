@@ -1,6 +1,6 @@
 import Table from "@components/table";
 import { DataTableColumn } from "mantine-datatable";
-import { Badge, Stack, Text, Button } from "@mantine/core";
+import { Stack, Text, Button } from "@mantine/core";
 import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
 import ProjectListHeader from "../components/project-list-header";
 import useProjects from "../../../hook/data/project/use-projects";
@@ -12,6 +12,7 @@ import { FaUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { formatNumber } from "@utils/functions/format-number";
 import { useSearchParams } from "react-router-dom";
+import CustomBadge from "@components/custom-badge";
 
 const ProjectList = () => {
   const { loginUser } = useAuth();
@@ -35,7 +36,9 @@ const ProjectList = () => {
       render: (record: any) => {
         const { status } = record;
         const statusColor = STATUS_COLOR[status];
-        return <Badge color={statusColor}>{STATUS_NAME[status]}</Badge>;
+        return (
+          <CustomBadge color={statusColor}>{STATUS_NAME[status]}</CustomBadge>
+        );
       },
     },
     {

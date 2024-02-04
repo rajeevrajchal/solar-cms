@@ -2,7 +2,7 @@ import QuoteService from "@api/services/quote.service";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
-const useQuotes = () => {
+const useQuote = () => {
   const { quote_id } = useParams();
   const quote = useQuery({
     queryKey: ["quote.detail", quote_id],
@@ -16,4 +16,4 @@ const useQuotes = () => {
   };
 };
 
-export default useQuotes;
+export default useQuote;

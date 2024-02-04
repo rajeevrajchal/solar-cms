@@ -1,5 +1,5 @@
 import Tab from "@components/tab";
-import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
+import { STATUS, STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
 import useProject from "@hook/data/project/use-project";
 import {
   ActionIcon,
@@ -23,6 +23,7 @@ import ProjectListAction from "../components/project-list-action";
 import ProjectEquipment from "../components/detail/project-equipments";
 import ProjectQuote from "../components/detail/project-quote";
 import { IoReceiptOutline } from "react-icons/io5";
+import { includes } from "lodash";
 
 const ProjectDetail = () => {
   const { loading, error, project } = useProject();
@@ -208,13 +209,21 @@ const ProjectDetail = () => {
             label: "Quote",
             icon: <IoReceiptOutline />,
             value: "quote",
+            disabled: includes(
+              [STATUS.NEW, STATUS.SITE_SURVEY, STATUS.EQUIPMENT_SELECTION],
+              project?.status?.toLowerCase()
+            ),
             component: (
               <ProjectQuote
                 project_id={project.id}
-                quote={{
-                  ...project.quote[0],
-                  project: project,
-                }}
+                quote={
+                  project?.quote?.length > 0
+                    ? {
+                        ...project.quote[0],
+                        project: project,
+                      }
+                    : null
+                }
               />
             ),
           },

@@ -9,9 +9,9 @@ import useProjectMutate from "@hook/data/project/use-project-mutate";
 import ProjectAssignMe from "./project-assign-owner";
 import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
-import { useSearchParams } from "react-router-dom";
 import { STATUS } from "@enum/status.enum";
 import { includes } from "lodash";
+import { useState } from "react";
 
 const map_status_name: any = {
   [STATUS.SITE_SURVEY.toLowerCase()]: {
@@ -42,23 +42,20 @@ interface ProjectListActionProps {
   hideDetail?: boolean;
   hasQuote?: boolean;
 }
+type MODAL_TYPE = "copy" | "assign_me" | "assign_engineer" | "delete" | null;
 
 const ProjectListAction = (props: ProjectListActionProps) => {
   const { project_id, project_user, status, hideDetail, hasQuote } = props;
   const { deleteProject, assignOwnerToProject } = useProjectMutate();
   const { loginUser } = useAuth();
-  const [searchParam, setSearchParam] = useSearchParams();
+  const [activeModal, setActiveModal] = useState<MODAL_TYPE>(null);
 
   const handleMenuClose = () => {
-    setSearchParam();
+    setActiveModal(null);
   };
 
-  const handleMenuItemClick = (
-    key: "copy" | "assign_me" | "assign_engineer" | "delete"
-  ) => {
-    setSearchParam({
-      modal: key,
-    });
+  const handleMenuItemClick = (key: MODAL_TYPE) => {
+    setActiveModal(key);
   };
 
   const getMenuViaRole: any = [
@@ -90,7 +87,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
       children: <Text className="capitalize">Select Engineer</Text>,
       onClick: () => handleMenuItemClick("assign_engineer"),
       allow: [USER_ROLE.SALE],
-      disable: searchParam.get("tab") === "my" || project_user?.engineer_id,
+      disable: project_user?.engineer_id,
     },
     {
       leftSection: <MdInsights />,
@@ -123,8 +120,12 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         hasQuote || !includes([STATUS.CUSTOMER_INQUIRY], status.toLowerCase()),
     },
     {
-      leftSection: <MdDelete />,
-      children: <Text className="capitalize">Delete</Text>,
+      leftSection: <MdDelete color="red" />,
+      children: (
+        <Text className="capitalize" c="red">
+          Delete
+        </Text>
+      ),
       onClick: () => handleMenuItemClick("delete"),
       allow: [USER_ROLE.SALE, USER_ROLE.ADMIN],
       disable: false,
@@ -159,7 +160,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
 
       {/* delete */}
       <ConfirmationModal
-        opened={searchParam.get("modal") === "delete"}
+        opened={activeModal === "delete"}
         close={handleMenuClose}
         confirm={() =>
           deleteProject.mutate(project_id, {
@@ -174,7 +175,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
 
       {/* assign self */}
       <ConfirmationModal
-        opened={searchParam.get("modal") === "assign_me"}
+        opened={activeModal === "assign_me"}
         close={handleMenuClose}
         confirm={() =>
           assignOwnerToProject.mutate(
@@ -195,10 +196,10 @@ const ProjectListAction = (props: ProjectListActionProps) => {
       />
 
       {/* assign new engineer */}
-      {searchParam.get("modal") === "assign_engineer" && (
+      {activeModal === "assign_engineer" && (
         <ProjectAssignMe
           owner_key="engineer"
-          opened={searchParam.get("modal") === "assign_engineer"}
+          opened={activeModal === "assign_engineer"}
           close={handleMenuClose}
           title="Assign Project"
           project_id={project_id}

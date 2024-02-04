@@ -41,7 +41,6 @@ const Table = (props: TableProps) => {
     headerLeftContent,
     onRowClick,
     rowColor,
-    rowClassName,
     rowBackgroundColor,
     label,
     verticalAlign = "center",
@@ -83,7 +82,6 @@ const Table = (props: TableProps) => {
         <Box>{headerContent}</Box>
       </Flex>
       <DataTable
-        pos="relative"
         withTableBorder
         borderRadius="md"
         verticalAlign={verticalAlign}
@@ -100,10 +98,7 @@ const Table = (props: TableProps) => {
         rowExpansion={rowExpansion}
         rowColor={rowColor}
         rowBackgroundColor={rowBackgroundColor}
-        rowClassName={rowClassName}
         minHeight={150}
-        noHeader={false}
-        scrollAreaProps={{ type: "never" }}
       />
     </Stack>
   );

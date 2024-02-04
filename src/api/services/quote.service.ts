@@ -38,6 +38,26 @@ const QuoteService = {
       throw new Error("Quote Id is required");
     }
   },
+  delete: (quote_id: string | null | undefined) => {
+    if (quote_id || quote_id !== null || quote_id !== undefined) {
+      return useAxios({
+        url: `quote/${quote_id}`,
+        method: METHOD.DELETE,
+      });
+    } else {
+      throw new Error("Quote Id is required");
+    }
+  },
+  approve: (quote_id: string | null | undefined) => {
+    if (quote_id || quote_id !== null || quote_id !== undefined) {
+      return useAxios({
+        url: `quote/approve/${quote_id}`,
+        method: METHOD.POST,
+      });
+    } else {
+      throw new Error("Quote Id is required");
+    }
+  },
   download: (quote_id: string | null | undefined) => {
     if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({

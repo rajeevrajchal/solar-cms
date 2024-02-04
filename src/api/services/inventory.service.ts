@@ -31,6 +31,16 @@ const InventoryService = {
       throw new Error("Inventory Id is required");
     }
   },
+  delete: (inventory_id: string | null) => {
+    if (inventory_id || inventory_id !== null) {
+      return useAxios({
+        url: `inventory/${inventory_id}`,
+        method: METHOD.DELETE,
+      });
+    } else {
+      throw new Error("Inventory Id is required");
+    }
+  },
   detail: (inventory_id: string | null) => {
     if (inventory_id || inventory_id !== null) {
       return useAxios({

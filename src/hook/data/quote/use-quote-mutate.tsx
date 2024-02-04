@@ -32,6 +32,33 @@ const useQuoteMutate = () => {
     },
   });
 
+  const deleteQuote = useMutation({
+    mutationFn: (quote_id: string | undefined) => QuoteService.delete(quote_id),
+    onSuccess: (data: any) => {
+      toast.success("Quote is deleted.");
+      queryClient.invalidateQueries({
+        queryKey: ["quotes", data?.quote?.id],
+      });
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to delete");
+    },
+  });
+
+  const approveQuote = useMutation({
+    mutationFn: (quote_id: string | undefined) =>
+      QuoteService.approve(quote_id),
+    onSuccess: (data: any) => {
+      toast.success("Quote is approved.");
+      queryClient.invalidateQueries({
+        queryKey: ["quotes", data?.quote?.id],
+      });
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to approved");
+    },
+  });
+
   const downloadQuote = useMutation({
     mutationFn: (quote_id: string | undefined) =>
       QuoteService.download(quote_id),
@@ -43,7 +70,7 @@ const useQuoteMutate = () => {
     },
   });
 
-  return { createQuote, updateQuote, downloadQuote };
+  return { createQuote, updateQuote, downloadQuote, deleteQuote, approveQuote };
 };
 
 export default useQuoteMutate;

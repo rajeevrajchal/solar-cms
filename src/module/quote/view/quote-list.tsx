@@ -11,8 +11,6 @@ import {
 import CustomBadge from "@components/custom-badge";
 import { formatDate } from "@utils/functions/format-date";
 import QuoteListAction from "../components/quote-list-action";
-import { QUOTE } from "@model/quote";
-
 const columns: DataTableColumn[] = [
   {
     accessor: "name",
@@ -83,8 +81,8 @@ const columns: DataTableColumn[] = [
     textAlign: "left",
     width: 50,
     ellipsis: true,
-    render: (record) => {
-      return <QuoteListAction quote={record as QUOTE} />;
+    render: (record: any) => {
+      return <QuoteListAction quote_id={record.id} />;
     },
   },
 ];

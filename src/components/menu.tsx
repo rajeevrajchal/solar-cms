@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu as MMenu } from "@mantine/core";
-import { filter } from "lodash";
+import { filter, omit } from "lodash";
 import React from "react";
 import { ReactNode, useState } from "react";
 
@@ -47,7 +47,7 @@ const Menu = (props: MenuProps) => {
                   entry.items,
                   (menuItemEntry) => !menuItemEntry.disable
                 ).map((item: any, itemIndex: number) => (
-                  <MMenu.Item key={itemIndex} {...item} />
+                  <MMenu.Item key={itemIndex} {...omit(item, "disable")} />
                 ))}
               </React.Fragment>
             ) : (

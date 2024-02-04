@@ -4,11 +4,11 @@ const AppRoute = {
   forget_password: "/forget-password",
   profile: "/my-account",
 
-  quote: "/quote",
+  quote: "/quotes",
   create_quote: (project_id?: string) =>
-    project_id ? `quote/create?pi=${project_id}` : `/quote/create`,
-  edit_quote: (quote_id: string) => `/quote/${quote_id}/edit`,
-  quote_detail: (quote_id: string) => `/quote/${quote_id}`,
+    project_id ? `quotes/create?pi=${project_id}` : `/quotes/create`,
+  edit_quote: (quote_id: string) => `/quotes/${quote_id}/edit`,
+  quote_detail: (quote_id: string) => `/quotes/${quote_id}`,
 
   inventory: "/inventory",
   create_inventory: "/inventory/add",
