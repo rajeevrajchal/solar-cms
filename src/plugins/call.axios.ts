@@ -17,6 +17,7 @@ interface AxiosAPI {
   isAuthentication?: boolean;
   contentType?: string;
   responseType?: ResponseType;
+  isDownload?: boolean;
   onUploadProgress?: () => void;
 }
 
@@ -36,8 +37,16 @@ const baseUrl = `${import.meta.env.VITE_API_URL}/api/v1/`;
 
 const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
   const { getStorageData } = useLocalStorage();
-  const { url, method, data, headers, params, responseType, onUploadProgress } =
-    props;
+  const {
+    url,
+    method,
+    data,
+    isDownload,
+    headers,
+    params,
+    responseType,
+    onUploadProgress,
+  } = props;
 
   const token = await getStorageData(user_token_key);
 
@@ -46,7 +55,6 @@ const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
     url: `${baseUrl}${url}`,
     headers: {
       "Content-Type": props.contentType || "application/json",
-      "Access-Control-Allow-Origin": "*",
       accept: "application/json",
       Authorization: token !== null ? `Bearer ${token}` : "",
       ...headers,
@@ -76,7 +84,8 @@ const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
 
   try {
     const response = await axios(config);
-    return response?.data as T;
+    console.log("the res", response);
+    return isDownload ? (response as any) : (response?.data as T);
   } catch (error: any) {
     const err: any = error as AxiosError<ErrorDataType>;
     throw new Error(err?.response?.data?.message || err || "");

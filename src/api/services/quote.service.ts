@@ -62,7 +62,9 @@ const QuoteService = {
     if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({
         url: `quote/download/${quote_id}`,
-        method: METHOD.GET,
+        method: METHOD.POST,
+        isDownload: true,
+        responseType: "blob",
       });
     } else {
       throw new Error("Quote Id is required");

@@ -1,6 +1,7 @@
 import QuoteService, { QUOTE_INPUT } from "@api/services/quote.service";
 import AppRoute from "@routes/route.constant";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import exportFile from "@utils/functions/export-file";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -62,7 +63,10 @@ const useQuoteMutate = () => {
   const downloadQuote = useMutation({
     mutationFn: (quote_id: string | undefined) =>
       QuoteService.download(quote_id),
-    onSuccess: () => {
+    onSuccess: (data: any) => {
+      const contentDisposition = data.headers.get("Content-Disposition");
+      const filename = contentDisposition.split(";")[1].split("=")[1];
+      exportFile(filename, data?.data);
       toast.success("Quote downloaded.");
     },
     onError: (error) => {
