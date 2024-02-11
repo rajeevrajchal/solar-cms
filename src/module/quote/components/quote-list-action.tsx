@@ -1,23 +1,26 @@
 import Menu from "@components/menu";
 import ConfirmationModal from "@components/modal/confirmation-modal";
+import { QUOTE_STATUS } from "@enum/quote-status.enum";
 import useQuoteMutate from "@hook/data/quote/use-quote-mutate";
 import { ActionIcon, Text } from "@mantine/core";
+import { QUOTE } from "@model/quote";
 import AppRoute from "@routes/route.constant";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
 import { IoMdCheckmark } from "react-icons/io";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete, MdOutlineFileDownload } from "react-icons/md";
 
 interface QuoteListAction {
-  quote_id: string;
+  quote: QUOTE;
 }
 
-type MODAL_TYPE = "delete" | "status";
+type MODAL_TYPE = "delete" | "accepted" | "rejected";
 
 const QuoteListAction = (props: QuoteListAction) => {
-  const { quote_id } = props;
+  const { quote } = props;
   const [activeModal, setActiveModal] = useState<MODAL_TYPE | null>(null);
-  const { deleteQuote, approveQuote } = useQuoteMutate();
+  const { deleteQuote, approveQuote, downloadQuote } = useQuoteMutate();
 
   const handleMenuClose = () => {
     setActiveModal(null);
@@ -25,6 +28,59 @@ const QuoteListAction = (props: QuoteListAction) => {
 
   const handleMenuItemClick = (action: MODAL_TYPE) => {
     setActiveModal(action);
+  };
+
+  const handleApproveQuote = () => {
+    approveQuote.mutate(quote?.id, {
+      onSuccess: () => {
+        setActiveModal(null);
+      },
+      onError: () => {
+        setActiveModal(null);
+      },
+    });
+  };
+  const handleRejectedQuote = () => {
+    approveQuote.mutate(quote?.id, {
+      onSuccess: () => {
+        setActiveModal(null);
+      },
+      onError: () => {
+        setActiveModal(null);
+      },
+    });
+  };
+
+  const handleDeleteQuote = () => {
+    deleteQuote.mutate(quote?.id, {
+      onSuccess: () => {
+        setActiveModal(null);
+      },
+      onError: () => {
+        setActiveModal(null);
+      },
+    });
+  };
+
+  const statusModal: Record<
+    string,
+    {
+      heading: string;
+      description: string;
+      onClick: () => void;
+    }
+  > = {
+    rejected: {
+      heading: "Reject Quote",
+      description: "As per client you want to reject it",
+      onClick: () => handleRejectedQuote(),
+    },
+    accepted: {
+      heading: "Accept Quote",
+      description:
+        "Are you sure you want to mark this quote as customer approve.t",
+      onClick: () => handleRejectedQuote(),
+    },
   };
 
   return (
@@ -40,20 +96,40 @@ const QuoteListAction = (props: QuoteListAction) => {
             label: "Action",
             items: [
               {
-                leftSection: <MdEdit />,
-                children: <Text className="capitalize">Detail</Text>,
+                leftSection: <FaEdit size={20} />,
+                children: <Text className="capitalize ml-2">Detail</Text>,
                 component: "a",
-                href: AppRoute.quote_detail(quote_id),
+                href: AppRoute.quote_detail(quote?.id),
                 allow: "*",
               },
               {
-                leftSection: <IoMdCheckmark />,
+                leftSection: <IoMdCheckmark size={24} />,
                 children: <Text className="capitalize">Approve</Text>,
-                onClick: () => handleMenuItemClick("status"),
+                onClick: () => handleMenuItemClick("accepted"),
+                allow: "*",
+                disable: [
+                  QUOTE_STATUS.ACCEPTED,
+                  QUOTE_STATUS.REJECTED,
+                ].includes(quote?.status?.toLowerCase() as QUOTE_STATUS),
+              },
+              {
+                leftSection: <IoMdCheckmark size={24} />,
+                children: <Text className="capitalize">Reject</Text>,
+                onClick: () => handleMenuItemClick("rejected"),
+                allow: "*",
+                disable: [
+                  QUOTE_STATUS.ACCEPTED,
+                  QUOTE_STATUS.REJECTED,
+                ].includes(quote?.status?.toLowerCase() as QUOTE_STATUS),
+              },
+              {
+                leftSection: <MdOutlineFileDownload size={24} />,
+                children: <Text className="capitalize">Download</Text>,
+                onClick: () => downloadQuote.mutate(quote?.id),
                 allow: "*",
               },
               {
-                leftSection: <MdDelete color="red" />,
+                leftSection: <MdDelete color="red" size={24} />,
                 children: (
                   <Text className="capitalize" c="red">
                     Delete
@@ -61,6 +137,9 @@ const QuoteListAction = (props: QuoteListAction) => {
                 ),
                 onClick: () => handleMenuItemClick("delete"),
                 allow: "*",
+                disable: [QUOTE_STATUS.ACCEPTED].includes(
+                  quote?.status?.toLowerCase() as QUOTE_STATUS
+                ),
               },
             ],
           },
@@ -72,17 +151,17 @@ const QuoteListAction = (props: QuoteListAction) => {
           <ConfirmationModal
             opened={activeModal === "delete"}
             close={handleMenuClose}
-            confirm={() => deleteQuote.mutate(quote_id)}
+            confirm={() => handleDeleteQuote()}
             title="Delete Confirmation"
             description="Are you sure you want to delete this project. Deleting this project will also delete respective items like quote."
           />
 
           <ConfirmationModal
-            opened={activeModal === "status"}
+            opened={["rejected", "accepted"].includes(activeModal)}
             close={handleMenuClose}
-            confirm={() => approveQuote.mutate(quote_id)}
-            title="Approve Quote"
-            description="Are you sure you want to mark this quote as customer approve."
+            confirm={() => handleApproveQuote()}
+            title={statusModal[activeModal]?.heading}
+            description={statusModal[activeModal]?.description}
           />
         </>
       )}

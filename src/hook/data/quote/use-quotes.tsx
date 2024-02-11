@@ -11,12 +11,7 @@ const useQuotes = () => {
   );
 
   const quotes = useQuery({
-    queryKey: [
-      "quotes",
-      searchParams.get("category"),
-      debouncedValue,
-      searchParams.get("vendor"),
-    ],
+    queryKey: ["quotes", debouncedValue, searchParams.get("status")],
     queryFn: () =>
       QuoteService.list({
         search: debouncedValue || "",

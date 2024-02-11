@@ -14,6 +14,8 @@ import { theme } from "@utils/theme";
 import { BreadcrumbProvider } from "@hook/store/use-breadcrumb";
 import AppRoutes from "@routes";
 
+import "./index.css";
+
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import "@mantine/dropzone/styles.css";
@@ -21,8 +23,6 @@ import "@mantine/dates/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import "mantine-datatable/styles.layer.css";
-
-import "./index.css";
 
 import { AuthProvider } from "@hook/store/use-auth";
 

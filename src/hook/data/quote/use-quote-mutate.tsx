@@ -35,10 +35,10 @@ const useQuoteMutate = () => {
 
   const deleteQuote = useMutation({
     mutationFn: (quote_id: string | undefined) => QuoteService.delete(quote_id),
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       toast.success("Quote is deleted.");
       queryClient.invalidateQueries({
-        queryKey: ["quotes", data?.quote?.id],
+        queryKey: ["quotes"],
       });
     },
     onError: (error) => {
@@ -49,10 +49,10 @@ const useQuoteMutate = () => {
   const approveQuote = useMutation({
     mutationFn: (quote_id: string | undefined) =>
       QuoteService.approve(quote_id),
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       toast.success("Quote is approved.");
       queryClient.invalidateQueries({
-        queryKey: ["quotes", data?.quote?.id],
+        queryKey: ["quotes"],
       });
     },
     onError: (error) => {

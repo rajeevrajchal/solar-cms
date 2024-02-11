@@ -9,7 +9,7 @@ const CustomBadge = (props: CustomBadgeProps) => {
   const {
     children,
     size = "md",
-    radius = "sm",
+    radius = "lg",
     variant = "light",
     color,
     tooltip,
@@ -24,6 +24,7 @@ const CustomBadge = (props: CustomBadgeProps) => {
         variant={variant}
         color={color}
         w="150px"
+        py="sm"
         {...rest}
         className="cursor-pointer"
       >

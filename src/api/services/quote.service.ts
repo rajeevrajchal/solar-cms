@@ -52,7 +52,7 @@ const QuoteService = {
     if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({
         url: `quote/approve/${quote_id}`,
-        method: METHOD.POST,
+        method: METHOD.PATCH,
       });
     } else {
       throw new Error("Quote Id is required");
