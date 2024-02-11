@@ -17,17 +17,27 @@ const UploadCSV = (props: UploadCSVProps) => {
     initialValues: {
       csv: [],
     },
-    onSubmit: (values) => {
-      onSubmit(values?.csv?.[0]);
+    onSubmit: async (values, { resetForm }) => {
+      await onSubmit(values?.csv?.[0]);
+      setUploadCsv(false);
+      resetForm();
     },
   });
+
+  const handleCloseUploadCSV = () => {
+    uploadCsvFormik?.resetForm();
+    setUploadCsv(false);
+  };
 
   return (
     <>
       <Button
         leftSection={<TbFileTypeCsv size={14} />}
         variant="light"
-        onClick={() => setUploadCsv(true)}
+        onClick={() => {
+          setUploadCsv(true);
+          uploadCsvFormik.resetForm();
+        }}
       >
         Upload CSV
       </Button>
@@ -35,6 +45,9 @@ const UploadCSV = (props: UploadCSVProps) => {
         <>
           <Dropzone
             maxFiles={1}
+            accept={{
+              "text/html": [".csv"],
+            }}
             files={uploadCsvFormik.values.csv || []}
             showPreview
             setFiles={(files: FileWithPath[]) =>
@@ -42,7 +55,11 @@ const UploadCSV = (props: UploadCSVProps) => {
             }
           />
           <Group justify="flex-end">
-            <Button variant="subtle" disabled={loading}>
+            <Button
+              variant="subtle"
+              disabled={loading}
+              onClick={() => handleCloseUploadCSV()}
+            >
               Cancel
             </Button>
             <Button

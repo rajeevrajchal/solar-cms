@@ -6,7 +6,7 @@ export type INVENTORY = {
   name: string;
   category: INVENTORY_KIND;
   nature: string;
-  product_image: string;
+  product_image: any;
   description: string;
   watt: number;
   voltage: number;

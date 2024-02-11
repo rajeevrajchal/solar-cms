@@ -2,6 +2,7 @@ import InventoryService from "@api/services/inventory.service";
 import { INVENTORY } from "@model/inventory";
 import AppRoute from "@routes/route.constant";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import exportFile from "@utils/functions/export-file";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -86,8 +87,12 @@ const useInventoryMutate = () => {
 
   const download_csv = useMutation({
     mutationFn: () => InventoryService.download_csv(),
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       console.log("teh data are", data);
+      const contentDisposition = data.headers.get("Content-Disposition");
+      const filename = contentDisposition.split(";")[1].split("=")[1];
+      exportFile(filename, data?.data);
+      toast.success("Inventory downloaded.");
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to create");

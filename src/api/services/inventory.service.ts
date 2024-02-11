@@ -12,18 +12,21 @@ const InventoryService = {
     useAxios({
       url: `inventory`,
       method: METHOD.POST,
+      contentType: "multipart/form-data",
       data: payload,
     }),
   create_as_draft: (payload: Partial<INVENTORY>) =>
     useAxios({
       url: `inventory/as-draft`,
       method: METHOD.POST,
+      contentType: "multipart/form-data",
       data: payload,
     }),
   update: (payload: Partial<INVENTORY>, inventory_id: string | null) => {
     if (inventory_id || inventory_id !== null) {
       return useAxios({
         url: `inventory/${inventory_id}`,
+        contentType: "multipart/form-data",
         method: METHOD.PATCH,
         data: payload,
       });
@@ -62,6 +65,8 @@ const InventoryService = {
     useAxios({
       url: `inventory/download-csv`,
       method: METHOD.GET,
+      isDownload: true,
+      responseType: "blob",
     }),
 };
 

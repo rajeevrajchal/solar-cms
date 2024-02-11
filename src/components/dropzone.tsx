@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   Box,
+  Flex,
   ActionIcon,
 } from "@mantine/core";
 import { Dropzone as MDropzone, DropzoneProps } from "@mantine/dropzone";
@@ -46,17 +47,50 @@ const Dropzone = (props: DropzonePropsInterface) => {
         </Group>
       </MDropzone>
       {showPreview ? (
-        <SimpleGrid cols={{ base: 1, sm: 3 }}>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
           {files.map((file: any, index: number) => {
-            const imageUrl = URL.createObjectURL(file);
+            console.log("file", file);
+            if (file.type.includes("image")) {
+              const imageUrl = URL.createObjectURL(file);
+              return (
+                <Box pos="relative" key={`file-preview-${index}`}>
+                  <Image
+                    key={index}
+                    src={imageUrl}
+                    radius="md"
+                    onLoad={() => URL.revokeObjectURL(imageUrl)}
+                  />
+                  <ActionIcon
+                    pos="absolute"
+                    top={-8}
+                    right={-8}
+                    radius="xl"
+                    size="md"
+                    color="gray"
+                    onClick={() => handleRemove(index)}
+                  >
+                    <FaTrash size={18} />
+                  </ActionIcon>
+                </Box>
+              );
+            }
             return (
-              <Box pos="relative">
-                <Image
-                  key={index}
-                  src={imageUrl}
-                  radius="md"
-                  onLoad={() => URL.revokeObjectURL(imageUrl)}
-                />
+              <Box
+                pos="relative"
+                bg="#EAF4FD"
+                p="md"
+                style={{
+                  borderRadius: "7px",
+                }}
+                w="fit"
+                key={`file-preview-${index}`}
+              >
+                <Flex align="center">
+                  <span>
+                    <FaRegFileAlt size={32} />
+                  </span>
+                  <Text>{file.name}</Text>
+                </Flex>
                 <ActionIcon
                   pos="absolute"
                   top={-8}

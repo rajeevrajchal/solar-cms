@@ -13,6 +13,8 @@ import {
   Text,
   Select,
   Loader,
+  Box,
+  Image,
 } from "@mantine/core";
 import { VENDOR } from "@model/vendor";
 import { useFormik } from "formik";
@@ -20,6 +22,7 @@ import { includes, isEmpty, map } from "lodash";
 import createInventoryValidation from "../validation/inventory-form";
 import AppRoute from "@routes/route.constant";
 import { INVENTORY } from "@model/inventory";
+import { IMAGE_MIME_TYPE } from "@mantine/dropzone";
 
 interface InventoryFormProp {
   data?: Partial<INVENTORY>;
@@ -44,15 +47,21 @@ const InventoryForm = (props: InventoryFormProp) => {
       max_discount: data?.max_discount ?? "",
       max_flat_discount: data?.max_flat_discount ?? "",
       description: data?.description ?? "",
-      product_image: "",
+      product_image: [],
     },
     validationSchema: createInventoryValidation,
     onSubmit: (values: any) => {
       if (isEmpty(data)) {
-        create.mutate(values);
+        create.mutate({
+          ...values,
+          product_image: values?.product_image?.[0],
+        });
       } else {
         update.mutate({
-          payload: values,
+          payload: {
+            ...values,
+            product_image: values?.product_image?.[0],
+          },
           inventory_id: data?.id || null,
         });
       }
@@ -309,13 +318,18 @@ const InventoryForm = (props: InventoryFormProp) => {
           <Fieldset legend="Product Images">
             <Dropzone
               showPreview
-              maxFiles={4}
+              maxFiles={1}
+              accept={IMAGE_MIME_TYPE}
               files={inventoryForm.values.product_image || []}
               setFiles={(files) =>
                 inventoryForm.setFieldValue("product_image", files)
               }
-              
             />
+            {data?.product_image && (
+              <Box pos="relative" mt="md">
+                <Image src={data?.product_image?.url} radius="md" />
+              </Box>
+            )}
           </Fieldset>
         </Grid.Col>
       </Grid>
