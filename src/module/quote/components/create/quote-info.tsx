@@ -1,18 +1,23 @@
 import useProjectForQuote from "@hook/data/project/use-project-for-quote";
-import { Badge, Flex, Loader, Select, Stack, Text } from "@mantine/core";
+import { Flex, Loader, Select, Stack, Text } from "@mantine/core";
 import { PROJECTS } from "@model/project";
 import ProjectEquipment from "@module/project/components/detail/project-equipments";
 import { find, isEmpty, map, reduce } from "lodash";
 import { useEffect, useState } from "react";
 import QuoteMatrix from "./quote-matrix";
 import { EQUIPMENT } from "@model/equipment";
-import { QUOTE_STATUS } from "@enum/quote-status.enum";
+import {
+  QUOTE_STATUS,
+  QUOTE_STATUS_COLOR,
+  QUOTE_STATUS_NAME,
+} from "@enum/quote-status.enum";
+import CustomBadge from "@components/custom-badge";
 
 interface QuoteInfoProps {
   form: any;
   isEdit?: boolean;
   project_info?: PROJECTS;
-  status: QUOTE_STATUS | null;
+  status: QUOTE_STATUS;
 }
 
 const getEquipmentTotalCost = (equipments: EQUIPMENT[]) => {
@@ -90,7 +95,11 @@ const QuoteInfo = (props: QuoteInfoProps) => {
         ) : (
           <Flex align="center" gap="md">
             <Text fw="bold">{project_info.name}</Text>
-            <Badge>{status}</Badge>
+            <CustomBadge
+              color={QUOTE_STATUS_COLOR[status.toLowerCase() as QUOTE_STATUS]}
+            >
+              {QUOTE_STATUS_NAME[status.toLowerCase() as QUOTE_STATUS]}
+            </CustomBadge>
           </Flex>
         )}
         {form.values.project_id && <QuoteMatrix isEdit={isEdit} form={form} />}

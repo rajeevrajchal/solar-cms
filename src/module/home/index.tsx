@@ -1,7 +1,11 @@
 import { Stack } from "@mantine/core";
 
 const Home = () => {
-  return <Stack>Home</Stack>;
+  return (
+    <Stack>
+      <p>Home</p>
+    </Stack>
+  );
 };
 
 export default Home;

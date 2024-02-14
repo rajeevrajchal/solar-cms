@@ -11,7 +11,7 @@ export type QUOTE_INPUT = {
 };
 
 const QuoteService = {
-  list: (params: { search?: string }) =>
+  list: (params: { search?: string; status?: string }) =>
     useAxios({
       url: `quote${buildQueryString(params)}`,
       method: METHOD.GET,
@@ -52,6 +52,16 @@ const QuoteService = {
     if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({
         url: `quote/approve/${quote_id}`,
+        method: METHOD.PATCH,
+      });
+    } else {
+      throw new Error("Quote Id is required");
+    }
+  },
+  reject: (quote_id: string | null | undefined) => {
+    if (quote_id || quote_id !== null || quote_id !== undefined) {
+      return useAxios({
+        url: `quote/reject/${quote_id}`,
         method: METHOD.PATCH,
       });
     } else {

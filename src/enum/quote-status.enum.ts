@@ -7,11 +7,11 @@ export enum QUOTE_STATUS {
 }
 
 export const QUOTE_STATUS_COLOR: Record<QUOTE_STATUS, string> = {
-  [QUOTE_STATUS.DRAFT]: "badge-neutral",
-  [QUOTE_STATUS.ACCEPTED]: "badge-success",
-  [QUOTE_STATUS.SENT]: "badge-primary",
-  [QUOTE_STATUS.REJECTED]: "badge-warning",
-  [QUOTE_STATUS.EXPIRED]: "badge-error",
+  [QUOTE_STATUS.DRAFT]: "#F2F2F2",
+  [QUOTE_STATUS.ACCEPTED]: "#00AA6E",
+  [QUOTE_STATUS.SENT]: "#00B5FF",
+  [QUOTE_STATUS.REJECTED]: "#FF5861",
+  [QUOTE_STATUS.EXPIRED]: "#FF5861",
 };
 
 export const QUOTE_STATUS_NAME: Record<QUOTE_STATUS, string> = {

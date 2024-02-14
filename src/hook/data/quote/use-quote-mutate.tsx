@@ -60,6 +60,19 @@ const useQuoteMutate = () => {
     },
   });
 
+  const rejectQuote = useMutation({
+    mutationFn: (quote_id: string | undefined) => QuoteService.reject(quote_id),
+    onSuccess: () => {
+      toast.success("Quote is rejected.");
+      queryClient.invalidateQueries({
+        queryKey: ["quotes"],
+      });
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to reject");
+    },
+  });
+
   const downloadQuote = useMutation({
     mutationFn: (quote_id: string | undefined) =>
       QuoteService.download(quote_id),
@@ -74,7 +87,14 @@ const useQuoteMutate = () => {
     },
   });
 
-  return { createQuote, updateQuote, downloadQuote, deleteQuote, approveQuote };
+  return {
+    createQuote,
+    updateQuote,
+    downloadQuote,
+    deleteQuote,
+    approveQuote,
+    rejectQuote,
+  };
 };
 
 export default useQuoteMutate;

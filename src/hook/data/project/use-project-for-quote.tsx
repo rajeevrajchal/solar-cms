@@ -3,10 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 
 const useProjectForQuote = (props: { skip?: boolean }) => {
   const { skip } = props;
+  console.log("skip", skip);
   const projects = useQuery({
     queryKey: ["projects.quote"],
     queryFn: () => ProjectService.remain_for_quote(),
-    enabled: skip,
+    enabled: !skip,
   });
 
   return {

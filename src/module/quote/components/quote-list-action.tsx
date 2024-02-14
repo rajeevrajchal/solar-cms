@@ -8,7 +8,7 @@ import AppRoute from "@routes/route.constant";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
-import { IoMdCheckmark } from "react-icons/io";
+import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 import { MdDelete, MdOutlineFileDownload } from "react-icons/md";
 
 interface QuoteListAction {
@@ -20,7 +20,8 @@ type MODAL_TYPE = "delete" | "accepted" | "rejected";
 const QuoteListAction = (props: QuoteListAction) => {
   const { quote } = props;
   const [activeModal, setActiveModal] = useState<MODAL_TYPE | null>(null);
-  const { deleteQuote, approveQuote, downloadQuote } = useQuoteMutate();
+  const { deleteQuote, approveQuote, downloadQuote, rejectQuote } =
+    useQuoteMutate();
 
   const handleMenuClose = () => {
     setActiveModal(null);
@@ -40,8 +41,9 @@ const QuoteListAction = (props: QuoteListAction) => {
       },
     });
   };
+
   const handleRejectedQuote = () => {
-    approveQuote.mutate(quote?.id, {
+    rejectQuote.mutate(quote?.id, {
       onSuccess: () => {
         setActiveModal(null);
       },
@@ -79,7 +81,7 @@ const QuoteListAction = (props: QuoteListAction) => {
       heading: "Accept Quote",
       description:
         "Are you sure you want to mark this quote as customer approve.t",
-      onClick: () => handleRejectedQuote(),
+      onClick: () => handleApproveQuote(),
     },
   };
 
@@ -113,7 +115,7 @@ const QuoteListAction = (props: QuoteListAction) => {
                 ].includes(quote?.status?.toLowerCase() as QUOTE_STATUS),
               },
               {
-                leftSection: <IoMdCheckmark size={24} />,
+                leftSection: <IoMdClose size={24} />,
                 children: <Text className="capitalize">Reject</Text>,
                 onClick: () => handleMenuItemClick("rejected"),
                 allow: "*",
@@ -159,7 +161,7 @@ const QuoteListAction = (props: QuoteListAction) => {
           <ConfirmationModal
             opened={["rejected", "accepted"].includes(activeModal)}
             close={handleMenuClose}
-            confirm={() => handleApproveQuote()}
+            confirm={() => statusModal[activeModal]?.onClick()}
             title={statusModal[activeModal]?.heading}
             description={statusModal[activeModal]?.description}
           />

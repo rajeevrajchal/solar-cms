@@ -90,6 +90,7 @@ const columns: DataTableColumn[] = [
 
 const QuoteList = () => {
   const { loading, quotes } = useQuotes();
+
   return (
     <Table
       label="Quotes"

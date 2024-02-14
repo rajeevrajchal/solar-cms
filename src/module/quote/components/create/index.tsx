@@ -70,7 +70,7 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
           </Text>
         )}
         <Flex align="center" justify="flex-end" gap="md">
-          {data?.id &&
+          {!data?.id &&
             data?.status?.toLowerCase() !== QUOTE_STATUS.ACCEPTED && (
               <>
                 {edit ? (

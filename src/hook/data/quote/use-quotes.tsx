@@ -15,6 +15,7 @@ const useQuotes = () => {
     queryFn: () =>
       QuoteService.list({
         search: debouncedValue || "",
+        status: searchParams.get("status") || "",
       }),
   });
 
