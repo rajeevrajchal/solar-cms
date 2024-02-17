@@ -8,6 +8,7 @@ const InventoryService = {
       url: `inventory${buildQueryString(params)}`,
       method: METHOD.GET,
     }),
+
   create: (payload: Partial<INVENTORY>) =>
     useAxios({
       url: `inventory`,
@@ -15,6 +16,7 @@ const InventoryService = {
       contentType: "multipart/form-data",
       data: payload,
     }),
+
   create_as_draft: (payload: Partial<INVENTORY>) =>
     useAxios({
       url: `inventory/as-draft`,
@@ -22,6 +24,7 @@ const InventoryService = {
       contentType: "multipart/form-data",
       data: payload,
     }),
+
   update: (payload: Partial<INVENTORY>, inventory_id: string | null) => {
     if (inventory_id || inventory_id !== null) {
       return useAxios({
@@ -34,6 +37,7 @@ const InventoryService = {
       throw new Error("Inventory Id is required");
     }
   },
+
   delete: (inventory_id: string | null) => {
     if (inventory_id || inventory_id !== null) {
       return useAxios({
@@ -44,6 +48,7 @@ const InventoryService = {
       throw new Error("Inventory Id is required");
     }
   },
+
   detail: (inventory_id: string | null) => {
     if (inventory_id || inventory_id !== null) {
       return useAxios({
@@ -61,6 +66,7 @@ const InventoryService = {
       data: payload,
       contentType: "multipart/form-data",
     }),
+
   download_csv: () =>
     useAxios({
       url: `inventory/download-csv`,

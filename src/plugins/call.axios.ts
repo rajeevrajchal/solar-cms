@@ -68,12 +68,20 @@ const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
 
   if (
     props.contentType === "multipart/form-data" ||
-    config?.headers?.["Content-Type"].includes("multipart/form-data")
+    (config?.headers?.["Content-Type"] &&
+      config.headers["Content-Type"].includes("multipart/form-data"))
   ) {
     if (data instanceof Object && !(data instanceof FormData)) {
       const formData = new FormData();
+
       Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value as string);
+        if (Array.isArray(value)) {
+          value.forEach((file, index) => {
+            formData.append(`${key}[${index}]`, file);
+          });
+        } else {
+          formData.append(key, value as string);
+        }
       });
 
       config.data = formData;
@@ -84,7 +92,6 @@ const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
 
   try {
     const response = await axios(config);
-    console.log("the res", response);
     return isDownload ? (response as any) : (response?.data as T);
   } catch (error: any) {
     const err: any = error as AxiosError<ErrorDataType>;

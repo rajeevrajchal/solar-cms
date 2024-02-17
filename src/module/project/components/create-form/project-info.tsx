@@ -1,6 +1,3 @@
-import LocationSelector, {
-  LOCATION_SELECTOR,
-} from "@components/location-selector";
 import { batteryTypeOptions } from "@enum/battery-type.enum";
 import { panelTypeOptions } from "@enum/panel-type.enum";
 import {
@@ -12,7 +9,6 @@ import {
   Radio,
   Group,
   Checkbox,
-  Box,
 } from "@mantine/core";
 
 interface ProjectInfoProps {
@@ -24,6 +20,40 @@ const ProjectInfo = (props: ProjectInfoProps) => {
 
   return (
     <Stack gap="md">
+      <Fieldset legend="Property (Optional)">
+        <Grid>
+          <Grid.Col span={6}>
+            <TextInput
+              label="Estimated Area"
+              placeholder="estimated area"
+              name="project.estimated_area"
+              onChange={form.handleChange}
+              type="number"
+              value={form.values.project.estimated_area}
+              error={
+                form.touched?.project?.estimated_area &&
+                form.errors?.project?.estimated_area &&
+                form.errors?.project?.estimated_area
+              }
+            />
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <TextInput
+              label="Capacity"
+              placeholder="capacity"
+              name="project.capacity"
+              onChange={form.handleChange}
+              type="number"
+              value={form.values.project.capacity}
+              error={
+                form.touched?.project?.capacity &&
+                form.errors?.project?.capacity &&
+                form.errors?.project?.capacity
+              }
+            />
+          </Grid.Col>
+        </Grid>
+      </Fieldset>
       <Fieldset legend="Basic Features">
         <Grid>
           <Grid.Col span={6}>
@@ -149,7 +179,7 @@ const ProjectInfo = (props: ProjectInfoProps) => {
               }
             />
           </Stack>
-          <Box
+          {/* <Box
             style={{
               flex: 1,
             }}
@@ -164,7 +194,7 @@ const ProjectInfo = (props: ProjectInfoProps) => {
                 form.setFieldValue("project.longitude", location.lat);
               }}
             />
-          </Box>
+          </Box> */}
         </Group>
       </Fieldset>
     </Stack>

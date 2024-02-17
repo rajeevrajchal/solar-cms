@@ -24,6 +24,7 @@ import ProjectEquipment from "../components/detail/project-equipments";
 import ProjectQuote from "../components/detail/project-quote";
 import { IoReceiptOutline } from "react-icons/io5";
 import { includes } from "lodash";
+import ProjectModel from "../components/detail/project-model";
 
 const ProjectDetail = () => {
   const { loading, error, project } = useProject();
@@ -198,6 +199,12 @@ const ProjectDetail = () => {
                 project_id={project?.id}
               />
             ),
+          },
+          {
+            label: "Model (Design)",
+            icon: <LuComponent />,
+            value: "model",
+            component: <ProjectModel models={project.model} />,
           },
           {
             label: "Equipment",

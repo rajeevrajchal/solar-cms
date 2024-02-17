@@ -17,6 +17,7 @@ import UploadDesignModal from "./components/design/upload-design-modal";
 import { FaPlus } from "react-icons/fa";
 import { MdRemove } from "react-icons/md";
 import Table from "@components/table";
+import useProjectMutate from "@hook/data/project/use-project-mutate";
 
 interface ProjectDesignProps {
   project: PROJECTS;
@@ -26,9 +27,7 @@ const ProjectDesign = (props: ProjectDesignProps) => {
   const { project } = props;
   const navigate = useNavigate();
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
-  const [skip, setSkip] = useState<boolean>(false);
-
-  console.log("skip validation", skip);
+  const { uploadProjectModel } = useProjectMutate();
 
   const inSightForm: any = useFormik({
     initialValues: {
@@ -37,7 +36,18 @@ const ProjectDesign = (props: ProjectDesignProps) => {
     },
     onSubmit: (values) => {
       console.log("the values", values);
-      setSkip(false);
+      uploadProjectModel.mutate(
+        {
+          id: project.id,
+          connection: values.connection,
+          models: values.design_file,
+        },
+        {
+          onSuccess: () => {
+            setShowUploadModal(false);
+          },
+        }
+      );
     },
   });
 
@@ -57,11 +67,6 @@ const ProjectDesign = (props: ProjectDesignProps) => {
   const onBack = () => {
     inSightForm.resetForm();
     navigate(-1);
-  };
-
-  const handleSkipDesign = () => {
-    setSkip(true);
-    inSightForm.handleSubmit();
   };
 
   return (
@@ -312,8 +317,7 @@ const ProjectDesign = (props: ProjectDesignProps) => {
         <UploadDesignModal
           form={inSightForm}
           closeModal={() => setShowUploadModal(false)}
-          handleContinue={() => inSightForm.handleSubmit}
-          handleSkipDesign={() => handleSkipDesign()}
+          handleContinue={() => inSightForm.handleSubmit()}
         />
       </Modal>
     </Stack>

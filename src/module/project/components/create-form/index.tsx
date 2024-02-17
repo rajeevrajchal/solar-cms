@@ -43,6 +43,8 @@ const ProjectForm = (props: ProjectFormProps) => {
         battery_type: data?.battery_type || "",
         cleaning: data?.cleaning || "yes",
         mark_location_customer: data?.mark_location_customer || false,
+        estimated_area: data?.estimated_area || "",
+        capacity: data?.capacity || "",
       },
     },
     validationSchema: createProjectValidation[active],

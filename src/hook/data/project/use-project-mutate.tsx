@@ -1,11 +1,14 @@
 import ProjectService from "@api/services/project.service";
 import { ASSIGN_OWNER_PROJECT } from "@api/types/project-input.type";
 import { PROJECTS } from "@model/project";
+import AppRoute from "@routes/route.constant";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const useProjectMutate = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const createProject = useMutation({
     mutationFn: (payload: Partial<PROJECTS>) => ProjectService.create(payload),
@@ -112,6 +115,20 @@ const useProjectMutate = () => {
     },
   });
 
+  const uploadProjectModel = useMutation({
+    mutationFn: (payload: any) => {
+      console.log("payload", payload);
+      return ProjectService.project_model(payload);
+    },
+    onSuccess: (data: any) => {
+      navigate(AppRoute.project_detail(data?.data?.id));
+      toast.success("Model uploaded to project successfully");
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to upload model");
+    },
+  });
+
   return {
     createProject,
     updateProjectBySale,
@@ -120,6 +137,7 @@ const useProjectMutate = () => {
     projectInsight,
     copyProject,
     assignEquipmentInProject,
+    uploadProjectModel,
   };
 };
 

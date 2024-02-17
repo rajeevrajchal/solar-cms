@@ -32,10 +32,10 @@ const ProjectInsight = () => {
     switch (status) {
       case STATUS.SITE_SURVEY:
         return <InfoViewSetup project={project} />;
-      case STATUS.DESIGN_IN_PROGRESS:
-        return <ProjectDesign project={project} />;
       case STATUS.EQUIPMENT_SELECTION:
         return <InsightComponentEquipment project={project} />;
+      case STATUS.DESIGN_IN_PROGRESS:
+        return <ProjectDesign project={project} />;
       default:
         return <NotFound />;
     }

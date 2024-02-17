@@ -5,6 +5,13 @@ import { PROJECT_COMPONENT } from "./project-component";
 import { EQUIPMENT } from "./equipment";
 import { QUOTE } from "./quote";
 
+export type PROJECT_MODEL = {
+  id: string;
+  model_url: string;
+  image_id: string;
+  project_id: string;
+};
+
 export type PROJECTS = {
   id: string;
   name: string;
@@ -40,6 +47,9 @@ export type PROJECTS = {
   engineer_id: string;
   parent_id: string;
 
+  estimated_area: number;
+  capacity: number;
+
   equipment: EQUIPMENT[];
   quote: QUOTE[];
 
@@ -49,6 +59,7 @@ export type PROJECTS = {
   customer: USER;
   creator: USER;
   engineer: USER;
+  model: PROJECT_MODEL[];
 
   children: PROJECTS[];
 };

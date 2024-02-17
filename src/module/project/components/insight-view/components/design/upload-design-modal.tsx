@@ -5,16 +5,20 @@ interface UploadDesignModalProps {
   form: any;
   closeModal: () => void;
   handleContinue: () => void;
-  handleSkipDesign: () => void;
 }
 
 const UploadDesignModal = (props: UploadDesignModalProps) => {
-  const { closeModal, form, handleContinue, handleSkipDesign } = props;
+  const { closeModal, form, handleContinue } = props;
+
   return (
     <Stack>
       <Dropzone
         showPreview
         maxFiles={4}
+        accept={{
+          "image/*": [".jpg", ".jpeg", ".png"],
+          "application/pdf": [],
+        }}
         files={form.values.design_file}
         setFiles={(files) => form.setFieldValue("design_file", files)}
       />
@@ -24,9 +28,6 @@ const UploadDesignModal = (props: UploadDesignModalProps) => {
         </Button>
         <Button variant="light" onClick={() => handleContinue()}>
           Continue
-        </Button>
-        <Button variant="light" onClick={() => handleSkipDesign()}>
-          Skip Design
         </Button>
       </Group>
     </Stack>

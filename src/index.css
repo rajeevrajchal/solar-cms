@@ -1,1 +1,10 @@
 @layer mantine, mantine-datatable;
+@layer tailwind {
+  @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
+
+.mantine-Radio-inner {
+  margin-left: 8px;
+}

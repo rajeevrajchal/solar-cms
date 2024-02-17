@@ -6,7 +6,6 @@ import {
   Select,
   Radio,
   Group,
-  Box,
 } from "@mantine/core";
 import { PROJECTS } from "@model/project";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +13,6 @@ import ProjectInsightHeader from "./insight-header";
 import { panelTypeOptions } from "@enum/panel-type.enum";
 import { batteryTypeOptions } from "@enum/battery-type.enum";
 import { useFormik } from "formik";
-import LocationSelector, {
-  LOCATION_SELECTOR,
-} from "@components/location-selector";
 import useProjectMutate from "@hook/data/project/use-project-mutate";
 
 interface InfoViewSetupProps {
@@ -42,6 +38,8 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
         latitude: project?.latitude || 51.505,
         longitude: project?.longitude || -0.09,
         location: project?.location || "",
+        actual_area: project?.actual_area || "",
+        capacity: project?.capacity || "",
       },
     },
     onSubmit: (values) => {
@@ -66,8 +64,40 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
         onBack={() => onBack()}
       />
 
-      {/* sun hours */}
-      <Fieldset legend="Sun Hours">
+      {/* property */}
+      <Fieldset legend="Property">
+        <Grid>
+          <Grid.Col span={4}>
+            <TextInput
+              label="Estimated Area"
+              placeholder="estimated area"
+              name="project.estimated_area"
+              onChange={inSightForm.handleChange}
+              type="number"
+              value={inSightForm.values.project.estimated_area}
+              error={
+                inSightForm.touched?.project?.estimated_area &&
+                inSightForm.errors?.project?.estimated_area &&
+                inSightForm.errors?.project?.estimated_area
+              }
+            />
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <TextInput
+              label="Capacity"
+              placeholder="capacity"
+              name="project.capacity"
+              onChange={inSightForm.handleChange}
+              type="number"
+              value={inSightForm.values.project.capacity}
+              error={
+                inSightForm.touched?.project?.capacity &&
+                inSightForm.errors?.project?.capacity &&
+                inSightForm.errors?.project?.capacity
+              }
+            />
+          </Grid.Col>
+        </Grid>
         <Grid>
           <Grid.Col span={4}>
             <TextInput
@@ -261,7 +291,7 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
               }
             />
           </Stack>
-          <Box
+          {/* <Box
             style={{
               flex: 1,
             }}
@@ -276,7 +306,7 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
                 inSightForm.setFieldValue("project.longitude", location.lat);
               }}
             />
-          </Box>
+          </Box> */}
         </Group>
       </Fieldset>
     </Stack>

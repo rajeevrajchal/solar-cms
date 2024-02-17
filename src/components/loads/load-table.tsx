@@ -12,6 +12,7 @@ import { IoMdAdd, IoMdTrash } from "react-icons/io";
 import { IoSaveOutline } from "react-icons/io5";
 import { GrPowerReset } from "react-icons/gr";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { RiCustomerService2Fill } from "react-icons/ri";
 import usePublicProjectMutate from "@hook/data/project/use-public-project-mutation";
 import { ELECTRIC_LOAD } from "@api/types/project-input.type";
 import { useState } from "react";
@@ -107,6 +108,9 @@ const LoadTable = (props: LoadTableProps) => {
               disabled={uploadElectricLoad.isPending}
             >
               Upload CSV
+            </Button>
+            <Button variant="light" leftSection={<RiCustomerService2Fill />}>
+              Request Client
             </Button>
             {loadForm.dirty && (
               <>

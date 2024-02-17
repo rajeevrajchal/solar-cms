@@ -87,6 +87,14 @@ const ProjectService = {
       data: payload,
     }),
 
+  project_model: (payload: any) =>
+    useAxios({
+      url: `project/${payload.id}/project-model`,
+      method: METHOD.PATCH,
+      data: payload,
+      contentType: "multipart/form-data",
+    }),
+
   copy_project: (payload: { project_id: string }) => {
     if (!payload?.project_id) {
       throw new Error("No project found");
