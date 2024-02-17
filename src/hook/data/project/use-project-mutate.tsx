@@ -129,6 +129,19 @@ const useProjectMutate = () => {
     },
   });
 
+  const requestFillProjectLoad = useMutation({
+    mutationFn: (payload: any) => {
+      console.log("payload", payload);
+      return ProjectService.project_request_load(payload);
+    },
+    onSuccess: () => {
+      toast.success("Project load linked sent");
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to sent link");
+    },
+  });
+
   return {
     createProject,
     updateProjectBySale,
@@ -138,6 +151,7 @@ const useProjectMutate = () => {
     copyProject,
     assignEquipmentInProject,
     uploadProjectModel,
+    requestFillProjectLoad,
   };
 };
 

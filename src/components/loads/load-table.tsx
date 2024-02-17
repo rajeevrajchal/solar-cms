@@ -17,6 +17,8 @@ import usePublicProjectMutate from "@hook/data/project/use-public-project-mutati
 import { ELECTRIC_LOAD } from "@api/types/project-input.type";
 import { useState } from "react";
 import { ELECTRICLOAD } from "@model/electric_load";
+import useProjectMutate from "@hook/data/project/use-project-mutate";
+import useAuth from "@hook/store/use-auth";
 
 interface LoadTableProps {
   project_id: string;
@@ -24,7 +26,9 @@ interface LoadTableProps {
 }
 const LoadTable = (props: LoadTableProps) => {
   const { project_id, loads } = props;
+  const { isLoggedIn } = useAuth();
   const { uploadElectricLoad } = usePublicProjectMutate();
+  const { requestFillProjectLoad } = useProjectMutate();
   const [readOnly, setReadonly] = useState<boolean>(
     loads.length > 0 ? true : false
   );
@@ -84,6 +88,12 @@ const LoadTable = (props: LoadTableProps) => {
 
   const handleResetForm = () => loadForm.resetForm();
 
+  const handleResetProject = () => {
+    requestFillProjectLoad.mutate({
+      project_id: project_id,
+    });
+  };
+
   return (
     <Stack>
       <Group
@@ -105,13 +115,23 @@ const LoadTable = (props: LoadTableProps) => {
             <Button
               variant="light"
               leftSection={<MdOutlineCloudUpload />}
-              disabled={uploadElectricLoad.isPending}
+              disabled={
+                uploadElectricLoad.isPending || requestFillProjectLoad.isPending
+              }
             >
               Upload CSV
             </Button>
-            <Button variant="light" leftSection={<RiCustomerService2Fill />}>
-              Request Client
-            </Button>
+            {isLoggedIn && (
+              <Button
+                variant="light"
+                loading={requestFillProjectLoad.isPending}
+                disabled={requestFillProjectLoad.isPending}
+                leftSection={<RiCustomerService2Fill />}
+                onClick={() => handleResetProject()}
+              >
+                Request Client
+              </Button>
+            )}
             {loadForm.dirty && (
               <>
                 <Button
@@ -229,7 +249,10 @@ const LoadTable = (props: LoadTableProps) => {
                 <Button
                   variant="subtle"
                   leftSection={<IoMdAdd size={22} />}
-                  disabled={uploadElectricLoad.isPending}
+                  disabled={
+                    uploadElectricLoad.isPending ||
+                    requestFillProjectLoad.isPending
+                  }
                 >
                   Add new item
                 </Button>

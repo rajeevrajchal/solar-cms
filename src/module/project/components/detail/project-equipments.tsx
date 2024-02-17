@@ -5,10 +5,9 @@ import { formatCurrency } from "@utils/functions/format-currency";
 interface ProjectEquipmentProps {
   equipment: EQUIPMENT[];
   label?: string;
-  hideConnection?: boolean;
 }
 const ProjectEquipment = (props: ProjectEquipmentProps) => {
-  const { equipment, hideConnection = false, label } = props;
+  const { equipment, label } = props;
 
   return (
     <Table
@@ -22,23 +21,6 @@ const ProjectEquipment = (props: ProjectEquipmentProps) => {
           ellipsis: true,
           width: 500,
           resizable: true,
-        },
-        {
-          accessor: "component",
-          title: "Component",
-          sortable: true,
-          textAlign: "left",
-          ellipsis: true,
-          footer: "",
-          hidden: hideConnection,
-        },
-        {
-          accessor: "connection",
-          title: "Connection",
-          sortable: true,
-          textAlign: "left",
-          ellipsis: true,
-          hidden: hideConnection,
         },
         {
           accessor: "inventory.voltage",

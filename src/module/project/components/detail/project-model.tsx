@@ -16,7 +16,7 @@ const ProjectModel = (props: ProjectModelProps) => {
           <Flex align="center" justify="space-between" gap="md">
             <Flex align="center" justify="center" gap="sm">
               <FaRegFileAlt size={22} />
-              <Text>File name</Text>
+              <Text>{model.id}</Text>
             </Flex>
             <ActionIcon
               variant="subtle"

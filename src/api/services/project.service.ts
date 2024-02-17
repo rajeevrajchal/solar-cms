@@ -107,6 +107,18 @@ const ProjectService = {
     }
   },
 
+  project_request_load: (payload: { project_id: string }) => {
+    if (!payload?.project_id) {
+      throw new Error("No project found");
+    } else {
+      return useAxios({
+        url: `project/${payload?.project_id}/request-load`,
+        method: METHOD.POST,
+        data: payload,
+      });
+    }
+  },
+
   delete: (project_id: string) => {
     if (!project_id) {
       throw new Error("No project found");
