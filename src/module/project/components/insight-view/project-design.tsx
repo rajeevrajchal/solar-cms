@@ -35,7 +35,6 @@ const ProjectDesign = (props: ProjectDesignProps) => {
       connection: [],
     },
     onSubmit: (values) => {
-      console.log("the values", values);
       uploadProjectModel.mutate(
         {
           id: project.id,

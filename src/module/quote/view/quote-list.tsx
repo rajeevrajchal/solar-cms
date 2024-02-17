@@ -11,6 +11,8 @@ import {
 import CustomBadge from "@components/custom-badge";
 import { formatDate } from "@utils/functions/format-date";
 import QuoteListAction from "../components/quote-list-action";
+import { useNavigate } from "react-router-dom";
+import AppRoute from "@routes/route.constant";
 
 const columns: DataTableColumn[] = [
   {
@@ -90,6 +92,7 @@ const columns: DataTableColumn[] = [
 
 const QuoteList = () => {
   const { loading, quotes } = useQuotes();
+  const navigate = useNavigate();
 
   return (
     <Table
@@ -98,6 +101,9 @@ const QuoteList = () => {
       columns={columns}
       data={quotes || []}
       fetching={loading}
+      onRowClick={(row) =>
+        navigate(AppRoute.quote_detail(row?.record?.id as string))
+      }
     />
   );
 };

@@ -19,13 +19,16 @@ import { useState } from "react";
 import { ELECTRICLOAD } from "@model/electric_load";
 import useProjectMutate from "@hook/data/project/use-project-mutate";
 import useAuth from "@hook/store/use-auth";
+import { includes } from "lodash";
+import { STATUS } from "@enum/status.enum";
 
 interface LoadTableProps {
   project_id: string;
   loads: ELECTRICLOAD[];
+  status?: STATUS;
 }
 const LoadTable = (props: LoadTableProps) => {
-  const { project_id, loads } = props;
+  const { project_id, loads, status = STATUS.NEW } = props;
   const { isLoggedIn } = useAuth();
   const { uploadElectricLoad } = usePublicProjectMutate();
   const { requestFillProjectLoad } = useProjectMutate();
@@ -94,68 +97,79 @@ const LoadTable = (props: LoadTableProps) => {
     });
   };
 
+  if (readOnly) {
+    return (
+      <Stack>
+        <Text>Thanks for filling the information.</Text>
+      </Stack>
+    );
+  }
+
   return (
     <Stack>
-      <Group
-        align="flex-end"
-        justify="space-between"
-        pos="sticky"
-        top={0}
-        left={0}
-        w="100%"
-        style={{
-          zIndex: 99,
-        }}
-      >
-        <Text size="md" fw="bold" tt="capitalize">
-          Electric Load
-        </Text>
-        {!readOnly && (
-          <Group>
-            <Button
-              variant="light"
-              leftSection={<MdOutlineCloudUpload />}
-              disabled={
-                uploadElectricLoad.isPending || requestFillProjectLoad.isPending
-              }
-            >
-              Upload CSV
-            </Button>
-            {isLoggedIn && (
+      {includes([STATUS.NEW, STATUS.SITE_SURVEY], status) && (
+        <Group
+          align="flex-end"
+          justify="space-between"
+          pos="sticky"
+          top={0}
+          left={0}
+          w="100%"
+          style={{
+            zIndex: 99,
+          }}
+        >
+          <Text size="md" fw="bold" tt="capitalize">
+            Electric Load
+          </Text>
+          {!readOnly && (
+            <Group>
               <Button
                 variant="light"
-                loading={requestFillProjectLoad.isPending}
-                disabled={requestFillProjectLoad.isPending}
-                leftSection={<RiCustomerService2Fill />}
-                onClick={() => handleResetProject()}
+                leftSection={<MdOutlineCloudUpload />}
+                disabled={
+                  uploadElectricLoad.isPending ||
+                  requestFillProjectLoad.isPending
+                }
               >
-                Request Client
+                Upload CSV
               </Button>
-            )}
-            {loadForm.dirty && (
-              <>
+              {isLoggedIn && (
                 <Button
                   variant="light"
-                  color="red"
-                  leftSection={<GrPowerReset />}
-                  disabled={uploadElectricLoad.isPending}
-                  onClick={() => handleResetForm()}
+                  loading={requestFillProjectLoad.isPending}
+                  disabled={requestFillProjectLoad.isPending}
+                  leftSection={<RiCustomerService2Fill />}
+                  onClick={() => handleResetProject()}
                 >
-                  Reset
+                  Request Client
                 </Button>
-                <Button
-                  leftSection={<IoSaveOutline />}
-                  disabled={uploadElectricLoad.isPending}
-                  loading={uploadElectricLoad.isPending}
-                  onClick={() => loadForm.handleSubmit()}
-                >
-                  Save
-                </Button>
-              </>
-            )}
-          </Group>
-        )}
-      </Group>
+              )}
+              {loadForm.dirty && (
+                <>
+                  <Button
+                    variant="light"
+                    color="red"
+                    leftSection={<GrPowerReset />}
+                    disabled={uploadElectricLoad.isPending}
+                    onClick={() => handleResetForm()}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    leftSection={<IoSaveOutline />}
+                    disabled={uploadElectricLoad.isPending}
+                    loading={uploadElectricLoad.isPending}
+                    onClick={() => loadForm.handleSubmit()}
+                  >
+                    Save
+                  </Button>
+                </>
+              )}
+            </Group>
+          )}
+        </Group>
+      )}
       <Table withTableBorder striped withColumnBorders withRowBorders>
         <Table.Thead>
           <Table.Tr>

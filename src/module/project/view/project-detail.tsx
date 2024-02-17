@@ -25,8 +25,11 @@ import ProjectQuote from "../components/detail/project-quote";
 import { IoReceiptOutline } from "react-icons/io5";
 import { includes } from "lodash";
 import ProjectModel from "../components/detail/project-model";
+import { USER_ROLE } from "@enum/user.role";
+import useAuth from "@hook/store/use-auth";
 
 const ProjectDetail = () => {
+  const { loginUser } = useAuth();
   const { loading, error, project } = useProject();
 
   if (loading) {
@@ -197,6 +200,7 @@ const ProjectDetail = () => {
                 electric_load={project?.electric_load ?? []}
                 customer={project?.customer ?? {}}
                 project_id={project?.id}
+                status={project?.status}
               />
             ),
           },
@@ -204,6 +208,13 @@ const ProjectDetail = () => {
             label: "Model (Design)",
             icon: <LuComponent />,
             value: "model",
+            disabled:
+              USER_ROLE.ENGINEER !== loginUser.role.toLowerCase() ||
+              project.model.length <= 0 ||
+              includes(
+                [STATUS.NEW, STATUS.SITE_SURVEY, STATUS.EQUIPMENT_SELECTION],
+                project?.status?.toLowerCase()
+              ),
             component: <ProjectModel models={project.model} />,
           },
           {
@@ -216,10 +227,11 @@ const ProjectDetail = () => {
             label: "Quote",
             icon: <IoReceiptOutline />,
             value: "quote",
-            disabled: includes(
-              [STATUS.NEW, STATUS.SITE_SURVEY, STATUS.EQUIPMENT_SELECTION],
-              project?.status?.toLowerCase()
-            ),
+            disabled:
+              includes(
+                [STATUS.NEW, STATUS.SITE_SURVEY, STATUS.EQUIPMENT_SELECTION],
+                project?.status?.toLowerCase()
+              ) || loginUser.role.toLowerCase() !== USER_ROLE.SALE,
             component: (
               <ProjectQuote
                 project_id={project.id}

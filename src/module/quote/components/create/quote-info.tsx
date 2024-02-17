@@ -17,7 +17,7 @@ interface QuoteInfoProps {
   form: any;
   isEdit?: boolean;
   project_info?: PROJECTS;
-  status: QUOTE_STATUS;
+  status: QUOTE_STATUS | null;
 }
 
 const getEquipmentTotalCost = (equipments: EQUIPMENT[]) => {
@@ -95,11 +95,13 @@ const QuoteInfo = (props: QuoteInfoProps) => {
         ) : (
           <Flex align="center" gap="md">
             <Text fw="bold">{project_info.name}</Text>
-            <CustomBadge
-              color={QUOTE_STATUS_COLOR[status.toLowerCase() as QUOTE_STATUS]}
-            >
-              {QUOTE_STATUS_NAME[status.toLowerCase() as QUOTE_STATUS]}
-            </CustomBadge>
+            {status !== null && (
+              <CustomBadge
+                color={QUOTE_STATUS_COLOR[status.toLowerCase() as QUOTE_STATUS]}
+              >
+                {QUOTE_STATUS_NAME[status.toLowerCase() as QUOTE_STATUS]}
+              </CustomBadge>
+            )}
           </Flex>
         )}
         {form.values.project_id && <QuoteMatrix isEdit={isEdit} form={form} />}
@@ -132,7 +134,6 @@ const QuoteInfo = (props: QuoteInfoProps) => {
             </Stack>
           </Stack>
           <ProjectEquipment
-            hideConnection
             label="Equipments"
             equipment={selectedProject?.equipment || []}
           />

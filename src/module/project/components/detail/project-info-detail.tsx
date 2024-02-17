@@ -28,27 +28,29 @@ const ProjectInfoDetail = (props: ProjectInfoDetailProps) => {
           flex: 1,
         }}
       >
-        <Stack gap={0}>
-          <Text size="sm" fw="bold">
-            Customer's Load
-          </Text>
-          <Group gap="lg">
-            <Group>
-              <Text size="sm" w={100}>
-                Total Devices
-              </Text>
-              <Badge variant="light">{project?.electric_load?.length}</Badge>
+        {project?.electric_load?.length > 0 && (
+          <Stack gap={0}>
+            <Text size="sm" fw="bold">
+              Customer's Load
+            </Text>
+            <Group gap="lg">
+              <Group>
+                <Text size="sm" w={100}>
+                  Total Devices
+                </Text>
+                <Badge variant="light">{project?.electric_load?.length}</Badge>
+              </Group>
+              <Group>
+                <Text size="sm" w="full">
+                  Total Watt Usage:
+                </Text>
+                <Badge variant="light">
+                  {calculateTotalWattUsage(project?.electric_load ?? [])}
+                </Badge>
+              </Group>
             </Group>
-            <Group>
-              <Text size="sm" w="full">
-                Total Watt Usage:
-              </Text>
-              <Badge variant="light">
-                {calculateTotalWattUsage(project?.electric_load ?? [])}
-              </Badge>
-            </Group>
-          </Group>
-        </Stack>
+          </Stack>
+        )}
         <Stack gap={0}>
           <Text size="sm" fw="bold">
             Request Feature

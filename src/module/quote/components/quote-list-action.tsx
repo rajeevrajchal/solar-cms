@@ -7,9 +7,8 @@ import { QUOTE } from "@model/quote";
 import AppRoute from "@routes/route.constant";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaEdit } from "react-icons/fa";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
-import { MdDelete, MdOutlineFileDownload } from "react-icons/md";
+import { MdDelete, MdEdit, MdOutlineFileDownload } from "react-icons/md";
 
 interface QuoteListAction {
   quote: QUOTE;
@@ -98,7 +97,7 @@ const QuoteListAction = (props: QuoteListAction) => {
             label: "Action",
             items: [
               {
-                leftSection: <FaEdit size={20} />,
+                leftSection: <MdEdit size={22} />,
                 children: <Text className="capitalize ml-2">Detail</Text>,
                 component: "a",
                 href: AppRoute.quote_detail(quote?.id),

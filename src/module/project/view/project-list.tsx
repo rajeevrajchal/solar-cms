@@ -11,10 +11,12 @@ import Tab from "@components/tab";
 import { FaUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { formatNumber } from "@utils/functions/format-number";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CustomBadge from "@components/custom-badge";
+import AppRoute from "@routes/route.constant";
 
 const ProjectList = () => {
+  const navigate = useNavigate();
   const { loginUser } = useAuth();
   const { loading, projects } = useProjects();
   const [, setSearchParams] = useSearchParams();
@@ -222,6 +224,9 @@ const ProjectList = () => {
       columns={columns}
       data={projects || []}
       fetching={loading}
+      onRowClick={(row) =>
+        navigate(AppRoute.project_detail(row?.record?.id as string))
+      }
     />
   );
 };

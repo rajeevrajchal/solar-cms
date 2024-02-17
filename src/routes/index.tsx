@@ -5,7 +5,6 @@ import AuthRoute from "./auth.route";
 import Home from "@module/home";
 import Projects from "@module/project";
 import { USER_ROLE } from "@enum/user.role";
-import useAuth from "@hook/store/use-auth";
 import Login from "@module/auth/login";
 import AuthLayout from "@layout/auth.layout";
 import Customer from "@module/customer";
@@ -17,10 +16,9 @@ import Quote from "@module/quote";
 import User from "@module/user";
 import UserDetailLayout from "@module/user/layout/user-detail-layout";
 import Vendor from "@module/vendors";
+import RoleRoute from "./role.route";
 
 const AppRoutes = () => {
-  const { loginUser } = useAuth();
-
   return (
     <Routes>
       <Route
@@ -32,30 +30,79 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<Home />} />
-        <Route path={`${AppRoute.projects}/*`} element={<Projects />} />
-        <Route path={`${AppRoute.inventory}/*`} element={<Inventory />} />
-        <Route path={`${AppRoute.vendor}/*`} element={<Vendor />} />
-        <Route path={`${AppRoute.quote}/*`} element={<Quote />} />
+        <Route
+          path={`${AppRoute.projects}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Projects />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.inventory}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Inventory />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.vendor}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Vendor />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.quote}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Quote />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="my-account"
+          element={
+            <RoleRoute allowed_role="*">
+              <UserDetailLayout />
+            </RoleRoute>
+          }
+        />
 
-        {/* admin & sales */}
-        {[USER_ROLE.ADMIN, USER_ROLE.SALE, USER_ROLE.ENGINEER].includes(
-          loginUser?.role?.toLowerCase() as USER_ROLE
-        ) && (
-          <>
-            <Route path={`${AppRoute.customers}/*`} element={<Customer />} />
-          </>
-        )}
-
-        {/* admin */}
-        {[USER_ROLE.ADMIN].includes(
-          loginUser?.role?.toLowerCase() as USER_ROLE
-        ) && (
-          <>
-            <Route path={`${AppRoute.users}/*`} element={<User />} />
-          </>
-        )}
-
-        <Route path="my-account" element={<UserDetailLayout />} />
+        <Route
+          path={`${AppRoute.inventory}/*`}
+          element={
+            <RoleRoute allowed_role={[USER_ROLE.ADMIN, USER_ROLE.SALE]}>
+              <Inventory />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.vendor}/*`}
+          element={
+            <RoleRoute allowed_role={[USER_ROLE.ADMIN, USER_ROLE.SALE]}>
+              <Vendor />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.customers}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Customer />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.users}/*`}
+          element={
+            <RoleRoute allowed_role={[USER_ROLE.ADMIN]}>
+              <User />
+            </RoleRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
 

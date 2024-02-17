@@ -65,7 +65,11 @@ const ProjectListAction = (props: ProjectListActionProps) => {
       component: "a",
       href: AppRoute.project_edit(project_id),
       allow: [USER_ROLE.SALE],
-      disable: hideDetail,
+      disable:
+        hideDetail ||
+        ![STATUS.NEW, STATUS.SITE_SURVEY].includes(
+          status.toLowerCase() as STATUS
+        ),
     },
     {
       leftSection: <FaEye />,

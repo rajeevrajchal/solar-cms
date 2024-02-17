@@ -85,12 +85,10 @@ const QuoteMatrix = (props: QuoteMatrixProps) => {
                   name="installation_cost"
                   value={form.values.installation_cost}
                   onChange={form.handleChange}
-                  rightSection={
-                    import.meta.env.VITE_APP_CURRENCY_SYMBOL || "$"
-                  }
+                  rightSection={import.meta.env.VITE_APP_CURRENCY_SYMBOL || "$"}
                 />
               ) : (
-                formatCurrency(form.values.installation_cost)
+                formatCurrency(form?.values?.installation_cost)
               )}
             </Grid.Col>
           </Grid>
@@ -229,9 +227,7 @@ const QuoteMatrix = (props: QuoteMatrixProps) => {
                   name="adjustment"
                   value={form.values.adjustment}
                   onChange={form.handleChange}
-                  rightSection={
-                    import.meta.env.VITE_APP_CURRENCY_SYMBOL || "$"
-                  }
+                  rightSection={import.meta.env.VITE_APP_CURRENCY_SYMBOL || "$"}
                 />
               ) : (
                 formatCurrency(form.values.adjustment)

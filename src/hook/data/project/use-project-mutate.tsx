@@ -121,7 +121,8 @@ const useProjectMutate = () => {
       return ProjectService.project_model(payload);
     },
     onSuccess: (data: any) => {
-      navigate(AppRoute.project_detail(data?.data?.id));
+      console.log("project-detail", data);
+      navigate(AppRoute.projects);
       toast.success("Model uploaded to project successfully");
     },
     onError: (error) => {
@@ -131,7 +132,6 @@ const useProjectMutate = () => {
 
   const requestFillProjectLoad = useMutation({
     mutationFn: (payload: any) => {
-      console.log("payload", payload);
       return ProjectService.project_request_load(payload);
     },
     onSuccess: () => {

@@ -5,11 +5,13 @@ import { USER } from "@model/user";
 import LoadTable from "@components/loads/load-table";
 import { reduce } from "lodash";
 import { DataTableColumn } from "mantine-datatable";
+import { STATUS } from "@enum/status.enum";
 
 interface ProjectCustomerElectricLoadProps {
   electric_load: ELECTRICLOAD[];
   customer: USER;
   project_id: string;
+  status: STATUS;
 }
 
 const columns: DataTableColumn[] = [
@@ -63,7 +65,7 @@ const getTotal = (load: ELECTRICLOAD[]) =>
 const ProjectCustomerElectricLoad = (
   props: ProjectCustomerElectricLoadProps
 ) => {
-  const { electric_load, customer, project_id } = props;
+  const { electric_load, customer, project_id, status } = props;
 
   if (electric_load?.length) {
     return (
@@ -78,7 +80,13 @@ const ProjectCustomerElectricLoad = (
   }
 
   if (electric_load?.length === 0 && customer?.type === "guest") {
-    return <LoadTable project_id={project_id} loads={electric_load} />;
+    return (
+      <LoadTable
+        project_id={project_id}
+        loads={electric_load}
+        status={status}
+      />
+    );
   }
 
   return (

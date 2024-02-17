@@ -8,7 +8,7 @@ import { QUOTE } from "@model/quote";
 import { useState } from "react";
 import AppRoute from "@routes/route.constant";
 import { QUOTE_STATUS } from "@enum/quote-status.enum";
-import { isEmpty } from "lodash";
+import { includes, isEmpty } from "lodash";
 
 interface CreateQuoteFormProps {
   data?: Partial<QUOTE>;
@@ -41,7 +41,7 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
         project_id: values.project_id,
         discount: +values.discount,
         adjustment: +values.adjustment,
-        installation_cost: +values.adjustment,
+        installation_cost: +values.installation_cost,
       };
       if (data?.id) {
         updateQuote.mutate(
@@ -70,8 +70,11 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
           </Text>
         )}
         <Flex align="center" justify="flex-end" gap="md">
-          {!data?.id &&
-            data?.status?.toLowerCase() !== QUOTE_STATUS.ACCEPTED && (
+          {data?.id &&
+            !includes(
+              [QUOTE_STATUS.ACCEPTED, QUOTE_STATUS.REJECTED],
+              data?.status?.toLowerCase()
+            ) && (
               <>
                 {edit ? (
                   <>
