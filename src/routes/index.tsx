@@ -5,7 +5,7 @@ import AuthRoute from "./auth.route";
 import Home from "@module/home";
 import Projects from "@module/project";
 import { USER_ROLE } from "@enum/user.role";
-import Login from "@module/auth/login";
+import Login from "@module/auth/views/login";
 import AuthLayout from "@layout/auth.layout";
 import Customer from "@module/customer";
 import ElectricLoadProject from "@module/public/electric-load-project";
@@ -17,10 +17,13 @@ import User from "@module/user";
 import UserDetailLayout from "@module/user/layout/user-detail-layout";
 import Vendor from "@module/vendors";
 import RoleRoute from "./role.route";
+import ForgetPassword from "@module/auth/views/forget-password";
+import ResetPassword from "@module/auth/views/reset-password";
 
 const AppRoutes = () => {
   return (
     <Routes>
+      {/* dashboard route */}
       <Route
         path={AppRoute.home}
         element={
@@ -106,14 +109,7 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* public url */}
-      <Route path={AppRoute.home} element={<BlankLayout />}>
-        <Route
-          path={`${AppRoute.electric_load_public}`}
-          element={<ElectricLoadProject />}
-        />
-        <Route path="*" element={<NotFound />} />
-      </Route>
+      {/* auth route */}
       <Route
         path={AppRoute.home}
         element={
@@ -123,7 +119,23 @@ const AppRoutes = () => {
         }
       >
         <Route path={`${AppRoute.login}`} element={<Login />} />
-        <Route path={`${AppRoute.forget_password}`} element={<Login />} />
+        <Route
+          path={`${AppRoute.forget_password}`}
+          element={<ForgetPassword />}
+        />
+        <Route
+          path={`${AppRoute.reset_password}`}
+          element={<ResetPassword />}
+        />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+
+      {/* public route */}
+      <Route path={AppRoute.home} element={<BlankLayout />}>
+        <Route
+          path={`${AppRoute.electric_load_public}`}
+          element={<ElectricLoadProject />}
+        />
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="*" element={<NotFound />} />

@@ -80,7 +80,22 @@ const AuthLayout = () => {
         </Stack>
 
         <Box h="100%" bg="white" w="100%">
-          <Outlet />
+          <Stack justify="center" h="100%">
+            <Center>
+              <Stack
+                w={{ base: "100%", sm: "60%" }}
+                px={{ base: "lg", sm: 0 }}
+                gap="md"
+              >
+                <Center>
+                  <Box display={{ base: "block", sm: "none" }} w="60%">
+                    <Image src={logo} />
+                  </Box>
+                </Center>
+                <Outlet />
+              </Stack>
+            </Center>
+          </Stack>
         </Box>
       </Flex>
     </Box>

@@ -3,6 +3,7 @@ import AppRoute from "@routes/route.constant";
 import { ReactElement } from "react";
 import { AiOutlinePieChart, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
+import { FaUsersCog } from "react-icons/fa";
 import { LuLayoutList } from "react-icons/lu";
 import { PiUsersThree } from "react-icons/pi";
 import { TbFileInvoice } from "react-icons/tb";
@@ -64,6 +65,13 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Users",
     key: "users",
     href: AppRoute.users,
+    allow: [USER_ROLE.ADMIN],
+  },
+  {
+    icon: <FaUsersCog size={22} />,
+    label: "Teams",
+    key: "teams",
+    href: AppRoute.team,
     allow: [USER_ROLE.ADMIN],
   },
 ];

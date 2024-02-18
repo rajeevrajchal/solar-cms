@@ -2,6 +2,7 @@ const AppRoute = {
   home: "/",
   login: "/login",
   forget_password: "/forget-password",
+  reset_password: "/reset-password",
   profile: "/my-account",
 
   quote: "/quotes",
@@ -25,6 +26,10 @@ const AppRoute = {
   user_edit: (user_id: string) => `/users/${user_id}/edit`,
   user_detail: (user_id: string) => `/users/${user_id}`,
   user_project: (user_id: string) => `/users/${user_id}/projects`,
+
+  team: "/teams",
+  create_team: "/teams/create",
+  team_edit: (team_id: string) => `/teams/${team_id}/edit`,
 
   projects: "/projects",
   create_project: "/projects/create",

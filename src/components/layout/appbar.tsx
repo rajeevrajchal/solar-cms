@@ -13,10 +13,8 @@ import {
   Divider,
 } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
+import { getInitialsName } from "@utils/functions/get-initials-name";
 import { BsLayoutSidebarInset } from "react-icons/bs";
-
-const avatar =
-  "https://plus.unsplash.com/premium_photo-1683121366070-5ceb7e007a97?auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=500";
 
 interface AppBarProps {
   desktopOpened?: boolean;
@@ -69,19 +67,18 @@ const AppBar = (props: AppBarProps) => {
             <Menu shadow="md" width={200} withArrow arrowSize={12}>
               <Menu.Target>
                 <Center>
-                  <Avatar src={avatar} alt="it's me" size="sm" />
+                  <Avatar color="cyan" alt={loginUser.name} size="sm">
+                    {getInitialsName(loginUser.name)}
+                  </Avatar>
                 </Center>
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Label>
                   <Paper>
-                    <Text size="sm">{loginUser.name}</Text>
-                    <Text
-                      size="sm"
-                      style={{
-                        textTransform: "lowercase",
-                      }}
-                    >
+                    <Text size="sm" className="capitalize">
+                      {loginUser.name}
+                    </Text>
+                    <Text size="sm" className="capitalize">
                       {loginUser.role}
                     </Text>
                   </Paper>

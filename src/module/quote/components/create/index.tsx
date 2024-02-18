@@ -70,45 +70,44 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
           </Text>
         )}
         <Flex align="center" justify="flex-end" gap="md">
-          {data?.id &&
-            !includes(
-              [QUOTE_STATUS.ACCEPTED, QUOTE_STATUS.REJECTED],
-              data?.status?.toLowerCase()
-            ) && (
-              <>
-                {edit ? (
-                  <>
-                    <Button
-                      variant="subtle"
-                      disabled={createQuote.isPending}
-                      onClick={
-                        data?.id
-                          ? () => setEdit(false)
-                          : () => navigate(AppRoute.quote)
-                      }
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      disabled={createQuote.isPending}
-                      loading={createQuote.isPending}
-                      variant="outlined"
-                      onClick={() => projectForm.handleSubmit()}
-                    >
-                      {data?.id ? "Update" : "Create"}
-                    </Button>
-                  </>
-                ) : (
+          {!includes(
+            [QUOTE_STATUS.ACCEPTED, QUOTE_STATUS.REJECTED],
+            data?.status?.toLowerCase()
+          ) && (
+            <>
+              {edit ? (
+                <>
                   <Button
-                    variant="light"
+                    variant="subtle"
                     disabled={createQuote.isPending}
-                    onClick={() => setEdit(true)}
+                    onClick={
+                      data?.id
+                        ? () => setEdit(false)
+                        : () => navigate(AppRoute.quote)
+                    }
                   >
-                    Edit
+                    Cancel
                   </Button>
-                )}
-              </>
-            )}
+                  <Button
+                    disabled={createQuote.isPending}
+                    loading={createQuote.isPending}
+                    variant="outlined"
+                    onClick={() => projectForm.handleSubmit()}
+                  >
+                    {data?.id ? "Update" : "Create"}
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="light"
+                  disabled={createQuote.isPending}
+                  onClick={() => setEdit(true)}
+                >
+                  Edit
+                </Button>
+              )}
+            </>
+          )}
           {!isEmpty(data) && (
             <>
               <Button onClick={() => downloadQuote.mutate(data?.id)}>

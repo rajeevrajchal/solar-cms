@@ -23,6 +23,10 @@ function AuthRoute(props: AuthRouteProps) {
     ? location.state.from
     : AppRoute.home;
 
+  const publicPathNavigation: string = location.state
+    ? location.state.from
+    : AppRoute.login;
+
   if (loading) {
     return <Splash />;
   }
@@ -41,7 +45,7 @@ function AuthRoute(props: AuthRouteProps) {
   if (!isLoggedIn && !loading && isAuth) {
     return (
       <Navigate
-        to={AppRoute.login}
+        to={publicPathNavigation}
         state={{
           from: location,
         }}
