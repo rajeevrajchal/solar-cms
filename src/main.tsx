@@ -25,6 +25,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "mantine-datatable/styles.layer.css";
 
 import { AuthProvider } from "@hook/store/use-auth";
+import { I18nextProvider } from "react-i18next";
+import i18n from "@plugins/i18n";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,18 +51,20 @@ const queryClient = new QueryClient({
 
 const app = (
   <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <ToastContainer />
-        <MantineProvider theme={theme}>
-          <AuthProvider>
-            <BreadcrumbProvider>
-              <AppRoutes />
-            </BreadcrumbProvider>
-          </AuthProvider>
-        </MantineProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <ToastContainer />
+          <MantineProvider theme={theme}>
+            <AuthProvider>
+              <BreadcrumbProvider>
+                <AppRoutes />
+              </BreadcrumbProvider>
+            </AuthProvider>
+          </MantineProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </I18nextProvider>
   </React.StrictMode>
 );
 

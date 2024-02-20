@@ -1,9 +1,11 @@
 import { Stack } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   return (
     <Stack>
-      <p>Home</p>
+      <p>{t("api.home")}</p>
     </Stack>
   );
 };
