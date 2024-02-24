@@ -1,20 +1,25 @@
+import Menu from "@components/menu";
 import useAuth from "@hook/store/use-auth";
 import {
+  ActionIcon,
   AppShell,
   Avatar,
+  Button,
   Center,
-  Menu,
-  Group,
-  Flex,
-  ActionIcon,
-  Loader,
-  Text,
-  Paper,
   Divider,
+  Flex,
+  Group,
+  Loader,
+  Menu as MMenu,
+  Paper,
+  Text,
 } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
 import { getInitialsName } from "@utils/functions/get-initials-name";
 import { BsLayoutSidebarInset } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa";
+import { MdDesignServices } from "react-icons/md";
+import { PiProjectorScreenChartLight } from "react-icons/pi";
 
 interface AppBarProps {
   desktopOpened?: boolean;
@@ -63,17 +68,40 @@ const AppBar = (props: AppBarProps) => {
         </Group>
         {loginUser?.id && (
           <Group gap="lg" preventGrowOverflow={false} wrap="nowrap" grow>
+            {/* quick buttons */}
+            <Menu
+              position="bottom-end"
+              trigger={
+                <Button size="xs" leftSection={<FaPlus />}>
+                  Start
+                </Button>
+              }
+              menu={[
+                {
+                  leftSection: <PiProjectorScreenChartLight size={20} />,
+                  children: <Text className="capitalize">Create Project</Text>,
+                  component: "a",
+                  href: AppRoute.create_project,
+                },
+                {
+                  leftSection: <MdDesignServices size={20} />,
+                  children: <Text className="capitalize">Book Service</Text>,
+                  component: "a",
+                  href: AppRoute.book_services,
+                },
+              ]}
+            />
             {/* profile button */}
-            <Menu shadow="md" width={200} withArrow arrowSize={12}>
-              <Menu.Target>
+            <MMenu shadow="md" width={200} withArrow arrowSize={12}>
+              <MMenu.Target>
                 <Center>
                   <Avatar color="cyan" alt={loginUser.name} size="sm">
                     {getInitialsName(loginUser.name)}
                   </Avatar>
                 </Center>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Label>
+              </MMenu.Target>
+              <MMenu.Dropdown>
+                <MMenu.Label>
                   <Paper>
                     <Text size="sm" className="capitalize">
                       {loginUser.name}
@@ -82,12 +110,12 @@ const AppBar = (props: AppBarProps) => {
                       {loginUser.role}
                     </Text>
                   </Paper>
-                </Menu.Label>
+                </MMenu.Label>
                 <Divider />
-                <Menu.Item component="a" href={AppRoute.profile} mt="xs">
+                <MMenu.Item component="a" href={AppRoute.profile} mt="xs">
                   Profile
-                </Menu.Item>
-                <Menu.Item
+                </MMenu.Item>
+                <MMenu.Item
                   component="button"
                   variant="filled"
                   color="red"
@@ -99,9 +127,9 @@ const AppBar = (props: AppBarProps) => {
                   ) : (
                     " Logout"
                   )}
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+                </MMenu.Item>
+              </MMenu.Dropdown>
+            </MMenu>
           </Group>
         )}
       </Flex>

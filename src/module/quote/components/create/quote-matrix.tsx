@@ -1,5 +1,6 @@
-import { Stack, Grid, TextInput, Text } from "@mantine/core";
+import { Grid, Stack, Text, TextInput } from "@mantine/core";
 import { formatCurrency } from "@utils/functions/format-currency";
+import { includes } from "lodash";
 import { useEffect } from "react";
 
 interface QuoteMatrixProps {
@@ -120,7 +121,7 @@ const QuoteMatrix = (props: QuoteMatrixProps) => {
           </Grid>
         </Grid.Col>
         <Grid.Col span={6}>
-          <Grid align="center">
+          <Grid>
             <Grid.Col
               span={{
                 base: 6,
@@ -128,7 +129,7 @@ const QuoteMatrix = (props: QuoteMatrixProps) => {
                 lg: 4,
               }}
             >
-              Discount
+              Variance
             </Grid.Col>
             <Grid.Col
               span={{
@@ -137,69 +138,71 @@ const QuoteMatrix = (props: QuoteMatrixProps) => {
                 lg: 4,
               }}
             >
-              {isEdit ? (
-                <TextInput
-                  rightSection="%"
-                  placeholder="Discount"
-                  type="number"
-                  name="discount"
-                  onChange={form.handleChange}
-                  value={form.values.discount}
-                />
-              ) : (
-                `${form.values.discount}%`
-              )}
+              5%
             </Grid.Col>
           </Grid>
         </Grid.Col>
       </Grid>
 
-      <Grid align="center">
-        <Grid.Col span={6}>
-          <Grid>
-            <Grid.Col
-              span={{
-                base: 6,
-                md: 6,
-                lg: 4,
-              }}
-            >
-              Discount Amount
-            </Grid.Col>
-            <Grid.Col
-              span={{
-                base: 6,
-                md: 6,
-                lg: 4,
-              }}
-            >
-              {formatCurrency(form.values.discount_amount)}
-            </Grid.Col>
-          </Grid>
-        </Grid.Col>
-        <Grid.Col span={6}>
-          <Grid>
-            <Grid.Col
-              span={{
-                base: 6,
-                md: 6,
-                lg: 4,
-              }}
-            >
-              Amount after discount
-            </Grid.Col>
-            <Grid.Col
-              span={{
-                base: 6,
-                md: 6,
-                lg: 4,
-              }}
-            >
-              {formatCurrency(form.values.total_after_discount)}
-            </Grid.Col>
-          </Grid>
-        </Grid.Col>
-      </Grid>
+      {!includes(["", 0, null], form.values.discount) && (
+        <Grid align="center">
+          <Grid.Col span={6}>
+            <Grid align="center">
+              <Grid.Col
+                span={{
+                  base: 6,
+                  md: 6,
+                  lg: 4,
+                }}
+              >
+                Discount
+              </Grid.Col>
+              <Grid.Col
+                span={{
+                  base: 6,
+                  md: 6,
+                  lg: 4,
+                }}
+              >
+                {isEdit ? (
+                  <TextInput
+                    rightSection="%"
+                    placeholder="Discount"
+                    type="number"
+                    name="discount"
+                    onChange={form.handleChange}
+                    value={form.values.discount}
+                  />
+                ) : (
+                  `${form.values.discount} %`
+                )}
+              </Grid.Col>
+            </Grid>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <Grid>
+              <Grid.Col
+                span={{
+                  base: 6,
+                  md: 6,
+                  lg: 4,
+                }}
+              >
+                Discount Amount
+              </Grid.Col>
+              <Grid.Col
+                span={{
+                  base: 6,
+                  md: 6,
+                  lg: 4,
+                }}
+              >
+                {formatCurrency(form.values.discount_amount)}
+              </Grid.Col>
+            </Grid>
+          </Grid.Col>
+        </Grid>
+      )}
 
       <Grid align="center">
         <Grid.Col span={6}>

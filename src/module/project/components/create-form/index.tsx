@@ -1,14 +1,14 @@
-import { useFormik } from "formik";
-import CustomerInfo from "./customer-info";
+import useCustomerMutate from "@hook/data/customer/use-customer-mutate";
+import useProjectMutate from "@hook/data/project/use-project-mutate";
 import useStepper from "@hook/utils/use-stepper";
+import { PROJECTS } from "@model/project";
+import { useFormik } from "formik";
+import { omit } from "lodash";
+import { useNavigate } from "react-router-dom";
+import createProjectValidation from "./create-project-validation";
+import CustomerInfo from "./customer-info";
 import FormLayout from "./form-layout";
 import ProjectInfo from "./project-info";
-import createProjectValidation from "./create-project-validation";
-import useProjectMutate from "@hook/data/project/use-project-mutate";
-import useCustomerMutate from "@hook/data/customer/use-customer-mutate";
-import { useNavigate } from "react-router-dom";
-import { omit } from "lodash";
-import { PROJECTS } from "@model/project";
 
 interface ProjectFormProps {
   data?: Partial<PROJECTS>;

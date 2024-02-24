@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu as MMenu } from "@mantine/core";
 import { filter, omit } from "lodash";
-import React from "react";
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 interface MenuGroup {
   label: string;
@@ -13,11 +12,12 @@ type MenuEntry = any | MenuGroup;
 
 interface MenuProps {
   trigger: ReactNode;
+  position?: any;
   menu: MenuEntry[];
 }
 
 const Menu = (props: MenuProps) => {
-  const { trigger, menu } = props;
+  const { trigger, menu, position } = props;
   const [opened, setOpened] = useState<boolean>(false);
 
   const handleToggle = () => {
@@ -31,6 +31,7 @@ const Menu = (props: MenuProps) => {
       shadow="md"
       withArrow
       arrowSize={12}
+      position={position}
     >
       <MMenu.Target>{trigger}</MMenu.Target>
       <MMenu.Dropdown

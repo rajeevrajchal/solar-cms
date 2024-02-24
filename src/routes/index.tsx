@@ -1,24 +1,26 @@
-import { Route, Routes } from "react-router-dom";
-import AppRoute from "./route.constant";
-import DashboardLayout from "@layout/dashboard.layout";
-import AuthRoute from "./auth.route";
-import Home from "@module/home";
-import Projects from "@module/project";
-import { USER_ROLE } from "@enum/user.role";
-import Login from "@module/auth/views/login";
-import AuthLayout from "@layout/auth.layout";
-import Customer from "@module/customer";
-import ElectricLoadProject from "@module/public/electric-load-project";
-import BlankLayout from "@layout/blank.layout";
-import Inventory from "@module/inventory";
 import NotFound from "@components/errors/not-found";
+import { USER_ROLE } from "@enum/user.role";
+import AuthLayout from "@layout/auth.layout";
+import BlankLayout from "@layout/blank.layout";
+import DashboardLayout from "@layout/dashboard.layout";
+import ForgetPassword from "@module/auth/views/forget-password";
+import Login from "@module/auth/views/login";
+import ResetPassword from "@module/auth/views/reset-password";
+import Customer from "@module/customer";
+import Home from "@module/home";
+import Inventory from "@module/inventory";
+import Order from "@module/order";
+import Projects from "@module/project";
+import ElectricLoadProject from "@module/public/electric-load-project";
 import Quote from "@module/quote";
+import Services from "@module/services";
 import User from "@module/user";
 import UserDetailLayout from "@module/user/layout/user-detail-layout";
 import Vendor from "@module/vendors";
+import { Route, Routes } from "react-router-dom";
+import AuthRoute from "./auth.route";
 import RoleRoute from "./role.route";
-import ForgetPassword from "@module/auth/views/forget-password";
-import ResetPassword from "@module/auth/views/reset-password";
+import AppRoute from "./route.constant";
 
 const AppRoutes = () => {
   return (
@@ -38,6 +40,22 @@ const AppRoutes = () => {
           element={
             <RoleRoute allowed_role="*">
               <Projects />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.services}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Services />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.order}/*`}
+          element={
+            <RoleRoute allowed_role="*">
+              <Order />
             </RoleRoute>
           }
         />

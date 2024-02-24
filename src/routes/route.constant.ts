@@ -40,6 +40,16 @@ const AppRoute = {
     `/projects/${project_id}/${status ?? "insight"}`,
   project_quote: (project_id: string) => `/projects/${project_id}/quote`,
 
+  services: "/services",
+  book_services: "/services/book",
+
+  // order
+  order: "/orders",
+  create_order: (project_id?: string) =>
+    project_id ? `orders/create?pi=${project_id}` : `/orders/create`,
+  edit_order: (order_id: string) => `/orders/${order_id}/edit`,
+  order_detail: (order_id: string) => `/orders/${order_id}`,
+
   customers: "/customers",
   create_customer: "/customers/create",
   customer_edit: (customer_id: string) => `/customers/edit/${customer_id}`,

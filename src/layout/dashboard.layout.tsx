@@ -1,10 +1,10 @@
-import { useDisclosure, useLocalStorage } from "@mantine/hooks";
-import { AppShell, Stack } from "@mantine/core";
-import AppBar from "@components/layout/appbar";
 import Breadcrumb from "@components/breadcrumb";
+import AppBar from "@components/layout/appbar";
 import Sidebar from "@components/layout/sidebar";
-import { Outlet, useLocation } from "react-router-dom";
+import { AppShell, Stack } from "@mantine/core";
+import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { useLayoutEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 
 const DashboardLayout = () => {
   const [appSidebar, setAppSidebar] = useLocalStorage<boolean>({
@@ -45,7 +45,7 @@ const DashboardLayout = () => {
       />
       <AppShell.Main>
         <Stack gap="md">
-          {pathname === "/" ? null : <Breadcrumb />}
+          {pathname != "/" && <Breadcrumb />}
           <Outlet />
         </Stack>
       </AppShell.Main>
