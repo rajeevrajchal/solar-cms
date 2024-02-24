@@ -4,11 +4,12 @@ import {
 } from "@api/types/project-input.type";
 import { PROJECTS } from "@model/project";
 import useAxios, { METHOD } from "@plugins/call.axios";
+import { buildQueryString } from "@utils/functions/build-query-string";
 
 const ProjectService = {
-  list: (query?: string) => {
+  list: (params: { search?: string; status?: string; tab?: string }) => {
     return useAxios({
-      url: !query || query === "my" ? `project` : `project?type=${query}`,
+      url: `project${buildQueryString(params)}`,
       method: METHOD.GET,
     });
   },
