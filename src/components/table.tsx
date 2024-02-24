@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Box, Flex, Stack, Text } from "@mantine/core";
+import sortBy from "lodash/sortBy";
 import {
   DataTable,
   DataTableColumn,
   DataTableProps,
+  DataTableRowClickHandler,
   DataTableRowExpansionProps,
   DataTableSortStatus,
-  DataTableRowClickHandler,
   DataTableVerticalAlign,
 } from "mantine-datatable";
 import { ReactElement, useState } from "react";
-import sortBy from "lodash/sortBy";
-import { Flex, Stack, Box, Text } from "@mantine/core";
 
 interface TableProps extends Omit<DataTableProps, "columns" | "fetching"> {
   columns: DataTableColumn[];
@@ -74,9 +74,9 @@ const Table = (props: TableProps) => {
         }}
       >
         {label && (
-          <Box className="w-1/2">
-            <Text fw="bold">{label}</Text>
-          </Box>
+          <Text w="w-fit" fw="bold">
+            {label}
+          </Text>
         )}
         {headerLeftContent && <Box>{headerLeftContent}</Box>}
         <Box>{headerContent}</Box>
