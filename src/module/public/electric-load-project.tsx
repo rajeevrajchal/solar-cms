@@ -1,4 +1,4 @@
-import useProjectPublic from "@hook/data/project/use-project-public";
+import useProjectPublic from "@module/public/hooks/use-project-public";
 import { Center, Loader, Stack, Text } from "@mantine/core";
 import ElectricLoadUserDetail from "./components/electric-load/user-detail";
 import LoadTable from "../../components/loads/load-table";

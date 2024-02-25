@@ -1,4 +1,4 @@
-import useVendorMutate from "@hook/data/vendor/use-vendor-mutate";
+import useVendorMutate from "@module/vendors/hooks/use-vendor-mutate";
 import { Button, Fieldset, Flex, Stack, TextInput, Text } from "@mantine/core";
 import { VENDOR } from "@model/vendor";
 import { useFormik } from "formik";

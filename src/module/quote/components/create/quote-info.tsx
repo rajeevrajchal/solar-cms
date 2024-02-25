@@ -1,4 +1,4 @@
-import useProjectForQuote from "@hook/data/project/use-project-for-quote";
+import useProjectForQuote from "@module/project/hooks/use-project-for-quote";
 import { Flex, Loader, Select, Stack, Text } from "@mantine/core";
 import { PROJECTS } from "@model/project";
 import ProjectEquipment from "@module/project/components/detail/project-equipments";

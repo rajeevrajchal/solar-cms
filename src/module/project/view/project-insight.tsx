@@ -1,5 +1,5 @@
 import { STATUS } from "@enum/status.enum";
-import useProject from "@hook/data/project/use-project";
+import useProject from "@module/project/hooks/use-project";
 import { Center, Loader, Text } from "@mantine/core";
 import InfoViewSetup from "../components/insight-view/info-view";
 import { PROJECTS } from "@model/project";

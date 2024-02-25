@@ -1,7 +1,7 @@
 import Table from "@components/table";
 import { DataTableColumn } from "mantine-datatable";
 import VendorHeader from "../components/vendor-header";
-import useVendors from "@hook/data/vendor/user-vendors";
+import useVendors from "@module/vendors/hooks/user-vendors";
 import VendorAction from "../components/vendor-action";
 import VendorCreateEdit from "../components/vendor-create-edit";
 

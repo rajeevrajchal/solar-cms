@@ -1,5 +1,5 @@
 import NotFound from "@components/errors/not-found";
-import useQuotes from "@hook/data/quote/use-quote";
+import useQuotes from "@module/quote/hooks/use-quote";
 import { Center, Loader } from "@mantine/core";
 import CreateQuoteForm from "../components/create";
 

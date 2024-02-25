@@ -1,5 +1,5 @@
-import useCustomerMutate from "@hook/data/customer/use-customer-mutate";
-import useProjectMutate from "@hook/data/project/use-project-mutate";
+import useCustomerMutate from "@module/customer/hooks/use-customer-mutate";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import useStepper from "@hook/utils/use-stepper";
 import { PROJECTS } from "@model/project";
 import { useFormik } from "formik";

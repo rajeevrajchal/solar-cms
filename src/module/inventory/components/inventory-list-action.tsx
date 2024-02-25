@@ -1,6 +1,6 @@
 import Menu from "@components/menu";
 import ConfirmationModal from "@components/modal/confirmation-modal";
-import useInventoryMutate from "@hook/data/inventory/use-inventory-mutate";
+import useInventoryMutate from "@module/inventory/hooks/use-inventory-mutate";
 import { ActionIcon, Text } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
 import { useState } from "react";

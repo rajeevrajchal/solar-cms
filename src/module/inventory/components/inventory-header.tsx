@@ -1,6 +1,6 @@
 import SearchInput from "@components/search-input";
 import UploadCSV from "@components/upload-csv";
-import useInventoryMutate from "@hook/data/inventory/use-inventory-mutate";
+import useInventoryMutate from "@module/inventory/hooks/use-inventory-mutate";
 import { Button, Flex, Select } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
 import { IoMdAdd } from "react-icons/io";

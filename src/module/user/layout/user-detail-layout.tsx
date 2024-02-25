@@ -1,6 +1,6 @@
 import CustomBadge from "@components/custom-badge";
 import NotFound from "@components/errors/not-found";
-import useUser from "@hook/data/users/use-user";
+import useUser from "@module/user/hooks/use-user";
 import useAuth from "@hook/store/use-auth";
 import {
   Avatar,

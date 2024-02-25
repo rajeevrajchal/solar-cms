@@ -1,8 +1,8 @@
 import Dropzone from "@components/dropzone";
 import category from "@constant/category";
 import nature from "@constant/nature";
-import useInventoryMutate from "@hook/data/inventory/use-inventory-mutate";
-import useVendors from "@hook/data/vendor/user-vendors";
+import useInventoryMutate from "@module/inventory/hooks/use-inventory-mutate";
+import useVendors from "@module/vendors/hooks/user-vendors";
 import {
   Stack,
   Fieldset,

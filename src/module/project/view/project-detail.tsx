@@ -1,6 +1,6 @@
 import Tab from "@components/tab";
 import { STATUS, STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
-import useProject from "@hook/data/project/use-project";
+import useProject from "@module/project/hooks/use-project";
 import {
   ActionIcon,
   Badge,

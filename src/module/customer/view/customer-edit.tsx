@@ -1,6 +1,6 @@
 import { Center, Loader, Text } from "@mantine/core";
 import CustomerCreateForm from "../components/customer-create-form";
-import useCustomer from "../../../hook/data/customer/use-customer";
+import useCustomer from "../hooks/use-customer";
 
 const CustomerEdit = () => {
   const { loading, error, customer } = useCustomer();

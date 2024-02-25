@@ -1,7 +1,7 @@
 import { Button, Flex, Stack, Text } from "@mantine/core";
 import { useFormik } from "formik";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import useQuoteMutate from "@hook/data/quote/use-quote-mutate";
+import useQuoteMutate from "@module/quote/hooks/use-quote-mutate";
 import QuoteCreateValidation from "./quote-create.validation";
 import QuoteInfo from "./quote-info";
 import { QUOTE } from "@model/quote";

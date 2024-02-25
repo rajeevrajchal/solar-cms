@@ -6,7 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useState } from "react";
 import ConfirmationModal from "@components/modal/confirmation-modal";
-import useCustomerMutate from "@hook/data/customer/use-customer-mutate";
+import useCustomerMutate from "@module/customer/hooks/use-customer-mutate";
 
 interface CustomerListActionProps {
   customer_id: string;

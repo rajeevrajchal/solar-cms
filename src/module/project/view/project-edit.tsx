@@ -1,4 +1,4 @@
-import useProject from "@hook/data/project/use-project";
+import useProject from "@module/project/hooks/use-project";
 import { Center, Loader, Text } from "@mantine/core";
 import ProjectForm from "../components/create-form";
 

@@ -1,5 +1,5 @@
 import ConfirmationModal from "@components/modal/confirmation-modal";
-import useUserMutate from "@hook/data/users/use-user-mutate";
+import useUserMutate from "@module/user/hooks/use-user-mutate";
 import { Switch } from "@mantine/core";
 import { USER } from "@model/user";
 import { PropsWithChildren, useState } from "react";

@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import ComponentEquipmentTable from "./components/equipment/component-equipment-table";
 import ComponentEquipmentGrid from "./components/equipment/component-equipment-grid";
-import useProjectMutate from "@hook/data/project/use-project-mutate";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 
 interface InsightComponentEquipmentProps {
   project: PROJECTS;

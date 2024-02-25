@@ -3,7 +3,7 @@ import { DataTableColumn } from "mantine-datatable";
 import { Stack, Text, Button } from "@mantine/core";
 import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
 import ProjectListHeader from "../components/project-list-header";
-import useProjects from "../../../hook/data/project/use-projects";
+import useProjects from "../hooks/use-projects";
 import useAuth from "@hook/store/use-auth";
 import { USER_ROLE } from "@enum/user.role";
 import ProjectListAction from "../components/project-list-action";

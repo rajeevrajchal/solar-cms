@@ -1,5 +1,5 @@
 import Tab from "@components/tab";
-import useCustomer from "@hook/data/customer/use-customer";
+import useCustomer from "@module/customer/hooks/use-customer";
 import { Card, Center, Grid, Loader, Text } from "@mantine/core";
 import { FiGrid } from "react-icons/fi";
 

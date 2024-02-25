@@ -1,4 +1,4 @@
-import useCustomerMutate from "@hook/data/customer/use-customer-mutate";
+import useCustomerMutate from "@module/customer/hooks/use-customer-mutate";
 import { Button, Fieldset, Flex, Stack, TextInput, Text } from "@mantine/core";
 import { USER } from "@model/user";
 import createProjectValidation from "@module/project/components/create-form/create-project-validation";

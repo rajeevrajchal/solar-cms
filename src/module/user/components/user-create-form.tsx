@@ -1,5 +1,5 @@
 import { USER_ROLE } from "@enum/user.role";
-import useUserMutate from "@hook/data/users/use-user-mutate";
+import useUserMutate from "@module/user/hooks/use-user-mutate";
 import {
   Button,
   Fieldset,

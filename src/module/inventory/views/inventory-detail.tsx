@@ -1,5 +1,5 @@
 import NotFound from "@components/errors/not-found";
-import useInventory from "@hook/data/inventory/use-inventory";
+import useInventory from "@module/inventory/hooks/use-inventory";
 import { Center, Loader } from "@mantine/core";
 
 const InventoryDetail = () => {

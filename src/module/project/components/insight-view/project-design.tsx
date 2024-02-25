@@ -17,7 +17,7 @@ import UploadDesignModal from "./components/design/upload-design-modal";
 import { FaPlus } from "react-icons/fa";
 import { MdRemove } from "react-icons/md";
 import Table from "@components/table";
-import useProjectMutate from "@hook/data/project/use-project-mutate";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 
 interface ProjectDesignProps {
   project: PROJECTS;

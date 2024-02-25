@@ -1,7 +1,7 @@
 import Table from "@components/table";
 import { DataTableColumn } from "mantine-datatable";
 import QuoteHeader from "../components/quote-header";
-import useQuotes from "@hook/data/quote/use-quotes";
+import useQuotes from "@module/quote/hooks/use-quotes";
 import { formatCurrency } from "@utils/functions/format-currency";
 import {
   QUOTE_STATUS,

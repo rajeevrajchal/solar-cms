@@ -1,7 +1,7 @@
 import Menu from "@components/menu";
 import ConfirmationModal from "@components/modal/confirmation-modal";
 import { QUOTE_STATUS } from "@enum/quote-status.enum";
-import useQuoteMutate from "@hook/data/quote/use-quote-mutate";
+import useQuoteMutate from "@module/quote/hooks/use-quote-mutate";
 import { ActionIcon, Text } from "@mantine/core";
 import { QUOTE } from "@model/quote";
 import AppRoute from "@routes/route.constant";

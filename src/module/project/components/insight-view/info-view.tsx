@@ -13,7 +13,7 @@ import ProjectInsightHeader from "./insight-header";
 import { panelTypeOptions } from "@enum/panel-type.enum";
 import { batteryTypeOptions } from "@enum/battery-type.enum";
 import { useFormik } from "formik";
-import useProjectMutate from "@hook/data/project/use-project-mutate";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 
 interface InfoViewSetupProps {
   project: PROJECTS;

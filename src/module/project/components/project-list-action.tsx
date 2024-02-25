@@ -5,7 +5,7 @@ import { ActionIcon, Text } from "@mantine/core";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { MdEdit, MdDelete, MdAssignmentInd, MdInsights } from "react-icons/md";
-import useProjectMutate from "@hook/data/project/use-project-mutate";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import ProjectAssignMe from "./project-assign-owner";
 import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
