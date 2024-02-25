@@ -6,7 +6,6 @@ import {
   DataTable,
   DataTableColumn,
   DataTableProps,
-  DataTableRowClickHandler,
   DataTableRowExpansionProps,
   DataTableSortStatus,
   DataTableVerticalAlign,
@@ -22,7 +21,6 @@ interface TableProps extends Omit<DataTableProps, "columns" | "fetching"> {
   headerContent?: ReactElement | null;
   headerLeftContent?: ReactElement | null;
   rowExpansion?: DataTableRowExpansionProps;
-  onRowClick?: DataTableRowClickHandler;
   rowColor?: any;
   rowClassName?: any;
   rowBackgroundColor?: any;
@@ -39,7 +37,6 @@ const Table = (props: TableProps) => {
     idAccessor,
     headerContent,
     headerLeftContent,
-    onRowClick,
     rowColor,
     rowBackgroundColor,
     label,
@@ -94,7 +91,6 @@ const Table = (props: TableProps) => {
         idAccessor={idAccessor || "id"}
         sortStatus={sortStatus}
         onSortStatusChange={setSortStatus}
-        onRowClick={onRowClick}
         rowExpansion={rowExpansion}
         rowColor={rowColor}
         rowBackgroundColor={rowBackgroundColor}

@@ -1,22 +1,20 @@
-import Table from "@components/table";
-import { DataTableColumn } from "mantine-datatable";
-import { Stack, Text, Button } from "@mantine/core";
-import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
-import ProjectListHeader from "../components/project-list-header";
-import useProjects from "../hooks/use-projects";
-import useAuth from "@hook/store/use-auth";
-import { USER_ROLE } from "@enum/user.role";
-import ProjectListAction from "../components/project-list-action";
+import CustomBadge from "@components/custom-badge";
 import Tab from "@components/tab";
+import Table from "@components/table";
+import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
+import { USER_ROLE } from "@enum/user.role";
+import useAuth from "@hook/store/use-auth";
+import { Button, Stack, Text } from "@mantine/core";
+import { formatNumber } from "@utils/functions/format-number";
+import { DataTableColumn } from "mantine-datatable";
 import { FaUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { formatNumber } from "@utils/functions/format-number";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import CustomBadge from "@components/custom-badge";
-import AppRoute from "@routes/route.constant";
+import { useSearchParams } from "react-router-dom";
+import ProjectListAction from "../components/project-list-action";
+import ProjectListHeader from "../components/project-list-header";
+import useProjects from "../hooks/use-projects";
 
 const ProjectList = () => {
-  const navigate = useNavigate();
   const { loginUser } = useAuth();
   const { loading, projects } = useProjects();
   const [, setSearchParams] = useSearchParams();
@@ -224,9 +222,6 @@ const ProjectList = () => {
       columns={columns}
       data={projects || []}
       fetching={loading}
-      onRowClick={(row) =>
-        navigate(AppRoute.project_detail(row?.record?.id as string))
-      }
     />
   );
 };
