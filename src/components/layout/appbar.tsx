@@ -73,7 +73,7 @@ const AppBar = (props: AppBarProps) => {
               position="bottom-end"
               trigger={
                 <Button size="xs" leftSection={<FaPlus />}>
-                  Start
+                  Create Configuration
                 </Button>
               }
               menu={[
@@ -85,7 +85,7 @@ const AppBar = (props: AppBarProps) => {
                 },
                 {
                   leftSection: <MdDesignServices size={20} />,
-                  children: <Text className="capitalize">Book Service</Text>,
+                  children: <Text className="capitalize">For Service</Text>,
                   component: "a",
                   href: AppRoute.book_services,
                 },
