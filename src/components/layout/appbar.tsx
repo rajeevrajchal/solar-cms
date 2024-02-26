@@ -1,3 +1,4 @@
+import ColorSwitch from "@components/color-switch";
 import Menu from "@components/menu";
 import useAuth from "@hook/store/use-auth";
 import {
@@ -52,7 +53,6 @@ const AppBar = (props: AppBarProps) => {
             hiddenFrom="sm"
             size="sm"
             aria-label="Toggle navigation"
-            color="black"
           >
             <BsLayoutSidebarInset />
           </ActionIcon>
@@ -60,7 +60,6 @@ const AppBar = (props: AppBarProps) => {
             variant="transparent"
             size="sm"
             onClick={toggleDesktop}
-            color="black"
             visibleFrom="sm"
           >
             <BsLayoutSidebarInset />
@@ -130,6 +129,7 @@ const AppBar = (props: AppBarProps) => {
                 </MMenu.Item>
               </MMenu.Dropdown>
             </MMenu>
+            <ColorSwitch />
           </Group>
         )}
       </Flex>
