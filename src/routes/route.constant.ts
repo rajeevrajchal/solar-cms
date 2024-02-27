@@ -42,6 +42,7 @@ const AppRoute = {
 
   services: "/services",
   book_services: "/services/book",
+  add_service: "/services/add",
 
   // order
   order: "/orders",

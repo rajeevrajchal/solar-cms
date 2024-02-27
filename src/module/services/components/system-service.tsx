@@ -1,5 +1,6 @@
 import Table from "@components/table";
 import { Button, Flex } from "@mantine/core";
+import AppRoute from "@routes/route.constant";
 import { DataTableColumn } from "mantine-datatable";
 import { GrDocumentConfig } from "react-icons/gr";
 
@@ -47,11 +48,16 @@ const columns: DataTableColumn[] = [
 const SystemService = () => {
   return (
     <Table
-      label="Customer Service Configuration"
+      label="Service we provide"
       headerContent={
         <Flex>
-          <Button leftSection={<GrDocumentConfig size={20} />} variant="light">
-            Create Service Configuration
+          <Button
+            leftSection={<GrDocumentConfig size={20} />}
+            variant="light"
+            component="a"
+            href={AppRoute.add_service}
+          >
+            Add Service Item
           </Button>
         </Flex>
       }
