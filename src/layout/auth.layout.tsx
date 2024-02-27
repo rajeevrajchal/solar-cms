@@ -1,10 +1,19 @@
-import { Box, Center, Flex, Stack, Image, Text } from "@mantine/core";
-import { Outlet } from "react-router-dom";
 import { Carousel } from "@mantine/carousel";
+import {
+  Box,
+  Center,
+  Flex,
+  Image,
+  Stack,
+  Text,
+  useMantineColorScheme,
+} from "@mantine/core";
+import { Outlet } from "react-router-dom";
 
 import banner from "@assets/background/background.svg";
 import dashboard from "@assets/background/dashboard.svg";
 import logo from "@assets/logo/png/logo_transparent.png";
+import ColorSwitch from "@components/color-switch";
 
 const bannerSlider = [
   {
@@ -24,13 +33,14 @@ const bannerSlider = [
 ];
 
 const AuthLayout = () => {
+  const { colorScheme } = useMantineColorScheme();
   return (
     <Box
       style={{
         width: "100vw",
         height: "100vh",
       }}
-      bg="#6b63ff"
+      bg={colorScheme === "light" ? "#6b63ff" : "transparent"}
     >
       <Flex h="100%" direction={{ base: "column", sm: "row" }}>
         <Stack h="100%" w="100%" display={{ base: "none", sm: "block" }}>
@@ -79,7 +89,11 @@ const AuthLayout = () => {
           </Center>
         </Stack>
 
-        <Box h="100%" bg="white" w="100%">
+        <Box
+          h="100%"
+          bg={colorScheme === "light" ? "white" : "transparent"}
+          w="100%"
+        >
           <Stack justify="center" h="100%">
             <Center>
               <Stack
@@ -92,6 +106,9 @@ const AuthLayout = () => {
                     <Image src={logo} />
                   </Box>
                 </Center>
+                <Flex align="center" justify="flex-end">
+                  <ColorSwitch />
+                </Flex>
                 <Outlet />
               </Stack>
             </Center>

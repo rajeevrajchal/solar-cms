@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { user_token_key } from "@constant/ls-key";
 import useLocalStorage from "@hook/utils/use-localstorage";
 import axios, {
   AxiosError,
@@ -6,7 +7,7 @@ import axios, {
   Method,
   ResponseType,
 } from "axios";
-import { user_token_key } from "@constant/ls-key";
+import { omit } from "lodash";
 
 interface AxiosAPI {
   url: string;
@@ -56,8 +57,12 @@ const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
     headers: {
       "Content-Type": props.contentType || "application/json",
       accept: "application/json",
-      Authorization: token !== null ? `Bearer ${token}` : "",
-      ...headers,
+      Authorization: headers?.token
+        ? `Bearer ${headers?.token}`
+        : token !== null
+        ? `Bearer ${token}`
+        : "",
+      ...omit(headers, ["token"]),
     },
     data,
     params,

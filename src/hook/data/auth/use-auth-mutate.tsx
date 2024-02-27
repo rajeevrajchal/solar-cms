@@ -1,5 +1,6 @@
 import AuthService from "@api/services/auth.service";
 import { FORGET_PASSWORD, RESET_PASSWORD } from "@api/types/auth.type";
+import AppRoute from "@routes/route.constant";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +22,9 @@ const useAuthMutate = () => {
 
   const resetPassword = useMutation({
     mutationFn: (payload: RESET_PASSWORD) => AuthService.resetPassword(payload),
+    onSuccess: () => {
+      navigate(AppRoute.login);
+    },
   });
 
   return {

@@ -4,6 +4,7 @@ import {
   RESET_PASSWORD,
 } from "@api/types/auth.type";
 import useAxios, { METHOD } from "@plugins/call.axios";
+import { omit } from "lodash";
 
 const AuthService = {
   login: (payload: LOGIN_TYPE) =>
@@ -40,7 +41,10 @@ const AuthService = {
     useAxios({
       url: "reset-password",
       method: METHOD.POST,
-      data: payload,
+      data: omit(payload, ["token"]),
+      headers: {
+        token: payload.token,
+      },
     }),
 };
 

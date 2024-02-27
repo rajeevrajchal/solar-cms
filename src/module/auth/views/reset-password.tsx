@@ -1,9 +1,10 @@
-import AppRoute from "@routes/route.constant";
-import { Navigate, useSearchParams } from "react-router-dom";
-import { Card, Text, Stack, Button, PasswordInput } from "@mantine/core";
-import { useFormik } from "formik";
+import { RESET_PASSWORD } from "@api/types/auth.type";
 import useAuthMutate from "@hook/data/auth/use-auth-mutate";
+import { Button, Card, PasswordInput, Stack, Text } from "@mantine/core";
+import AppRoute from "@routes/route.constant";
+import { useFormik } from "formik";
 import { MdLockOpen } from "react-icons/md";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -12,11 +13,10 @@ const ResetPassword = () => {
   const resetForm = useFormik({
     initialValues: {
       password: "",
-      confirm_password: "",
       token: searchParams.get("token"),
     },
     onSubmit: (values) => {
-      console.log("values", values);
+      resetPassword.mutate(values as RESET_PASSWORD);
     },
   });
 

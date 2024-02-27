@@ -1,44 +1,67 @@
-import Tab from "@components/tab";
-import { Stack } from "@mantine/core";
-import { FaUserAstronaut } from "react-icons/fa";
-import { GrSystem } from "react-icons/gr";
-import { useSearchParams } from "react-router-dom";
-import CustomerBooked from "../components/customer-service-configuration";
-import SystemService from "../components/system-service";
+import Table from "@components/table";
+import { Button, Flex } from "@mantine/core";
+import { DataTableColumn } from "mantine-datatable";
+import { GrDocumentConfig } from "react-icons/gr";
+import useServiceConfiguration from "../hooks/use-service-configuration";
+
+const columns: DataTableColumn[] = [
+  {
+    accessor: "name",
+    title: "Name",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+  },
+  {
+    accessor: "status",
+    title: "Status",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+  },
+  {
+    accessor: "customer.name",
+    title: "Customer",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+  },
+  {
+    accessor: "createdAt",
+    title: "Created At",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+  },
+  {
+    accessor: "id",
+    title: "Actions",
+    textAlign: "left",
+    width: 100,
+    ellipsis: true,
+    render: () => {
+      return <p>this is action</p>;
+    },
+  },
+];
 
 const ServiceList = () => {
-  const [searchParams] = useSearchParams();
-
-  const getView = () => {
-    switch (searchParams.get("tab")) {
-      case "customer":
-        return <CustomerBooked />;
-      case "system":
-        return <SystemService />;
-      default:
-        return <CustomerBooked />;
-    }
-  };
+  const { isLoading, service_configuration } = useServiceConfiguration();
 
   return (
-    <Stack gap={0}>
-      <Tab
-        tabs={[
-          {
-            label: "Customer Booked",
-            value: "customer",
-            icon: <FaUserAstronaut />,
-          },
-          {
-            label: "System",
-            value: "system",
-            icon: <GrSystem />,
-          },
-        ]}
-        initial="customer"
-      />
-      {getView()}
-    </Stack>
+    <Table
+      label="Customer Service Configuration"
+      headerContent={
+        <Flex>
+          <Button leftSection={<GrDocumentConfig size={20} />} variant="light">
+            Service Booking
+          </Button>
+        </Flex>
+      }
+      columns={columns}
+      data={service_configuration || []}
+      fetching={isLoading}
+    />
   );
 };
 

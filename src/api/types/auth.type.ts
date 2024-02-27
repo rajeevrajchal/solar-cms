@@ -9,6 +9,5 @@ export type FORGET_PASSWORD = {
 };
 export type RESET_PASSWORD = {
   password: string;
-  new_password: string;
   token: string;
 };
