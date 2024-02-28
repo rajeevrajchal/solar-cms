@@ -1,6 +1,6 @@
 import { RESET_PASSWORD } from "@api/types/auth.type";
 import useAuthMutate from "@hook/data/auth/use-auth-mutate";
-import { Button, Card, PasswordInput, Stack, Text } from "@mantine/core";
+import { Button, Card, PasswordInput, Stack, Text, Title } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
 import { useFormik } from "formik";
 import { MdLockOpen } from "react-icons/md";
@@ -26,12 +26,13 @@ const ResetPassword = () => {
 
   return (
     <Card bg="transparent" p={0}>
-      <Text fs="xl" fw="bold">
-        Reset Password
-      </Text>
-      <Text fs="8" c="gray">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem, harum?
-      </Text>
+      <Stack>
+        <Title variant="h6">Reset Password</Title>
+        <Text fs="xs">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident,
+          quidem!
+        </Text>
+      </Stack>
       <Stack>
         <PasswordInput
           label="Password"

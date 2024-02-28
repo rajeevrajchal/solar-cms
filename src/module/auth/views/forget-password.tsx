@@ -1,13 +1,14 @@
 import useAuthMutate from "@hook/data/auth/use-auth-mutate";
 import {
-  Card,
-  Text,
-  Stack,
-  TextInput,
   Button,
+  Card,
+  Center,
   Flex,
   PinInput,
-  Center,
+  Stack,
+  Text,
+  TextInput,
+  Title,
 } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
 import { useFormik } from "formik";
@@ -45,12 +46,13 @@ const ForgetPassword = () => {
 
   return (
     <Card bg="transparent" p={0}>
-      <Text fs="xl" fw="bold">
-        Forget Password
-      </Text>
-      <Text fs="8" c="gray">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem, harum?
-      </Text>
+      <Stack>
+        <Title variant="h6">Forget Password</Title>
+        <Text fs="xs">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident,
+          quidem!
+        </Text>
+      </Stack>
       <Stack mt="md">
         {openOtp ? (
           <Center>

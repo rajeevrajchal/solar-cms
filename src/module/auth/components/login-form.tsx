@@ -1,3 +1,6 @@
+import { LOGIN_TYPE } from "@api/types/auth.type";
+import useAuth from "@hook/store/use-auth";
+import useEnterKeyPress from "@hook/utils/use-enter";
 import {
   Button,
   Card,
@@ -6,15 +9,13 @@ import {
   Stack,
   Text,
   TextInput,
+  Title,
 } from "@mantine/core";
-import AppRoute from "@routes/route.constant";
 import loginValidationSchema from "@module/auth/validations/login-validation";
+import AppRoute from "@routes/route.constant";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
 import { MdAlternateEmail, MdLockOpen } from "react-icons/md";
-import { LOGIN_TYPE } from "@api/types/auth.type";
-import useAuth from "@hook/store/use-auth";
-import useEnterKeyPress from "@hook/utils/use-enter";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -34,10 +35,14 @@ const LoginForm = () => {
 
   return (
     <Card bg="transparent" p={0}>
-      <Text fs="xl" fw="bold">
-        Login with email
-      </Text>
       <Stack>
+        <Title variant="h6">Login</Title>
+        <Text fs="xs">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident,
+          quidem!
+        </Text>
+      </Stack>
+      <Stack mt="md">
         <TextInput
           label="Email"
           type="email"
