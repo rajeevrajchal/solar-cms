@@ -1,6 +1,5 @@
 import CustomBadge from "@components/custom-badge";
 import NotFound from "@components/errors/not-found";
-import useUser from "@module/user/hooks/use-user";
 import useAuth from "@hook/store/use-auth";
 import {
   Avatar,
@@ -14,13 +13,14 @@ import {
   Text,
 } from "@mantine/core";
 import { USER } from "@model/user";
+import useUser from "@module/user/hooks/use-user";
 import AppRoute from "@routes/route.constant";
 import { formatDate } from "@utils/functions/format-date";
 import { getInitialsName } from "@utils/functions/get-initials-name";
 import { ReactElement } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocation } from "react-icons/io5";
-import { MdOutlineMail, MdDateRange } from "react-icons/md";
+import { MdDateRange, MdOutlineMail } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
 interface UserDetailLayoutProps {
@@ -53,7 +53,10 @@ const UserDetailLayout = (props: UserDetailLayoutProps) => {
       }}
     >
       <Grid.Col
-        span={hasChildren ? 2 : 12}
+        span={{
+          base: 12,
+          md: hasChildren ? 3 : 12,
+        }}
         style={{
           height: "100%",
         }}
@@ -62,7 +65,7 @@ const UserDetailLayout = (props: UserDetailLayoutProps) => {
           <Card withBorder p={0} w={400}>
             <Stack justify="center" p="md">
               <Center>
-                <Avatar color="cyan" radius="full" size="xl">
+                <Avatar color="cyan" radius="md" size="xl">
                   {getInitialsName(user?.name)}
                 </Avatar>
               </Center>
@@ -111,7 +114,11 @@ const UserDetailLayout = (props: UserDetailLayoutProps) => {
                 <Button
                   component="a"
                   variant={pathname.includes("edit") ? "filled" : "light"}
-                  href={AppRoute.user_edit(user?.id)}
+                  href={
+                    pathname.includes("my-account")
+                      ? AppRoute.my_account_edit
+                      : AppRoute.user_edit(user?.id)
+                  }
                 >
                   Edit Profile
                 </Button>
@@ -136,7 +143,13 @@ const UserDetailLayout = (props: UserDetailLayoutProps) => {
         </Center>
       </Grid.Col>
       {hasChildren && children && (
-        <Grid.Col w="full" span={10}>
+        <Grid.Col
+          w="full"
+          span={{
+            base: 12,
+            md: hasChildren ? 9 : 12,
+          }}
+        >
           <Card withBorder p={0}>
             {children(user)}
           </Card>

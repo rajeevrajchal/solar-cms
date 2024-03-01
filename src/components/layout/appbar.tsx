@@ -19,7 +19,6 @@ import AppRoute from "@routes/route.constant";
 import { getInitialsName } from "@utils/functions/get-initials-name";
 import { BsLayoutSidebarInset } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
-import { MdDesignServices } from "react-icons/md";
 import { PiProjectorScreenChartLight } from "react-icons/pi";
 
 interface AppBarProps {
@@ -72,7 +71,7 @@ const AppBar = (props: AppBarProps) => {
               position="bottom-end"
               trigger={
                 <Button size="xs" leftSection={<FaPlus />}>
-                  Create Configuration
+                  Quick Start
                 </Button>
               }
               menu={[
@@ -82,12 +81,12 @@ const AppBar = (props: AppBarProps) => {
                   component: "a",
                   href: AppRoute.create_project,
                 },
-                {
-                  leftSection: <MdDesignServices size={20} />,
-                  children: <Text className="capitalize">For Service</Text>,
-                  component: "a",
-                  href: AppRoute.book_services,
-                },
+                // {
+                //   leftSection: <MdDesignServices size={20} />,
+                //   children: <Text className="capitalize">For Service</Text>,
+                //   component: "a",
+                //   href: AppRoute.book_services,
+                // },
               ]}
             />
             {/* profile button */}

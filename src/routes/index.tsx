@@ -14,6 +14,7 @@ import Projects from "@module/project";
 import ElectricLoadProject from "@module/public/electric-load-project";
 import Quote from "@module/quote";
 import User from "@module/user";
+import UserCreateForm from "@module/user/components/user-create-form";
 import UserDetailLayout from "@module/user/layout/user-detail-layout";
 import Vendor from "@module/vendors";
 import { Route, Routes } from "react-router-dom";
@@ -83,11 +84,19 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="my-account"
+          path={`${AppRoute.my_account}`}
           element={
             <RoleRoute allowed_role="*">
               <UserDetailLayout />
             </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.my_account}/edit`}
+          element={
+            <UserDetailLayout hasChildren={true}>
+              {(user) => <UserCreateForm data={user} />}
+            </UserDetailLayout>
           }
         />
 

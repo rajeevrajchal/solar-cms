@@ -1,5 +1,5 @@
 import { USER_ROLE } from "@enum/user.role";
-import useUserMutate from "@module/user/hooks/use-user-mutate";
+import useAuth from "@hook/store/use-auth";
 import {
   Button,
   Fieldset,
@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { USER } from "@model/user";
+import useUserMutate from "@module/user/hooks/use-user-mutate";
 import { useFormik } from "formik";
 import { isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ interface UserCreateFormProps {
 
 const UserCreateForm = (props: UserCreateFormProps) => {
   const { data } = props;
+  const { loginUser } = useAuth();
   const navigate = useNavigate();
   const { create, update } = useUserMutate();
 
@@ -65,6 +67,11 @@ const UserCreateForm = (props: UserCreateFormProps) => {
         <TextInput
           label="Email"
           placeholder="Email"
+          disabled={
+            ![USER_ROLE.ADMIN].includes(
+              loginUser?.role?.toLowerCase() as USER_ROLE
+            )
+          }
           mt="xs"
           name="email"
           onChange={userFormik.handleChange}
@@ -76,33 +83,37 @@ const UserCreateForm = (props: UserCreateFormProps) => {
             userFormik.errors?.email
           }
         />
-        <Select
-          label="Select Role"
-          mt="xs"
-          withAsterisk
-          value={userFormik.values.role}
-          placeholder="Select Role"
-          onChange={(value) => userFormik.setFieldValue(`role`, value)}
-          data={[
-            {
-              label: "Sale",
-              value: USER_ROLE.SALE.toUpperCase(),
-            },
-            {
-              label: "Engineer",
-              value: USER_ROLE.ENGINEER.toUpperCase(),
-            },
-            {
-              label: "Site Engineer",
-              value: USER_ROLE.WORKER.toUpperCase(),
-            },
-          ]}
-          error={
-            userFormik.touched?.role &&
-            userFormik.errors?.role &&
-            userFormik.errors?.role
-          }
-        />
+        {[USER_ROLE.ADMIN].includes(
+          loginUser?.role?.toLowerCase() as USER_ROLE
+        ) && (
+          <Select
+            label="Select Role"
+            mt="xs"
+            withAsterisk
+            value={userFormik.values.role}
+            placeholder="Select Role"
+            onChange={(value) => userFormik.setFieldValue(`role`, value)}
+            data={[
+              {
+                label: "Sale",
+                value: USER_ROLE.SALE.toUpperCase(),
+              },
+              {
+                label: "Engineer",
+                value: USER_ROLE.ENGINEER.toUpperCase(),
+              },
+              {
+                label: "Site Engineer",
+                value: USER_ROLE.WORKER.toUpperCase(),
+              },
+            ]}
+            error={
+              userFormik.touched?.role &&
+              userFormik.errors?.role &&
+              userFormik.errors?.role
+            }
+          />
+        )}
         <TextInput
           label="Contact"
           placeholder="Mobile Number"

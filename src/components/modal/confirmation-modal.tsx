@@ -1,7 +1,7 @@
 import { Button, Flex, Modal, Stack, Text } from "@mantine/core";
 import { ReactElement } from "react";
 
-interface ModalProps {
+export interface ModalProps {
   opened: boolean;
   close: () => void;
   confirm: () => void;
@@ -27,7 +27,7 @@ const ConfirmationModal = (props: ModalProps) => {
         {description ? (
           description
         ) : (
-          <Text> Are you sure you want to delete this ?</Text>
+          <Text> Are you sure you want to delete this ? </Text>
         )}
         <Flex gap="md" justify="flex-end" align="center">
           <Button variant="light" onClick={close} disabled={loading}>

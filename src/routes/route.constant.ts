@@ -60,6 +60,8 @@ const AppRoute = {
 
   // public
   electric_load_public: "/electric_load/:project_id",
+  my_account: "my-account",
+  my_account_edit: `my-account/edit`,
 };
 
 export default AppRoute;

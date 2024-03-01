@@ -1,14 +1,15 @@
 import Menu from "@components/menu";
 import ConfirmationModal from "@components/modal/confirmation-modal";
 import { QUOTE_STATUS } from "@enum/quote-status.enum";
-import useQuoteMutate from "@module/quote/hooks/use-quote-mutate";
 import { ActionIcon, Text } from "@mantine/core";
 import { QUOTE } from "@model/quote";
+import useQuoteMutate from "@module/quote/hooks/use-quote-mutate";
 import AppRoute from "@routes/route.constant";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 import { MdDelete, MdEdit, MdOutlineFileDownload } from "react-icons/md";
+import QuoteApprove from "./modal/quote-approve";
 
 interface QuoteListAction {
   quote: QUOTE;
@@ -105,7 +106,7 @@ const QuoteListAction = (props: QuoteListAction) => {
               },
               {
                 leftSection: <IoMdCheckmark size={24} />,
-                children: <Text className="capitalize">Approve</Text>,
+                children: <Text className="capitalize">Approve & Order</Text>,
                 onClick: () => handleMenuItemClick("accepted"),
                 allow: "*",
                 disable: [
@@ -158,11 +159,17 @@ const QuoteListAction = (props: QuoteListAction) => {
           />
 
           <ConfirmationModal
-            opened={["rejected", "accepted"].includes(activeModal)}
+            opened={["rejected"].includes(activeModal)}
             close={handleMenuClose}
             confirm={() => statusModal[activeModal]?.onClick()}
             title={statusModal[activeModal]?.heading}
             description={statusModal[activeModal]?.description}
+          />
+          <QuoteApprove
+            opened={["accepted"].includes(activeModal)}
+            close={handleMenuClose}
+            confirm={() => statusModal[activeModal]?.onClick()}
+            title={statusModal[activeModal]?.heading}
           />
         </>
       )}

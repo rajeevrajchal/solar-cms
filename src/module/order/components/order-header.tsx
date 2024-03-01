@@ -1,11 +1,9 @@
 import SearchInput from "@components/search-input";
-import { QUOTE_STATUS, QUOTE_STATUS_NAME } from "@enum/quote-status.enum";
-import { Button, Flex, Select } from "@mantine/core";
-import AppRoute from "@routes/route.constant";
-import { IoMdAdd } from "react-icons/io";
+import { ORDER_STATUS, ORDER_STATUS_NAME } from "@enum/order-status.enum";
+import { Flex, Select } from "@mantine/core";
 import { useSearchParams } from "react-router-dom";
 
-const QuoteHeader = () => {
+const OrderHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleStatusFilter = (key: string, value: string | null) => {
@@ -28,16 +26,12 @@ const QuoteHeader = () => {
         placeholder="Select Status"
         data={[
           {
-            label: QUOTE_STATUS_NAME[QUOTE_STATUS.PENDING],
-            value: QUOTE_STATUS.PENDING,
+            label: ORDER_STATUS_NAME[ORDER_STATUS.ORDER],
+            value: ORDER_STATUS.ORDER,
           },
           {
-            label: QUOTE_STATUS_NAME[QUOTE_STATUS.REJECTED],
-            value: QUOTE_STATUS.REJECTED,
-          },
-          {
-            label: QUOTE_STATUS_NAME[QUOTE_STATUS.ACCEPTED],
-            value: QUOTE_STATUS.ACCEPTED,
+            label: ORDER_STATUS_NAME[ORDER_STATUS.CANCEL],
+            value: ORDER_STATUS.CANCEL,
           },
         ]}
         clearable
@@ -47,16 +41,8 @@ const QuoteHeader = () => {
           textTransform: "capitalize",
         }}
       />
-      <Button
-        leftSection={<IoMdAdd size={14} />}
-        variant="light"
-        component="a"
-        href={AppRoute.create_quote()}
-      >
-        Create Quote
-      </Button>
     </Flex>
   );
 };
 
-export default QuoteHeader;
+export default OrderHeader;

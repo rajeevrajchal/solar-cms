@@ -1,17 +1,17 @@
-import useProjectForQuote from "@module/project/hooks/use-project-for-quote";
-import { Flex, Loader, Select, Stack, Text } from "@mantine/core";
-import { PROJECTS } from "@model/project";
-import ProjectEquipment from "@module/project/components/detail/project-equipments";
-import { find, isEmpty, map, reduce } from "lodash";
-import { useEffect, useState } from "react";
-import QuoteMatrix from "./quote-matrix";
-import { EQUIPMENT } from "@model/equipment";
+import CustomBadge from "@components/custom-badge";
 import {
   QUOTE_STATUS,
   QUOTE_STATUS_COLOR,
   QUOTE_STATUS_NAME,
 } from "@enum/quote-status.enum";
-import CustomBadge from "@components/custom-badge";
+import { Flex, Loader, Paper, Select, Stack, Text } from "@mantine/core";
+import { EQUIPMENT } from "@model/equipment";
+import { PROJECTS } from "@model/project";
+import ProjectEquipment from "@module/project/components/detail/project-equipments";
+import useProjectForQuote from "@module/project/hooks/use-project-for-quote";
+import { find, isEmpty, map, reduce } from "lodash";
+import { useEffect, useState } from "react";
+import QuoteMatrix from "./quote-matrix";
 
 interface QuoteInfoProps {
   form: any;
@@ -34,6 +34,7 @@ const getEquipmentTotalCost = (equipments: EQUIPMENT[]) => {
 
 const QuoteInfo = (props: QuoteInfoProps) => {
   const { form, project_info, isEdit = true, status } = props;
+
   const { loading, projects } = useProjectForQuote({
     skip: !isEmpty(project_info),
   });
@@ -61,51 +62,56 @@ const QuoteInfo = (props: QuoteInfoProps) => {
 
   return (
     <Stack>
-      <Stack
-        bg="#f1f2f3"
-        p="sm"
-        style={{
-          borderRadius: "8px",
-        }}
-      >
-        {isEmpty(project_info) ? (
-          <Select
-            searchable
-            label="Select project"
-            placeholder="Type of search project"
-            clearable
-            value={form.values.project_id}
-            onChange={handleProjectSelect}
-            rightSection={
-              loading ? <Loader color="blue" size="xs" type="dots" /> : ""
-            }
-            w="40%"
-            error={
-              form.touched?.project_id &&
-              form.errors?.project_id &&
-              form.errors?.project_id
-            }
-            data={map(projects || [], (project: PROJECTS) => {
-              return {
-                label: project.name,
-                value: project.id,
-              };
-            })}
-          />
-        ) : (
-          <Flex align="center" gap="md">
-            <Text fw="bold">{project_info.name}</Text>
-            {status !== null && (
-              <CustomBadge
-                color={QUOTE_STATUS_COLOR[status.toLowerCase() as QUOTE_STATUS]}
-              >
-                {QUOTE_STATUS_NAME[status.toLowerCase() as QUOTE_STATUS]}
-              </CustomBadge>
-            )}
-          </Flex>
-        )}
-        {form.values.project_id && <QuoteMatrix isEdit={isEdit} form={form} />}
-      </Stack>
+      <Paper withBorder>
+        <Stack
+          p="sm"
+          style={{
+            borderRadius: "8px",
+          }}
+        >
+          {isEmpty(project_info) ? (
+            <Select
+              searchable
+              label="Select project"
+              placeholder="Type of search project"
+              clearable
+              value={form.values.project_id}
+              onChange={handleProjectSelect}
+              rightSection={
+                loading ? <Loader color="blue" size="xs" type="dots" /> : ""
+              }
+              w="40%"
+              error={
+                form.touched?.project_id &&
+                form.errors?.project_id &&
+                form.errors?.project_id
+              }
+              data={map(projects || [], (project: PROJECTS) => {
+                return {
+                  label: project.name,
+                  value: project.id,
+                };
+              })}
+            />
+          ) : (
+            <Flex align="center" gap="md">
+              <Text fw="bold">{project_info.name}</Text>
+              {status !== null && (
+                <CustomBadge
+                  color={
+                    QUOTE_STATUS_COLOR[status.toLowerCase() as QUOTE_STATUS]
+                  }
+                >
+                  {QUOTE_STATUS_NAME[status.toLowerCase() as QUOTE_STATUS]}
+                </CustomBadge>
+              )}
+            </Flex>
+          )}
+          {form.values.project_id && (
+            <QuoteMatrix isEdit={isEdit} form={form} />
+          )}
+        </Stack>
+      </Paper>
       {form.values.project_id && (
         <>
           <Stack gap="xs">
