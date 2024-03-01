@@ -2,7 +2,6 @@ import { Card, Flex, Grid, Stack, Text } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaHandshake } from "react-icons/fa";
-import { MdDesignServices } from "react-icons/md";
 import { TbFileInvoice } from "react-icons/tb";
 
 const quick_link = [
@@ -11,11 +10,11 @@ const quick_link = [
     icon: <BiCategoryAlt size={28} />,
     href: AppRoute.projects,
   },
-  {
-    label: "Services",
-    icon: <MdDesignServices size={28} />,
-    href: AppRoute.services,
-  },
+  // {
+  //   label: "Services",
+  //   icon: <MdDesignServices size={28} />,
+  //   href: AppRoute.services,
+  // },
   {
     label: "Quote",
     icon: <TbFileInvoice size={28} />,

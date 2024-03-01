@@ -5,7 +5,6 @@ import { AiOutlinePieChart, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaHandshake, FaUsersCog } from "react-icons/fa";
 import { LuLayoutList } from "react-icons/lu";
-import { MdDesignServices } from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
 import { TbFileInvoice } from "react-icons/tb";
 import { TiVendorApple } from "react-icons/ti";
@@ -33,13 +32,13 @@ export const sidebarMenu: SidebarItem[] = [
     href: AppRoute.projects,
     allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
   },
-  {
-    icon: <MdDesignServices size={22} />,
-    label: "Service",
-    key: "service",
-    href: AppRoute.services,
-    allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
-  },
+  // {
+  //   icon: <MdDesignServices size={22} />,
+  //   label: "Service",
+  //   key: "service",
+  //   href: AppRoute.services,
+  //   allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
+  // },
   {
     icon: <TbFileInvoice size={22} />,
     label: "Quote",

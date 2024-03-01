@@ -13,7 +13,6 @@ import Order from "@module/order";
 import Projects from "@module/project";
 import ElectricLoadProject from "@module/public/electric-load-project";
 import Quote from "@module/quote";
-import Services from "@module/services";
 import User from "@module/user";
 import UserDetailLayout from "@module/user/layout/user-detail-layout";
 import Vendor from "@module/vendors";
@@ -43,14 +42,14 @@ const AppRoutes = () => {
             </RoleRoute>
           }
         />
-        <Route
+        {/* <Route
           path={`${AppRoute.services}/*`}
           element={
             <RoleRoute allowed_role="*">
               <Services />
             </RoleRoute>
           }
-        />
+        /> */}
         <Route
           path={`${AppRoute.order}/*`}
           element={
