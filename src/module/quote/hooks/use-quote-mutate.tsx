@@ -47,8 +47,8 @@ const useQuoteMutate = () => {
   });
 
   const approveQuote = useMutation({
-    mutationFn: (quote_id: string | undefined) =>
-      QuoteService.approve(quote_id),
+    mutationFn: (payload: { quote_id: string | undefined; payment: string }) =>
+      QuoteService.approve(payload.quote_id, payload.payment),
     onSuccess: () => {
       toast.success("Quote is approved.");
       queryClient.invalidateQueries({

@@ -31,15 +31,18 @@ const QuoteListAction = (props: QuoteListAction) => {
     setActiveModal(action);
   };
 
-  const handleApproveQuote = () => {
-    approveQuote.mutate(quote?.id, {
-      onSuccess: () => {
-        setActiveModal(null);
-      },
-      onError: () => {
-        setActiveModal(null);
-      },
-    });
+  const handleApproveQuote = (payment: string) => {
+    approveQuote.mutate(
+      { quote_id: quote?.id, payment: payment },
+      {
+        onSuccess: () => {
+          setActiveModal(null);
+        },
+        onError: () => {
+          setActiveModal(null);
+        },
+      }
+    );
   };
 
   const handleRejectedQuote = () => {
@@ -69,7 +72,7 @@ const QuoteListAction = (props: QuoteListAction) => {
     {
       heading: string;
       description: string;
-      onClick: () => void;
+      onClick: (payload?: any) => void;
     }
   > = {
     rejected: {
@@ -81,7 +84,7 @@ const QuoteListAction = (props: QuoteListAction) => {
       heading: "Accept Quote",
       description:
         "Are you sure you want to mark this quote as customer approve.t",
-      onClick: () => handleApproveQuote(),
+      onClick: (payment: string) => handleApproveQuote(payment),
     },
   };
 
@@ -168,7 +171,7 @@ const QuoteListAction = (props: QuoteListAction) => {
           <QuoteApprove
             opened={["accepted"].includes(activeModal)}
             close={handleMenuClose}
-            confirm={() => statusModal[activeModal]?.onClick()}
+            confirm={(payload) => statusModal[activeModal]?.onClick(payload)}
             title={statusModal[activeModal]?.heading}
           />
         </>

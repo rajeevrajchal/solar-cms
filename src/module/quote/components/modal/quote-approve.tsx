@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 interface QuoteApproveProps {
   opened: boolean;
   close: () => void;
-  confirm: () => void;
+  confirm: (payload: any) => void;
   loading?: boolean;
   title: ReactElement | string;
 }
@@ -16,12 +16,11 @@ const QuoteApprove = (props: QuoteApproveProps) => {
 
   const quoteApproveForm = useFormik({
     initialValues: {
-      name: "",
-      quote_id: "",
+      payment: "",
     },
     onSubmit: (values) => {
       console.log("the values", values);
-      confirm();
+      confirm(values.payment);
     },
   });
 
@@ -29,16 +28,16 @@ const QuoteApprove = (props: QuoteApproveProps) => {
     <Modal opened={opened} close={close} title={title}>
       <Stack>
         <TextInput
-          label="Name"
-          placeholder="Order Name"
-          name="name"
+          label="Payment"
+          placeholder="Payment Ratio"
+          name="payment"
           onChange={quoteApproveForm.handleChange}
-          value={quoteApproveForm.values.name}
+          value={quoteApproveForm.values.payment}
           withAsterisk
           error={
-            quoteApproveForm.touched?.name &&
-            quoteApproveForm.errors?.name &&
-            quoteApproveForm.errors?.name
+            quoteApproveForm.touched?.payment &&
+            quoteApproveForm.errors?.payment &&
+            quoteApproveForm.errors?.payment
           }
         />
         <Flex gap="md" justify="flex-end" align="center">

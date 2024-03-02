@@ -48,11 +48,14 @@ const QuoteService = {
       throw new Error("Quote Id is required");
     }
   },
-  approve: (quote_id: string | null | undefined) => {
+  approve: (quote_id: string | null | undefined, payment: string) => {
     if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({
         url: `quote/approve/${quote_id}`,
-        method: METHOD.PATCH,
+        method: METHOD.POST,
+        data: {
+          payment: payment,
+        },
       });
     } else {
       throw new Error("Quote Id is required");
