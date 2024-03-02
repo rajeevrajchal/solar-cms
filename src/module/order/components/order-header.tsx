@@ -26,12 +26,12 @@ const OrderHeader = () => {
         placeholder="Select Status"
         data={[
           {
-            label: ORDER_STATUS_NAME[ORDER_STATUS.ORDER],
-            value: ORDER_STATUS.ORDER,
+            label: ORDER_STATUS_NAME[ORDER_STATUS.ORDERED],
+            value: ORDER_STATUS.ORDERED,
           },
           {
-            label: ORDER_STATUS_NAME[ORDER_STATUS.CANCEL],
-            value: ORDER_STATUS.CANCEL,
+            label: ORDER_STATUS_NAME[ORDER_STATUS.CANALED],
+            value: ORDER_STATUS.CANALED,
           },
         ]}
         clearable

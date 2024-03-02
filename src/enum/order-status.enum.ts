@@ -1,14 +1,14 @@
 export enum ORDER_STATUS {
-  ORDER = "order",
-  CANCEL = "cancel",
+  ORDERED = "ordered",
+  CANALED = "cancel",
 }
 
 export const ORDER_STATUS_COLOR: Record<ORDER_STATUS, string> = {
-  [ORDER_STATUS.ORDER]: "#00B5FF",
-  [ORDER_STATUS.CANCEL]: "#FF5861",
+  [ORDER_STATUS.ORDERED]: "#00AA6E",
+  [ORDER_STATUS.CANALED]: "#FF5861",
 };
 
 export const ORDER_STATUS_NAME: Record<ORDER_STATUS, string> = {
-  [ORDER_STATUS.ORDER]: "order",
-  [ORDER_STATUS.CANCEL]: "cancel",
+  [ORDER_STATUS.ORDERED]: "ordered",
+  [ORDER_STATUS.CANALED]: "cancel",
 };
