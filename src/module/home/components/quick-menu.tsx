@@ -34,7 +34,10 @@ const QuickMenu = () => {
       <Grid>
         {quick_link.map((item, index) => (
           <Grid.Col
-            span={3}
+            span={{
+              base: 6,
+              md: 3,
+            }}
             key={`quick_link_${index}`}
             className="cursor-pointer hover:brightness-95"
           >
