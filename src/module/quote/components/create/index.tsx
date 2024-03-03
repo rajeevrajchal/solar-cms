@@ -114,7 +114,9 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
               >
                 Download
               </Button>
-              <QuoteListAction hideDetail quote={data as QUOTE} />
+              {data?.status?.toLowerCase() !== QUOTE_STATUS.ACCEPTED && (
+                <QuoteListAction hideDetail quote={data as QUOTE} />
+              )}
             </>
           )}
         </Flex>

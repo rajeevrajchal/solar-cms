@@ -1,14 +1,14 @@
 import { batteryTypeOptions } from "@enum/battery-type.enum";
 import { panelTypeOptions } from "@enum/panel-type.enum";
 import {
+  Checkbox,
   Fieldset,
+  Grid,
+  Group,
+  Radio,
   Select,
   Stack,
   TextInput,
-  Grid,
-  Radio,
-  Group,
-  Checkbox,
 } from "@mantine/core";
 
 interface ProjectInfoProps {
@@ -59,6 +59,11 @@ const ProjectInfo = (props: ProjectInfoProps) => {
           <Grid.Col span={6}>
             <Select
               searchable
+              styles={{
+                option: {
+                  textTransform: "capitalize",
+                },
+              }}
               label="Solar Panel Type"
               placeholder="Solar Panel Type"
               data={panelTypeOptions}
@@ -79,6 +84,11 @@ const ProjectInfo = (props: ProjectInfoProps) => {
               searchable
               label="Battery Type"
               placeholder="battery type"
+              styles={{
+                option: {
+                  textTransform: "capitalize",
+                },
+              }}
               data={batteryTypeOptions}
               clearable
               value={form.values.project.battery_type}

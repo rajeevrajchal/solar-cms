@@ -1,8 +1,8 @@
 import Modal, { ModalProps } from "@components/modal/modal";
-import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import useEngineers from "@hook/data/users/use-engineer";
 import { Button, Flex, Loader, Select, Stack } from "@mantine/core";
 import { USER } from "@model/user";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import { useFormik } from "formik";
 import { find, map } from "lodash";
 
@@ -53,6 +53,11 @@ const ProjectAssignOwner = (props: ProjectAssignMeProps) => {
       <Stack>
         <Select
           searchable
+          styles={{
+            option: {
+              textTransform: "capitalize",
+            },
+          }}
           placeholder="Select Engineer"
           clearable
           value={projectOwnerForm.values.owner_id}

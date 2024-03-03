@@ -35,6 +35,11 @@ const ComponentEquipmentTable = (props: ComponentEquipmentTableProps) => {
           render: (record: any, index: number) => {
             return (
               <Select
+                styles={{
+                  option: {
+                    textTransform: "capitalize",
+                  },
+                }}
                 value={record?.component_type}
                 placeholder="Select Component"
                 onChange={(value) =>
@@ -105,6 +110,11 @@ const ComponentEquipmentTable = (props: ComponentEquipmentTableProps) => {
           render: (record: any, index: number) => {
             return (
               <Select
+                styles={{
+                  option: {
+                    textTransform: "capitalize",
+                  },
+                }}
                 value={record?.voltage}
                 placeholder="Select voltage"
                 disabled={record?.component_type === "wire"}
@@ -196,6 +206,11 @@ const ComponentEquipmentTable = (props: ComponentEquipmentTableProps) => {
           render: (record: any, index: number) => {
             return (
               <Select
+                styles={{
+                  option: {
+                    textTransform: "capitalize",
+                  },
+                }}
                 value={record?.connection}
                 placeholder="Select connection"
                 disabled={record?.component_type === "wire"}
@@ -233,6 +248,11 @@ const ComponentEquipmentTable = (props: ComponentEquipmentTableProps) => {
           render: (record: any, index: number) => {
             return (
               <Select
+                styles={{
+                  option: {
+                    textTransform: "capitalize",
+                  },
+                }}
                 value={record?.inventory}
                 placeholder="Select inventory"
                 data={[

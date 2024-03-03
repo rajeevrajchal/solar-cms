@@ -1,17 +1,17 @@
+import useInventories from "@hook/data/inventory/use-inventories";
 import {
+  Button,
   Fieldset,
   Grid,
-  Select,
-  Loader,
-  TextInput,
   Group,
-  Button,
+  Loader,
+  Select,
+  TextInput,
 } from "@mantine/core";
 import { INVENTORY } from "@model/inventory";
 import { filter, find, map } from "lodash";
-import { MdRemove } from "react-icons/md";
-import useInventories from "@hook/data/inventory/use-inventories";
 import { useEffect } from "react";
+import { MdRemove } from "react-icons/md";
 
 interface EquipmentCardProps {
   index: number;
@@ -74,6 +74,11 @@ const EquipmentCard = (props: EquipmentCardProps) => {
         >
           <Select
             label="Component"
+            styles={{
+              option: {
+                textTransform: "capitalize",
+              },
+            }}
             placeholder="Select Component"
             clearable
             data={[
@@ -115,6 +120,11 @@ const EquipmentCard = (props: EquipmentCardProps) => {
         >
           <Select
             label="Choose From Inventory"
+            styles={{
+              option: {
+                textTransform: "capitalize",
+              },
+            }}
             placeholder="Select Item"
             rightSection={
               loading ? <Loader color="blue" size="xs" type="dots" /> : ""
@@ -164,6 +174,11 @@ const EquipmentCard = (props: EquipmentCardProps) => {
           <Select
             label="Set Connection"
             placeholder="Select connection"
+            styles={{
+              option: {
+                textTransform: "capitalize",
+              },
+            }}
             data={[
               {
                 label: "Parallel",

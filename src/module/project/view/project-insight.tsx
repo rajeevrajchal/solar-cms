@@ -1,11 +1,11 @@
+import NotFound from "@components/errors/not-found";
 import { STATUS } from "@enum/status.enum";
-import useProject from "@module/project/hooks/use-project";
 import { Center, Loader, Text } from "@mantine/core";
-import InfoViewSetup from "../components/insight-view/info-view";
 import { PROJECTS } from "@model/project";
+import useProject from "@module/project/hooks/use-project";
+import InfoViewSetup from "../components/insight-view/info-view";
 import InsightComponentEquipment from "../components/insight-view/insight-component-equipment";
 import ProjectDesign from "../components/insight-view/project-design";
-import NotFound from "@components/errors/not-found";
 
 export const initialProjectInsightComponent = {
   component_type: "",
@@ -22,6 +22,7 @@ export const initialProjectInsightComponent = {
   each_item_rating_volts: "",
   each_item_rating_ampre: "",
   quantity: "",
+  estimated_area: "",
 };
 
 const ProjectInsight = () => {

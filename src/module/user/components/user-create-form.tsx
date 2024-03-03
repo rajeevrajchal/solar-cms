@@ -89,6 +89,11 @@ const UserCreateForm = (props: UserCreateFormProps) => {
           <Select
             label="Select Role"
             mt="xs"
+            styles={{
+              option: {
+                textTransform: "capitalize",
+              },
+            }}
             withAsterisk
             value={userFormik.values.role}
             placeholder="Select Role"

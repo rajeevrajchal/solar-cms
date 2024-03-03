@@ -12,7 +12,7 @@ export enum STATUS {
 export const STATUS_COLOR: Record<string, string> = {
   [STATUS.NEW.toUpperCase()]: "#A9A9A9", // Using a grey color as an example
   [STATUS.ONLINE.toUpperCase()]: "#00FF00", // Green color
-  [STATUS.SITE_SURVEY.toUpperCase()]: "#0000FF", // Blue color
+  [STATUS.SITE_SURVEY.toUpperCase()]: "#808080", // Blue color
   [STATUS.EQUIPMENT_SELECTION.toUpperCase()]: "#808080", // Another grey color as an example
   [STATUS.DESIGN_IN_PROGRESS.toUpperCase()]: "#C0C0C0", // Silver color
   [STATUS.CUSTOMER_INQUIRY.toUpperCase()]: "#6495ED", // Cornflower blue color

@@ -1,14 +1,15 @@
 import {
+  ActionIcon,
+  Box,
+  Flex,
   Group,
+  Image,
+  Paper,
   SimpleGrid,
   Stack,
   Text,
-  Image,
-  Box,
-  Flex,
-  ActionIcon,
 } from "@mantine/core";
-import { Dropzone as MDropzone, DropzoneProps } from "@mantine/dropzone";
+import { DropzoneProps, Dropzone as MDropzone } from "@mantine/dropzone";
 import { FaRegFileAlt, FaTrash } from "react-icons/fa";
 
 interface DropzonePropsInterface extends Partial<DropzoneProps> {
@@ -49,7 +50,6 @@ const Dropzone = (props: DropzonePropsInterface) => {
       {showPreview ? (
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           {files.map((file: any, index: number) => {
-            console.log("file", file);
             if (file.type.includes("image")) {
               const imageUrl = URL.createObjectURL(file);
               return (
@@ -75,17 +75,13 @@ const Dropzone = (props: DropzonePropsInterface) => {
               );
             }
             return (
-              <Box
-                pos="relative"
-                bg="#EAF4FD"
+              <Paper
                 p="md"
-                style={{
-                  borderRadius: "7px",
-                }}
-                w="fit"
+                withBorder
+                pos="relative"
                 key={`file-preview-${index}`}
               >
-                <Flex align="center">
+                <Flex align="center" gap="md">
                   <span>
                     <FaRegFileAlt size={32} />
                   </span>
@@ -93,7 +89,7 @@ const Dropzone = (props: DropzonePropsInterface) => {
                 </Flex>
                 <ActionIcon
                   pos="absolute"
-                  top={-8}
+                  top={-12}
                   right={-8}
                   radius="xl"
                   size="md"
@@ -102,7 +98,7 @@ const Dropzone = (props: DropzonePropsInterface) => {
                 >
                   <FaTrash size={18} />
                 </ActionIcon>
-              </Box>
+              </Paper>
             );
           })}
         </SimpleGrid>

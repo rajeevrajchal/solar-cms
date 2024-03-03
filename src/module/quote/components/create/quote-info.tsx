@@ -73,6 +73,11 @@ const QuoteInfo = (props: QuoteInfoProps) => {
             <Select
               searchable
               label="Select project"
+              styles={{
+                option: {
+                  textTransform: "capitalize",
+                },
+              }}
               placeholder="Type of search project"
               clearable
               value={form.values.project_id}

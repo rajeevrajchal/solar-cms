@@ -1,19 +1,19 @@
+import { batteryTypeOptions } from "@enum/battery-type.enum";
+import { panelTypeOptions } from "@enum/panel-type.enum";
 import {
-  Stack,
   Fieldset,
   Grid,
-  TextInput,
-  Select,
-  Radio,
   Group,
+  Radio,
+  Select,
+  Stack,
+  TextInput,
 } from "@mantine/core";
 import { PROJECTS } from "@model/project";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
+import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import ProjectInsightHeader from "./insight-header";
-import { panelTypeOptions } from "@enum/panel-type.enum";
-import { batteryTypeOptions } from "@enum/battery-type.enum";
-import { useFormik } from "formik";
-import useProjectMutate from "@module/project/hooks/use-project-mutate";
 
 interface InfoViewSetupProps {
   project: PROJECTS;
@@ -40,6 +40,7 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
         location: project?.location || "",
         actual_area: project?.actual_area || "",
         capacity: project?.capacity || "",
+        estimated_area: project?.estimated_area || "",
       },
     },
     onSubmit: (values) => {
@@ -167,9 +168,6 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
                 option: {
                   textTransform: "capitalize",
                 },
-                options: {
-                  textTransform: "capitalize",
-                },
               }}
               value={inSightForm.values.project.panel_info}
               onChange={(value) =>
@@ -191,9 +189,6 @@ const InfoViewSetup = (props: InfoViewSetupProps) => {
               clearable
               styles={{
                 option: {
-                  textTransform: "capitalize",
-                },
-                options: {
                   textTransform: "capitalize",
                 },
               }}

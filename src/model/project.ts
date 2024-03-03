@@ -1,9 +1,9 @@
 import { STATUS } from "@enum/status.enum";
-import { USER } from "./user";
 import { ELECTRICLOAD } from "./electric_load";
-import { PROJECT_COMPONENT } from "./project-component";
 import { EQUIPMENT } from "./equipment";
+import { PROJECT_COMPONENT } from "./project-component";
 import { QUOTE } from "./quote";
+import { USER } from "./user";
 
 export type PROJECT_MODEL = {
   id: string;

@@ -4,11 +4,11 @@ import {
   Divider,
   Fieldset,
   Flex,
+  Loader,
   Select,
   Stack,
-  TextInput,
   Text,
-  Loader,
+  TextInput,
 } from "@mantine/core";
 import { USER } from "@model/user";
 import { filter, find, map } from "lodash";
@@ -65,6 +65,11 @@ const CustomerInfo = (props: CustomerInfoProp) => {
       <Flex w="100%" gap="md" align="flex-end">
         <Select
           searchable
+          styles={{
+            option: {
+              textTransform: "capitalize",
+            },
+          }}
           label="Select customer"
           placeholder="Find customer"
           clearable

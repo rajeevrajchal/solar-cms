@@ -1,28 +1,28 @@
 import Dropzone from "@components/dropzone";
 import category from "@constant/category";
 import nature from "@constant/nature";
+import {
+  Box,
+  Button,
+  Fieldset,
+  Grid,
+  Group,
+  Image,
+  Loader,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import { IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { INVENTORY } from "@model/inventory";
+import { VENDOR } from "@model/vendor";
 import useInventoryMutate from "@module/inventory/hooks/use-inventory-mutate";
 import useVendors from "@module/vendors/hooks/user-vendors";
-import {
-  Stack,
-  Fieldset,
-  TextInput,
-  Grid,
-  Button,
-  Group,
-  Text,
-  Select,
-  Loader,
-  Box,
-  Image,
-} from "@mantine/core";
-import { VENDOR } from "@model/vendor";
+import AppRoute from "@routes/route.constant";
 import { useFormik } from "formik";
 import { includes, isEmpty, map } from "lodash";
 import createInventoryValidation from "../validation/inventory-form";
-import AppRoute from "@routes/route.constant";
-import { INVENTORY } from "@model/inventory";
-import { IMAGE_MIME_TYPE } from "@mantine/dropzone";
 
 interface InventoryFormProp {
   data?: Partial<INVENTORY>;
@@ -115,6 +115,11 @@ const InventoryForm = (props: InventoryFormProp) => {
                   <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Select
                       searchable
+                      styles={{
+                        option: {
+                          textTransform: "capitalize",
+                        },
+                      }}
                       label="Vendor"
                       placeholder="Select Vendor"
                       clearable
@@ -145,6 +150,11 @@ const InventoryForm = (props: InventoryFormProp) => {
                   <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                     <Select
                       searchable
+                      styles={{
+                        option: {
+                          textTransform: "capitalize",
+                        },
+                      }}
                       label="Category"
                       placeholder="Select Product Category"
                       clearable
@@ -167,6 +177,11 @@ const InventoryForm = (props: InventoryFormProp) => {
                     <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                       <Select
                         searchable
+                        styles={{
+                          option: {
+                            textTransform: "capitalize",
+                          },
+                        }}
                         label="Nature"
                         placeholder="Select Nature"
                         clearable

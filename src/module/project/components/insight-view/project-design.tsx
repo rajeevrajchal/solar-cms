@@ -1,8 +1,8 @@
-import { useFormik } from "formik";
-import ProjectInsightHeader from "./insight-header";
-import { useNavigate } from "react-router-dom";
+import Dropzone from "@components/dropzone";
+import Table from "@components/table";
 import {
   ActionIcon,
+  Box,
   Button,
   Group,
   Select,
@@ -11,13 +11,15 @@ import {
   TextInput,
 } from "@mantine/core";
 import { PROJECTS } from "@model/project";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
+import { useFormik } from "formik";
 import { useState } from "react";
-import Modal from "@components/modal/modal";
-import UploadDesignModal from "./components/design/upload-design-modal";
 import { FaPlus } from "react-icons/fa";
 import { MdRemove } from "react-icons/md";
-import Table from "@components/table";
-import useProjectMutate from "@module/project/hooks/use-project-mutate";
+import { useNavigate } from "react-router-dom";
+import ProjectInsightHeader from "./insight-header";
+
+const showDesign = String(import.meta.env.VITE_SHOW_DESIGN_TABLE) === "true";
 
 interface ProjectDesignProps {
   project: PROJECTS;
@@ -26,7 +28,7 @@ interface ProjectDesignProps {
 const ProjectDesign = (props: ProjectDesignProps) => {
   const { project } = props;
   const navigate = useNavigate();
-  const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+  const [, setShowUploadModal] = useState<boolean>(false);
   const { uploadProjectModel } = useProjectMutate();
 
   const inSightForm: any = useFormik({
@@ -72,243 +74,273 @@ const ProjectDesign = (props: ProjectDesignProps) => {
     <Stack gap={2}>
       <ProjectInsightHeader
         project={project}
-        onContinue={() => setShowUploadModal(true)}
         onBack={() => onBack()}
+        onContinue={() => inSightForm.handleSubmit()}
       />
 
-      <Table
-        label="Define Connection"
-        headerContent={
-          <Button
-            leftSection={<FaPlus />}
-            variant="subtle"
-            fullWidth={false}
-            onClick={() => addItem()}
-          >
-            Add Connection Row
-          </Button>
-        }
-        columns={[
-          {
-            accessor: "set_name",
-            title: "Set Name",
-            sortable: true,
-            textAlign: "left",
-            ellipsis: true,
-            render: (record: any, index: number) => {
-              return (
-                <TextInput
-                  placeholder="Enter Set Name"
-                  value={record.set_name}
-                  name={`connection.[${index}].set_name`}
-                  onChange={inSightForm.handleChange}
-                  error={
-                    inSightForm.touched?.connection?.[index]?.set_name &&
-                    inSightForm.errors?.connection?.[index]?.set_name &&
-                    inSightForm.errors?.connection?.[index]?.set_name
-                  }
-                />
-              );
+      {showDesign && (
+        <Table
+          label="Define Connection"
+          headerContent={
+            <Button
+              leftSection={<FaPlus />}
+              variant="subtle"
+              fullWidth={false}
+              onClick={() => addItem()}
+            >
+              Add Connection Row
+            </Button>
+          }
+          columns={[
+            {
+              accessor: "set_name",
+              title: "Set Name",
+              sortable: true,
+              textAlign: "left",
+              ellipsis: true,
+              render: (record: any, index: number) => {
+                return (
+                  <TextInput
+                    placeholder="Enter Set Name"
+                    value={record.set_name}
+                    name={`connection.[${index}].set_name`}
+                    onChange={inSightForm.handleChange}
+                    error={
+                      inSightForm.touched?.connection?.[index]?.set_name &&
+                      inSightForm.errors?.connection?.[index]?.set_name &&
+                      inSightForm.errors?.connection?.[index]?.set_name
+                    }
+                  />
+                );
+              },
             },
-          },
-          {
-            accessor: "set",
-            title: "Choose Set",
-            sortable: true,
-            textAlign: "left",
-            ellipsis: true,
-            render: (record: any, index: number) => {
-              return (
-                <Select
-                  value={record?.set_a}
-                  placeholder="Select Component"
-                  onChange={(value) =>
-                    inSightForm.setFieldValue(
-                      `connection.[${index}].set_a`,
-                      value
-                    )
-                  }
-                  data={[
-                    {
-                      label: "Panel",
-                      value: "panel",
-                    },
-                    {
-                      label: "Battery",
-                      value: "battery",
-                    },
-                    {
-                      label: "MPU",
-                      value: "mpu",
-                    },
-                    {
-                      label: "Invertor",
-                      value: "invertor",
-                    },
-                    {
-                      label: "Wire",
-                      value: "wire",
-                    },
-                  ]}
-                  error={
-                    inSightForm.touched?.connection?.[index]?.set_a &&
-                    inSightForm.errors?.connection?.[index]?.set_a &&
-                    inSightForm.errors?.connection?.[index]?.set_a
-                  }
-                />
-              );
+            {
+              accessor: "set",
+              title: "Choose Set",
+              sortable: true,
+              textAlign: "left",
+              ellipsis: true,
+              render: (record: any, index: number) => {
+                return (
+                  <Select
+                    value={record?.set_a}
+                    placeholder="Select Component"
+                    onChange={(value) =>
+                      inSightForm.setFieldValue(
+                        `connection.[${index}].set_a`,
+                        value
+                      )
+                    }
+                    styles={{
+                      option: {
+                        textTransform: "capitalize",
+                      },
+                    }}
+                    data={[
+                      {
+                        label: "Panel",
+                        value: "panel",
+                      },
+                      {
+                        label: "Battery",
+                        value: "battery",
+                      },
+                      {
+                        label: "MPU",
+                        value: "mpu",
+                      },
+                      {
+                        label: "Invertor",
+                        value: "invertor",
+                      },
+                      {
+                        label: "Wire",
+                        value: "wire",
+                      },
+                    ]}
+                    error={
+                      inSightForm.touched?.connection?.[index]?.set_a &&
+                      inSightForm.errors?.connection?.[index]?.set_a &&
+                      inSightForm.errors?.connection?.[index]?.set_a
+                    }
+                  />
+                );
+              },
             },
-          },
-          {
-            accessor: "set_a_definition",
-            title: "",
-            textAlign: "left",
-            ellipsis: true,
-            render: () => {
-              return (
-                <Stack gap={0}>
-                  <Text size="xs">Info</Text>
-                  <Group>
+            {
+              accessor: "set_a_definition",
+              title: "",
+              textAlign: "left",
+              ellipsis: true,
+              render: () => {
+                return (
+                  <Stack gap={0}>
+                    <Text size="xs">Info</Text>
                     <Group>
-                      <Text size="xs">V: </Text>
-                      <Text size="xs">N/A</Text>
+                      <Group>
+                        <Text size="xs">V: </Text>
+                        <Text size="xs">N/A</Text>
+                      </Group>
+                      <Group>
+                        <Text size="xs">A [W]: </Text>
+                        <Text size="xs">N/A</Text>
+                      </Group>
                     </Group>
+                  </Stack>
+                );
+              },
+            },
+            {
+              accessor: "set_b",
+              title: "Choose Set",
+              sortable: true,
+              textAlign: "left",
+              ellipsis: true,
+              render: (record: any, index: number) => {
+                return (
+                  <Select
+                    value={record?.set_b}
+                    styles={{
+                      option: {
+                        textTransform: "capitalize",
+                      },
+                    }}
+                    placeholder="Select Component"
+                    onChange={(value) =>
+                      inSightForm.setFieldValue(
+                        `connection.[${index}].set_b`,
+                        value
+                      )
+                    }
+                    data={[
+                      {
+                        label: "Panel",
+                        value: "panel",
+                      },
+                      {
+                        label: "Battery",
+                        value: "battery",
+                      },
+                      {
+                        label: "MPU",
+                        value: "mpu",
+                      },
+                      {
+                        label: "Invertor",
+                        value: "invertor",
+                      },
+                      {
+                        label: "Wire",
+                        value: "wire",
+                      },
+                    ]}
+                    error={
+                      inSightForm.touched?.connection?.[index]?.set_b &&
+                      inSightForm.errors?.connection?.[index]?.set_b &&
+                      inSightForm.errors?.connection?.[index]?.set_b
+                    }
+                  />
+                );
+              },
+            },
+            {
+              accessor: "set_b_definition",
+              title: "",
+              textAlign: "left",
+              ellipsis: true,
+              render: () => {
+                return (
+                  <Stack gap={0}>
+                    <Text size="xs">Set B description</Text>
                     <Group>
-                      <Text size="xs">A [W]: </Text>
-                      <Text size="xs">N/A</Text>
+                      <Group>
+                        <Text size="xs">V: </Text>
+                        <Text size="xs">N/A</Text>
+                      </Group>
+                      <Group>
+                        <Text size="xs">A [W]: </Text>
+                        <Text size="xs">N/A</Text>
+                      </Group>
                     </Group>
-                  </Group>
-                </Stack>
-              );
+                  </Stack>
+                );
+              },
             },
-          },
-          {
-            accessor: "set_b",
-            title: "Choose Set",
-            sortable: true,
-            textAlign: "left",
-            ellipsis: true,
-            render: (record: any, index: number) => {
-              return (
-                <Select
-                  value={record?.set_b}
-                  placeholder="Select Component"
-                  onChange={(value) =>
-                    inSightForm.setFieldValue(
-                      `connection.[${index}].set_b`,
-                      value
-                    )
-                  }
-                  data={[
-                    {
-                      label: "Panel",
-                      value: "panel",
-                    },
-                    {
-                      label: "Battery",
-                      value: "battery",
-                    },
-                    {
-                      label: "MPU",
-                      value: "mpu",
-                    },
-                    {
-                      label: "Invertor",
-                      value: "invertor",
-                    },
-                    {
-                      label: "Wire",
-                      value: "wire",
-                    },
-                  ]}
-                  error={
-                    inSightForm.touched?.connection?.[index]?.set_b &&
-                    inSightForm.errors?.connection?.[index]?.set_b &&
-                    inSightForm.errors?.connection?.[index]?.set_b
-                  }
-                />
-              );
+            {
+              accessor: "connection",
+              title: "Set Item Connection",
+              sortable: true,
+              textAlign: "left",
+              ellipsis: true,
+              render: (record: any, index: number) => {
+                return (
+                  <Select
+                    value={record?.connection}
+                    styles={{
+                      option: {
+                        textTransform: "capitalize",
+                      },
+                    }}
+                    placeholder="Select connection"
+                    disabled={record?.component_type === "wire"}
+                    data={[
+                      {
+                        label: "Parallel",
+                        value: "parallel",
+                      },
+                      {
+                        label: "Series",
+                        value: "series",
+                      },
+                    ]}
+                    onChange={(value) =>
+                      inSightForm.setFieldValue(
+                        `connection.[${index}].connection`,
+                        value
+                      )
+                    }
+                    error={
+                      inSightForm.touched?.connection?.[index]?.connection &&
+                      inSightForm.errors?.connection?.[index]?.connection &&
+                      inSightForm.errors?.connection?.[index]?.connection
+                    }
+                  />
+                );
+              },
             },
-          },
-          {
-            accessor: "set_b_definition",
-            title: "",
-            textAlign: "left",
-            ellipsis: true,
-            render: () => {
-              return (
-                <Stack gap={0}>
-                  <Text size="xs">Set B description</Text>
-                  <Group>
-                    <Group>
-                      <Text size="xs">V: </Text>
-                      <Text size="xs">N/A</Text>
-                    </Group>
-                    <Group>
-                      <Text size="xs">A [W]: </Text>
-                      <Text size="xs">N/A</Text>
-                    </Group>
-                  </Group>
-                </Stack>
-              );
+            {
+              accessor: "action",
+              title: "",
+              textAlign: "left",
+              ellipsis: true,
+              width: 50,
+              render: (_: any, index: number) => {
+                return (
+                  <ActionIcon variant="light" onClick={() => removeItem(index)}>
+                    <MdRemove />
+                  </ActionIcon>
+                );
+              },
             },
-          },
-          {
-            accessor: "connection",
-            title: "Set Item Connection",
-            sortable: true,
-            textAlign: "left",
-            ellipsis: true,
-            render: (record: any, index: number) => {
-              return (
-                <Select
-                  value={record?.connection}
-                  placeholder="Select connection"
-                  disabled={record?.component_type === "wire"}
-                  data={[
-                    {
-                      label: "Parallel",
-                      value: "parallel",
-                    },
-                    {
-                      label: "Series",
-                      value: "series",
-                    },
-                  ]}
-                  onChange={(value) =>
-                    inSightForm.setFieldValue(
-                      `connection.[${index}].connection`,
-                      value
-                    )
-                  }
-                  error={
-                    inSightForm.touched?.connection?.[index]?.connection &&
-                    inSightForm.errors?.connection?.[index]?.connection &&
-                    inSightForm.errors?.connection?.[index]?.connection
-                  }
-                />
-              );
-            },
-          },
-          {
-            accessor: "action",
-            title: "",
-            textAlign: "left",
-            ellipsis: true,
-            width: 50,
-            render: (_: any, index: number) => {
-              return (
-                <ActionIcon variant="light" onClick={() => removeItem(index)}>
-                  <MdRemove />
-                </ActionIcon>
-              );
-            },
-          },
-        ]}
-        data={inSightForm.values.connection}
-      />
+          ]}
+          data={inSightForm.values.connection}
+        />
+      )}
 
-      <Modal
+      <Box mt="md">
+        <Dropzone
+          showPreview
+          maxFiles={4}
+          accept={{
+            "image/*": [".jpg", ".jpeg", ".png"],
+            "application/pdf": [],
+          }}
+          files={inSightForm.values.design_file}
+          setFiles={(files) => inSightForm.setFieldValue("design_file", files)}
+        />
+      </Box>
+
+      {/* <Modal
         opened={showUploadModal}
         close={() => setShowUploadModal(false)}
         title="Upload Design"
@@ -318,7 +350,7 @@ const ProjectDesign = (props: ProjectDesignProps) => {
           closeModal={() => setShowUploadModal(false)}
           handleContinue={() => inSightForm.handleSubmit()}
         />
-      </Modal>
+      </Modal> */}
     </Stack>
   );
 };
