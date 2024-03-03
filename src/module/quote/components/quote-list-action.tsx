@@ -13,12 +13,13 @@ import QuoteApprove from "./modal/quote-approve";
 
 interface QuoteListAction {
   quote: QUOTE;
+  hideDetail?: boolean;
 }
 
 type MODAL_TYPE = "delete" | "accepted" | "rejected";
 
 const QuoteListAction = (props: QuoteListAction) => {
-  const { quote } = props;
+  const { quote, hideDetail } = props;
   const [activeModal, setActiveModal] = useState<MODAL_TYPE | null>(null);
   const { deleteQuote, approveQuote, downloadQuote, rejectQuote } =
     useQuoteMutate();
@@ -106,6 +107,7 @@ const QuoteListAction = (props: QuoteListAction) => {
                 component: "a",
                 href: AppRoute.quote_detail(quote?.id),
                 allow: "*",
+                disable: hideDetail,
               },
               {
                 leftSection: <IoMdCheckmark size={24} />,
@@ -132,6 +134,7 @@ const QuoteListAction = (props: QuoteListAction) => {
                 children: <Text className="capitalize">Download</Text>,
                 onClick: () => downloadQuote.mutate(quote?.id),
                 allow: "*",
+                disable: hideDetail,
               },
               {
                 leftSection: <MdDelete color="red" size={24} />,

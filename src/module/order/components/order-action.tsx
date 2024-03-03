@@ -9,10 +9,12 @@ import { BsArrowRepeat, BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import {
+  MdDelete,
   MdOutlineFileDownload,
   MdOutlinePauseCircle,
   MdOutlinePayments,
 } from "react-icons/md";
+import OrderPayment from "./modal/order-payment";
 
 interface OrderActionProps {
   order: any;
@@ -49,23 +51,27 @@ const OrderAction = (props: OrderActionProps) => {
   > = {
     cancel: {
       heading: "Cancel",
-      description: "As per the client, you want to reject it",
+      description: "Are you sure you want to cancel this order.",
       onClick: () => console.log("cancel"),
     },
     delete: {
       heading: "Delete",
-      description: "As per the client, you want to delete it",
+      description: "Are you sure you want to delete this order.",
       onClick: () => console.log("delete"), // Corrected onClick function
     },
     re_order: {
       heading: "Re order",
-      description:
-        "Are you sure you want to mark this quote as customer approved?",
+      description: "Confirm you marked to reorder this order.",
       onClick: () => console.log("re-order"),
     },
     on_hold: {
       heading: "On hold",
-      description: "Are you sure you want to mark this quote as on hold?",
+      description: "Please confirm that you want to hold this order.",
+      onClick: () => console.log("on hold"), // Corrected onClick function
+    },
+    payment: {
+      heading: "Update Payment",
+      description: "Change the payment",
       onClick: () => console.log("on hold"), // Corrected onClick function
     },
   };
@@ -129,11 +135,24 @@ const OrderAction = (props: OrderActionProps) => {
                 onClick: () => downloadQuote.mutate(order?.quote?.id),
                 allow: "*",
               },
+              {
+                leftSection: <MdDelete size={24} className="text-red-400" />,
+                children: (
+                  <Text className="capitalize" c="red">
+                    Delete Order
+                  </Text>
+                ),
+                onClick: () => handleMenuItemClick("delete"),
+                disable: ![ORDER_STATUS.CANALED].includes(
+                  order?.status?.toLowerCase() as ORDER_STATUS
+                ),
+                allow: "*",
+              },
             ],
           },
         ]}
       />
-      {activeModal !== null && (
+      {activeModal !== null && activeModal !== "payment" && (
         <>
           <ConfirmationModal
             opened={activeModal !== null}
@@ -141,6 +160,16 @@ const OrderAction = (props: OrderActionProps) => {
             confirm={() => statusModal[activeModal]?.onClick()}
             title={statusModal[activeModal]?.heading}
             description={statusModal[activeModal]?.description}
+          />
+        </>
+      )}
+      {activeModal === "payment" && (
+        <>
+          <OrderPayment
+            opened={activeModal !== null}
+            close={handleMenuClose}
+            confirm={(payload) => statusModal.payment.onClick(payload)}
+            title={statusModal[activeModal]?.heading}
           />
         </>
       )}

@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import { includes, isEmpty } from "lodash";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import QuoteListAction from "../quote-list-action";
 import QuoteCreateValidation from "./quote-create.validation";
 import QuoteInfo from "./quote-info";
 
@@ -107,9 +108,13 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
           )}
           {!isEmpty(data) && !edit && (
             <>
-              <Button onClick={() => downloadQuote.mutate(data?.id)}>
+              <Button
+                loading={downloadQuote.isPending}
+                onClick={() => downloadQuote.mutate(data?.id)}
+              >
                 Download
               </Button>
+              <QuoteListAction hideDetail quote={data as QUOTE} />
             </>
           )}
         </Flex>

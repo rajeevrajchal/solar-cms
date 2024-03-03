@@ -1,5 +1,5 @@
 import Modal from "@components/modal/modal";
-import { Button, Flex, Stack, TextInput } from "@mantine/core";
+import { Button, Checkbox, Flex, Stack, TextInput } from "@mantine/core";
 import { useFormik } from "formik";
 import { ReactElement } from "react";
 
@@ -16,7 +16,9 @@ const QuoteApprove = (props: QuoteApproveProps) => {
 
   const quoteApproveForm = useFormik({
     initialValues: {
+      name: "",
       payment: "",
+      full_payment: false,
     },
     onSubmit: (values) => {
       console.log("the values", values);
@@ -27,6 +29,19 @@ const QuoteApprove = (props: QuoteApproveProps) => {
   return (
     <Modal opened={opened} close={close} title={title}>
       <Stack>
+        <TextInput
+          label="Name for order"
+          placeholder="Name of order"
+          name="name"
+          onChange={quoteApproveForm.handleChange}
+          value={quoteApproveForm.values.name}
+          withAsterisk
+          error={
+            quoteApproveForm.touched?.name &&
+            quoteApproveForm.errors?.name &&
+            quoteApproveForm.errors?.name
+          }
+        />
         <TextInput
           label="Payment"
           placeholder="Payment Ratio"
@@ -40,18 +55,28 @@ const QuoteApprove = (props: QuoteApproveProps) => {
             quoteApproveForm.errors?.payment
           }
         />
+        <Checkbox
+          label="Full Payment Done"
+          name="full_payment"
+          checked={quoteApproveForm.values?.full_payment}
+          onChange={quoteApproveForm.handleChange}
+        />
         <Flex gap="md" justify="flex-end" align="center">
-          <Button variant="light" onClick={close} disabled={loading}>
+          <Button
+            color="red"
+            variant="light"
+            onClick={close}
+            disabled={loading}
+          >
             Cancel
           </Button>
           <Button
-            color="red"
             variant="light"
             onClick={() => quoteApproveForm.handleSubmit()}
             loading={loading}
             disabled={loading}
           >
-            Order
+            Place Order
           </Button>
         </Flex>
       </Stack>
