@@ -71,7 +71,7 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
           </Text>
         )}
         <Flex align="center" justify="flex-end" gap="md">
-          {!includes([QUOTE_STATUS.ACCEPTED], data?.status?.toLowerCase()) && (
+          {includes([QUOTE_STATUS.PENDING], data?.status?.toLowerCase()) && (
             <>
               {edit ? (
                 <>

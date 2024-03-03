@@ -1,4 +1,7 @@
-import QuoteService, { QUOTE_INPUT } from "@api/services/quote.service";
+import QuoteService, {
+  APPROVE_QUOTE,
+  QUOTE_INPUT,
+} from "@api/services/quote.service";
 import AppRoute from "@routes/route.constant";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import exportFile from "@utils/functions/export-file";
@@ -47,12 +50,11 @@ const useQuoteMutate = () => {
   });
 
   const approveQuote = useMutation({
-    mutationFn: (payload: { quote_id: string | undefined; payment: string }) =>
-      QuoteService.approve(payload.quote_id, payload.payment),
+    mutationFn: (payload: APPROVE_QUOTE) => QuoteService.approve(payload),
     onSuccess: () => {
       toast.success("Quote is approved.");
       queryClient.invalidateQueries({
-        queryKey: ["quotes"],
+        queryKey: ["quotes", "quote.detail"],
       });
     },
     onError: (error) => {

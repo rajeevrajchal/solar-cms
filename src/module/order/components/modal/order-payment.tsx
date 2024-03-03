@@ -2,6 +2,7 @@ import Modal from "@components/modal/modal";
 import { Button, Checkbox, Flex, Stack, TextInput } from "@mantine/core";
 import { useFormik } from "formik";
 import { ReactElement } from "react";
+import * as Yup from "yup";
 
 interface OrderPaymentProps {
   opened: boolean;
@@ -19,8 +20,11 @@ const OrderPayment = (props: OrderPaymentProps) => {
       payment: "",
       full_payment: false,
     },
+    validationSchema: Yup.object().shape({
+      payment: Yup.string().required("Payment is required"),
+    }),
     onSubmit: (values) => {
-      confirm(values.payment);
+      confirm(values);
     },
   });
 
@@ -31,6 +35,9 @@ const OrderPayment = (props: OrderPaymentProps) => {
           label="Payment"
           placeholder="Payment Ratio"
           name="payment"
+          type="number"
+          min={0}
+          max={100}
           onChange={orderPaymentForm.handleChange}
           value={orderPaymentForm.values.payment}
           withAsterisk

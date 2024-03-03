@@ -21,8 +21,10 @@ const QuoteApprove = (props: QuoteApproveProps) => {
       full_payment: false,
     },
     onSubmit: (values) => {
-      console.log("the values", values);
-      confirm(values.payment);
+      confirm({
+        ...values,
+        payment: +values.payment,
+      });
     },
   });
 
@@ -46,6 +48,9 @@ const QuoteApprove = (props: QuoteApproveProps) => {
           label="Payment"
           placeholder="Payment Ratio"
           name="payment"
+          type="number"
+          min={0}
+          max={100}
           onChange={quoteApproveForm.handleChange}
           value={quoteApproveForm.values.payment}
           withAsterisk

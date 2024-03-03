@@ -10,6 +10,13 @@ export type QUOTE_INPUT = {
   quote_id?: string;
 };
 
+export type APPROVE_QUOTE = {
+  payment: number;
+  name: string;
+  full_payment: boolean;
+  quote_id: string;
+};
+
 const QuoteService = {
   list: (params: { search?: string; status?: string }) =>
     useAxios({
@@ -48,14 +55,16 @@ const QuoteService = {
       throw new Error("Quote Id is required");
     }
   },
-  approve: (quote_id: string | null | undefined, payment: string) => {
-    if (quote_id || quote_id !== null || quote_id !== undefined) {
+  approve: (payload: APPROVE_QUOTE) => {
+    if (
+      payload.quote_id ||
+      payload.quote_id !== null ||
+      payload.quote_id !== undefined
+    ) {
       return useAxios({
-        url: `quote/approve/${quote_id}`,
+        url: `quote/approve/${payload.quote_id}`,
         method: METHOD.POST,
-        data: {
-          payment: payment,
-        },
+        data: omit(payload, ["quote_id"]),
       });
     } else {
       throw new Error("Quote Id is required");

@@ -1,3 +1,4 @@
+import { APPROVE_QUOTE } from "@api/services/quote.service";
 import Menu from "@components/menu";
 import ConfirmationModal from "@components/modal/confirmation-modal";
 import { QUOTE_STATUS } from "@enum/quote-status.enum";
@@ -32,18 +33,15 @@ const QuoteListAction = (props: QuoteListAction) => {
     setActiveModal(action);
   };
 
-  const handleApproveQuote = (payment: string) => {
-    approveQuote.mutate(
-      { quote_id: quote?.id, payment: payment },
-      {
-        onSuccess: () => {
-          setActiveModal(null);
-        },
-        onError: () => {
-          setActiveModal(null);
-        },
-      }
-    );
+  const handleApproveQuote = (payload: APPROVE_QUOTE) => {
+    approveQuote.mutate(payload, {
+      onSuccess: () => {
+        setActiveModal(null);
+      },
+      onError: () => {
+        setActiveModal(null);
+      },
+    });
   };
 
   const handleRejectedQuote = () => {
@@ -85,7 +83,11 @@ const QuoteListAction = (props: QuoteListAction) => {
       heading: "Accept Quote",
       description:
         "Are you sure you want to mark this quote as customer approve.t",
-      onClick: (payment: string) => handleApproveQuote(payment),
+      onClick: (payload: Omit<APPROVE_QUOTE, "quote_id">) =>
+        handleApproveQuote({
+          ...payload,
+          quote_id: quote.id,
+        }),
     },
   };
 

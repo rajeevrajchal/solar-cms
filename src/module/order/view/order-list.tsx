@@ -67,21 +67,42 @@ const columns: DataTableColumn[] = [
     render: (record: any) => {
       const {
         payment,
+        full_payment,
         quote: { net_total },
       } = record;
-      return (
-        <Stack gap={0}>
-          <Flex gap="sm" c="green">
-            <Text>Received: </Text>
-            <Text>({payment} %)</Text>
-            <Text>{formatCurrency((payment / 100) * net_total)}</Text>
-          </Flex>
-          <Flex gap="md" c="red">
-            <Text>Remaining: </Text>
-            <Text>{formatCurrency((payment / 100) * net_total)}</Text>
-          </Flex>
-        </Stack>
-      );
+      {
+        if (payment === null) {
+          return (
+            <Text size="sm" c="red">
+              No Payment is made
+            </Text>
+          );
+        }
+        if (full_payment) {
+          return (
+            <Text size="sm" c="green">
+              Payment is completed
+            </Text>
+          );
+        }
+        return (
+          <Stack gap={0}>
+            <Flex gap="sm" c="green">
+              <Text size="sm">Received: </Text>
+              <Text size="sm">({payment} %)</Text>
+              <Text size="sm">
+                {formatCurrency((payment / 100) * net_total)}
+              </Text>
+            </Flex>
+            <Flex gap="sm" c="red">
+              <Text size="sm">Remaining: </Text>
+              <Text size="sm">
+                {formatCurrency(+net_total - +(payment / 100) * net_total)}
+              </Text>
+            </Flex>
+          </Stack>
+        );
+      }
     },
   },
   {
