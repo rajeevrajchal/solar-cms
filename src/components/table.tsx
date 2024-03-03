@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Flex, Stack, Text } from "@mantine/core";
 import sortBy from "lodash/sortBy";
 import {
@@ -10,7 +8,9 @@ import {
   DataTableSortStatus,
   DataTableVerticalAlign,
 } from "mantine-datatable";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+
+const PAGE_SIZE = 15;
 
 interface TableProps extends Omit<DataTableProps, "columns" | "fetching"> {
   columns: DataTableColumn[];
@@ -26,6 +26,9 @@ interface TableProps extends Omit<DataTableProps, "columns" | "fetching"> {
   rowBackgroundColor?: any;
   label?: string;
   verticalAlign?: DataTableVerticalAlign;
+  totalRecords?: number;
+  currentPage?: number;
+  changeCurrentPage?: (page: number) => void;
 }
 
 const Table = (props: TableProps) => {
@@ -40,8 +43,12 @@ const Table = (props: TableProps) => {
     rowColor,
     rowBackgroundColor,
     label,
+    totalRecords,
     verticalAlign = "center",
+    currentPage,
+    changeCurrentPage,
   } = props;
+
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus<any>>({
     columnAccessor: "system_name",
     direction: "asc",
@@ -51,6 +58,24 @@ const Table = (props: TableProps) => {
     const dataS = sortBy(rows, sortStatus.columnAccessor);
     return sortStatus.direction === "desc" ? dataS.reverse() : dataS;
   };
+
+  const [page, setPage] = useState<number>(1);
+  const [records, setRecords] = useState(data.slice(0, PAGE_SIZE));
+
+  useEffect(() => {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE;
+    setRecords(data.slice(from, to));
+  }, [page, data]); // Include 'data' in the dependencies
+
+  useEffect(() => {
+    if (currentPage) {
+      const from = (currentPage - 1) * PAGE_SIZE;
+      const to = from + PAGE_SIZE;
+      setRecords(data.slice(from, to));
+      setPage(currentPage);
+    }
+  }, [currentPage, data]);
 
   return (
     <Stack w="auto" gap="xs">
@@ -85,7 +110,7 @@ const Table = (props: TableProps) => {
         striped
         highlightOnHover
         fetching={fetching}
-        records={getData(data) || []}
+        records={getData(currentPage ? data : records) || []}
         columns={columns}
         noRecordsText="No records to show"
         idAccessor={idAccessor || "id"}
@@ -94,7 +119,11 @@ const Table = (props: TableProps) => {
         rowExpansion={rowExpansion}
         rowColor={rowColor}
         rowBackgroundColor={rowBackgroundColor}
-        minHeight={150}
+        minHeight={250}
+        totalRecords={totalRecords || data.length || 0}
+        recordsPerPage={PAGE_SIZE}
+        page={currentPage || page}
+        onPageChange={changeCurrentPage ? changeCurrentPage : (p) => setPage(p)}
       />
     </Stack>
   );

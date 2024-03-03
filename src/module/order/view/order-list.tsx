@@ -5,10 +5,12 @@ import {
   ORDER_STATUS_COLOR,
   ORDER_STATUS_NAME,
 } from "@enum/order-status.enum";
-import { Anchor } from "@mantine/core";
+import { Anchor, Flex, Stack, Text } from "@mantine/core";
 import AppRoute from "@routes/route.constant";
+import { formatCurrency } from "@utils/functions/format-currency";
 import { formatDate } from "@utils/functions/format-date";
 import { DataTableColumn } from "mantine-datatable";
+import OrderAction from "../components/order-action";
 import OrderHeader from "../components/order-header";
 import useOrders from "../hooks/use-orders";
 
@@ -49,6 +51,40 @@ const columns: DataTableColumn[] = [
     },
   },
   {
+    accessor: "quote.net_total",
+    title: "Order Total Cost ($)",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+    render: (record: any) => formatCurrency(record?.quote?.net_total),
+  },
+  {
+    accessor: "payment",
+    title: "Order Payment (%)",
+    sortable: true,
+    textAlign: "left",
+    ellipsis: true,
+    render: (record: any) => {
+      const {
+        payment,
+        quote: { net_total },
+      } = record;
+      return (
+        <Stack gap={0}>
+          <Flex gap="sm" c="green">
+            <Text>Received: </Text>
+            <Text>({payment} %)</Text>
+            <Text>{formatCurrency((payment / 100) * net_total)}</Text>
+          </Flex>
+          <Flex gap="md" c="red">
+            <Text>Remaining: </Text>
+            <Text>{formatCurrency((payment / 100) * net_total)}</Text>
+          </Flex>
+        </Stack>
+      );
+    },
+  },
+  {
     accessor: "createdAt",
     title: "Created At",
     sortable: true,
@@ -62,8 +98,8 @@ const columns: DataTableColumn[] = [
     textAlign: "left",
     width: 100,
     ellipsis: true,
-    render: () => {
-      return <p>this is action</p>;
+    render: (record) => {
+      return <OrderAction order={record} />;
     },
   },
 ];

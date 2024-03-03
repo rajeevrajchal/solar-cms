@@ -35,10 +35,6 @@ const QuoteHeader = () => {
             label: QUOTE_STATUS_NAME[QUOTE_STATUS.REJECTED],
             value: QUOTE_STATUS.REJECTED,
           },
-          {
-            label: QUOTE_STATUS_NAME[QUOTE_STATUS.ACCEPTED],
-            value: QUOTE_STATUS.ACCEPTED,
-          },
         ]}
         clearable
         value={searchParams.get("status") || ""}
