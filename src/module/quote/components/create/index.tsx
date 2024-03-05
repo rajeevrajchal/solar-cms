@@ -71,41 +71,37 @@ const CreateQuoteForm = (props: CreateQuoteFormProps) => {
           </Text>
         )}
         <Flex align="center" justify="flex-end" gap="md">
-          {includes([QUOTE_STATUS.PENDING], data?.status?.toLowerCase()) && (
+          {edit ? (
             <>
-              {edit ? (
-                <>
-                  <Button
-                    variant="subtle"
-                    disabled={createQuote.isPending}
-                    onClick={
-                      data?.id
-                        ? () => setEdit(false)
-                        : () => navigate(AppRoute.quote)
-                    }
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    disabled={createQuote.isPending}
-                    loading={createQuote.isPending}
-                    variant="outlined"
-                    onClick={() => projectForm.handleSubmit()}
-                  >
-                    {data?.id ? "Update" : "Create"}
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  variant="light"
-                  disabled={createQuote.isPending}
-                  onClick={() => setEdit(true)}
-                >
-                  Edit
-                </Button>
-              )}
+              <Button
+                variant="subtle"
+                disabled={createQuote.isPending}
+                onClick={
+                  data?.id
+                    ? () => setEdit(false)
+                    : () => navigate(AppRoute.quote)
+                }
+              >
+                Cancel
+              </Button>
+              <Button
+                disabled={createQuote.isPending}
+                loading={createQuote.isPending}
+                variant="outlined"
+                onClick={() => projectForm.handleSubmit()}
+              >
+                {data?.id ? "Update" : "Create"}
+              </Button>
             </>
-          )}
+          ) : includes([QUOTE_STATUS.PENDING], data?.status?.toLowerCase()) ? (
+            <Button
+              variant="light"
+              disabled={createQuote.isPending}
+              onClick={() => setEdit(true)}
+            >
+              Edit
+            </Button>
+          ) : null}
           {!isEmpty(data) && !edit && (
             <>
               <Button

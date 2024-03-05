@@ -10,23 +10,23 @@ import {
 } from "@tanstack/react-query";
 import { ToastContainer, toast } from "react-toastify";
 
-import { theme } from "@utils/theme";
 import { BreadcrumbProvider } from "@hook/store/use-breadcrumb";
 import AppRoutes from "@routes";
+import { theme } from "@utils/theme";
 
 import "./index.css";
 
-import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
-import "@mantine/dropzone/styles.css";
+import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import "@mantine/dropzone/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import "mantine-datatable/styles.layer.css";
 
 import { AuthProvider } from "@hook/store/use-auth";
-import { I18nextProvider } from "react-i18next";
 import i18n from "@plugins/i18n";
+import { I18nextProvider } from "react-i18next";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,7 +55,7 @@ const app = (
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <ToastContainer />
-          <MantineProvider theme={theme}>
+          <MantineProvider defaultColorScheme="dark" theme={theme}>
             <AuthProvider>
               <BreadcrumbProvider>
                 <AppRoutes />

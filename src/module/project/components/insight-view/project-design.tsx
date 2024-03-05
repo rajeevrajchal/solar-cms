@@ -17,6 +17,7 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { MdRemove } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import ProjectInsightHeader from "./insight-header";
 
 const showDesign = String(import.meta.env.VITE_SHOW_DESIGN_TABLE) === "true";
@@ -36,6 +37,11 @@ const ProjectDesign = (props: ProjectDesignProps) => {
       design_file: [],
       connection: [],
     },
+    validationSchema: Yup.object().shape({
+      design_file: Yup.array()
+        .min(1, "Design file required")
+        .required("Area is required"),
+    }),
     onSubmit: (values) => {
       uploadProjectModel.mutate(
         {

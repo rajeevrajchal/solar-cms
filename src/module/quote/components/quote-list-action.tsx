@@ -8,6 +8,7 @@ import useQuoteMutate from "@module/quote/hooks/use-quote-mutate";
 import AppRoute from "@routes/route.constant";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaRegUser } from "react-icons/fa";
 import { IoMdCheckmark, IoMdClose } from "react-icons/io";
 import { MdDelete, MdEdit, MdOutlineFileDownload } from "react-icons/md";
 import QuoteApprove from "./modal/quote-approve";
@@ -17,12 +18,12 @@ interface QuoteListAction {
   hideDetail?: boolean;
 }
 
-type MODAL_TYPE = "delete" | "accepted" | "rejected";
+type MODAL_TYPE = "delete" | "accepted" | "rejected" | "customer";
 
 const QuoteListAction = (props: QuoteListAction) => {
   const { quote, hideDetail } = props;
   const [activeModal, setActiveModal] = useState<MODAL_TYPE | null>(null);
-  const { deleteQuote, approveQuote, downloadQuote, rejectQuote } =
+  const { deleteQuote, approveQuote, downloadQuote, rejectQuote, shareQuote } =
     useQuoteMutate();
 
   const handleMenuClose = () => {
@@ -55,6 +56,17 @@ const QuoteListAction = (props: QuoteListAction) => {
     });
   };
 
+  const shareQuoteToCustomer = () => {
+    shareQuote.mutate(quote?.id, {
+      onSuccess: () => {
+        setActiveModal(null);
+      },
+      onError: () => {
+        setActiveModal(null);
+      },
+    });
+  };
+
   const handleDeleteQuote = () => {
     deleteQuote.mutate(quote?.id, {
       onSuccess: () => {
@@ -74,6 +86,12 @@ const QuoteListAction = (props: QuoteListAction) => {
       onClick: (payload?: any) => void;
     }
   > = {
+    customer: {
+      heading: "Share to customer",
+      description:
+        "As you share you want to share this quote with the customer",
+      onClick: () => shareQuoteToCustomer(),
+    },
     rejected: {
       heading: "Reject Quote",
       description: "As per client you want to reject it",
@@ -110,6 +128,22 @@ const QuoteListAction = (props: QuoteListAction) => {
                 href: AppRoute.quote_detail(quote?.id),
                 allow: "*",
                 disable: hideDetail,
+              },
+              {
+                leftSection: <FaRegUser size={20} />,
+                children: (
+                  <Text className="capitalize">
+                    {quote?.status?.toLocaleLowerCase() === QUOTE_STATUS.SENT
+                      ? "Resend"
+                      : "Send to customer"}
+                  </Text>
+                ),
+                onClick: () => handleMenuItemClick("customer"),
+                allow: "*",
+                disable: [
+                  QUOTE_STATUS.ACCEPTED,
+                  QUOTE_STATUS.REJECTED,
+                ].includes(quote?.status?.toLowerCase() as QUOTE_STATUS),
               },
               {
                 leftSection: <IoMdCheckmark size={24} />,
@@ -173,6 +207,15 @@ const QuoteListAction = (props: QuoteListAction) => {
             title={statusModal[activeModal]?.heading}
             description={statusModal[activeModal]?.description}
           />
+
+          <ConfirmationModal
+            opened={["customer"].includes(activeModal)}
+            close={handleMenuClose}
+            confirm={() => statusModal[activeModal]?.onClick()}
+            title={statusModal[activeModal]?.heading}
+            description={statusModal[activeModal]?.description}
+          />
+
           <QuoteApprove
             opened={["accepted"].includes(activeModal)}
             close={handleMenuClose}

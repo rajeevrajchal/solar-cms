@@ -80,6 +80,16 @@ const QuoteService = {
       throw new Error("Quote Id is required");
     }
   },
+  share: (quote_id: string | null | undefined) => {
+    if (quote_id || quote_id !== null || quote_id !== undefined) {
+      return useAxios({
+        url: `quote/share/${quote_id}`,
+        method: METHOD.PATCH,
+      });
+    } else {
+      throw new Error("Quote Id is required");
+    }
+  },
   download: (quote_id: string | null | undefined) => {
     if (quote_id || quote_id !== null || quote_id !== undefined) {
       return useAxios({

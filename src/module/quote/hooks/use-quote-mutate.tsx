@@ -75,6 +75,19 @@ const useQuoteMutate = () => {
     },
   });
 
+  const shareQuote = useMutation({
+    mutationFn: (quote_id: string | undefined) => QuoteService.share(quote_id),
+    onSuccess: () => {
+      toast.success("Quote is shared.");
+      queryClient.invalidateQueries({
+        queryKey: ["quotes", "quote.detail"],
+      });
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to sahre");
+    },
+  });
+
   const downloadQuote = useMutation({
     mutationFn: (quote_id: string | undefined) =>
       QuoteService.download(quote_id),
@@ -96,6 +109,7 @@ const useQuoteMutate = () => {
     deleteQuote,
     approveQuote,
     rejectQuote,
+    shareQuote,
   };
 };
 
