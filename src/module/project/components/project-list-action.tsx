@@ -1,17 +1,24 @@
-import ConfirmationModal from "@components/modal/confirmation-modal";
 import Menu from "@components/menu";
-import AppRoute from "@routes/route.constant";
-import { ActionIcon, Text } from "@mantine/core";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaEye } from "react-icons/fa";
-import { MdEdit, MdDelete, MdAssignmentInd, MdInsights } from "react-icons/md";
-import useProjectMutate from "@module/project/hooks/use-project-mutate";
-import ProjectAssignMe from "./project-assign-owner";
+import ConfirmationModal from "@components/modal/confirmation-modal";
+import { STATUS } from "@enum/status.enum";
 import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
-import { STATUS } from "@enum/status.enum";
+import { ActionIcon, Text } from "@mantine/core";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
+import AppRoute from "@routes/route.constant";
 import { includes } from "lodash";
 import { useState } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
+import {
+  MdAssignmentInd,
+  MdDelete,
+  MdEdit,
+  MdInsights,
+  MdOutlineInstallDesktop,
+} from "react-icons/md";
+import { VscVmActive } from "react-icons/vsc";
+import ProjectAssignMe from "./project-assign-owner";
 
 const map_status_name: any = {
   [STATUS.SITE_SURVEY.toLowerCase()]: {
@@ -42,11 +49,19 @@ interface ProjectListActionProps {
   hideDetail?: boolean;
   hasQuote?: boolean;
 }
-type MODAL_TYPE = "copy" | "assign_me" | "assign_engineer" | "delete" | null;
+type MODAL_TYPE =
+  | "copy"
+  | "assign_me"
+  | "assign_engineer"
+  | "delete"
+  | "installation"
+  | "complete"
+  | null;
 
 const ProjectListAction = (props: ProjectListActionProps) => {
   const { project_id, project_user, status, hideDetail, hasQuote } = props;
-  const { deleteProject, assignOwnerToProject } = useProjectMutate();
+  const { deleteProject, assignOwnerToProject, changeProjectStatus } =
+    useProjectMutate();
   const { loginUser } = useAuth();
   const [activeModal, setActiveModal] = useState<MODAL_TYPE>(null);
 
@@ -72,7 +87,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         ),
     },
     {
-      leftSection: <FaEye />,
+      leftSection: <FaEye size={22} />,
       children: <Text className="capitalize">Detail</Text>,
       component: "a",
       href: AppRoute.project_detail(project_id),
@@ -80,21 +95,21 @@ const ProjectListAction = (props: ProjectListActionProps) => {
       disable: hideDetail,
     },
     {
-      leftSection: <MdAssignmentInd />,
+      leftSection: <MdAssignmentInd size={22} />,
       children: <Text className="capitalize">Assign Me</Text>,
       onClick: () => handleMenuItemClick("assign_me"),
       allow: [USER_ROLE.ENGINEER],
       disable: project_user?.engineer_id,
     },
     {
-      leftSection: <MdAssignmentInd />,
+      leftSection: <MdAssignmentInd size={22} />,
       children: <Text className="capitalize">Select Engineer</Text>,
       onClick: () => handleMenuItemClick("assign_engineer"),
       allow: [USER_ROLE.SALE],
       disable: project_user?.engineer_id,
     },
     {
-      leftSection: <MdInsights />,
+      leftSection: <MdInsights size={22} />,
       children: (
         <Text tt="capitalize">
           {map_status_name[status?.toLowerCase()]?.label}
@@ -115,7 +130,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         ) || !project_user?.engineer_id,
     },
     {
-      leftSection: <MdInsights />,
+      leftSection: <MdInsights size={22} />,
       children: <Text tt="capitalize">Create Quote</Text>,
       allow: [USER_ROLE.SALE],
       href: AppRoute.create_quote(project_id),
@@ -124,7 +139,28 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         hasQuote || !includes([STATUS.CUSTOMER_INQUIRY], status.toLowerCase()),
     },
     {
-      leftSection: <MdDelete color="red" />,
+      leftSection: <MdOutlineInstallDesktop size={22} />,
+      children: <Text className="capitalize">Installation Started</Text>,
+      onClick: () => handleMenuItemClick("installation"),
+      allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
+      disable: !includes([STATUS.CUSTOMER_READY], status.toLowerCase()),
+    },
+    {
+      leftSection: <VscVmActive color="green" size={22} />,
+      children: (
+        <Text className="capitalize" c="green">
+          Mark Project Online
+        </Text>
+      ),
+      onClick: () => handleMenuItemClick("complete"),
+      allow: "*",
+      disable: !includes(
+        [STATUS.INSTALLATION_IN_PROGRESS],
+        status.toLowerCase()
+      ),
+    },
+    {
+      leftSection: <MdDelete color="red" size={22} />,
       children: (
         <Text className="capitalize" c="red">
           Delete
@@ -132,7 +168,10 @@ const ProjectListAction = (props: ProjectListActionProps) => {
       ),
       onClick: () => handleMenuItemClick("delete"),
       allow: [USER_ROLE.SALE, USER_ROLE.ADMIN],
-      disable: false,
+      disable: includes(
+        [STATUS.CUSTOMER_READY, STATUS.INSTALLATION_IN_PROGRESS, STATUS.ONLINE],
+        status.toLowerCase()
+      ),
     },
   ].filter((item) => {
     if (item?.allow === "*" && !item?.disable) {
@@ -175,6 +214,34 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         }
         title="Delete Confirmation"
         description="Are you sure you want to delete this project. Deleting this project will also delete respective items like quote."
+      />
+
+      {/* installation */}
+      <ConfirmationModal
+        opened={activeModal === "installation"}
+        close={handleMenuClose}
+        confirm={() =>
+          changeProjectStatus.mutate({
+            project_id: project_id,
+            status: STATUS.INSTALLATION_IN_PROGRESS,
+          })
+        }
+        title="Start Project Installation Confirmation"
+        description="Are you sure project installation started. "
+      />
+
+      {/* complete */}
+      <ConfirmationModal
+        opened={activeModal === "complete"}
+        close={handleMenuClose}
+        confirm={() =>
+          changeProjectStatus.mutate({
+            project_id: project_id,
+            status: STATUS.ONLINE,
+          })
+        }
+        title="Project Complete Confirmation"
+        description="Are you sure, project has been successfully installed and active. "
       />
 
       {/* assign self */}

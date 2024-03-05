@@ -221,6 +221,7 @@ const QuoteListAction = (props: QuoteListAction) => {
             close={handleMenuClose}
             confirm={(payload) => statusModal[activeModal]?.onClick(payload)}
             title={statusModal[activeModal]?.heading}
+            loading={approveQuote.isPending}
           />
         </>
       )}

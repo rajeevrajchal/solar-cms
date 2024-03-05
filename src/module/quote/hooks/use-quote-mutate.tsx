@@ -54,7 +54,10 @@ const useQuoteMutate = () => {
     onSuccess: () => {
       toast.success("Quote is approved.");
       queryClient.invalidateQueries({
-        queryKey: ["quotes", "quote.detail"],
+        queryKey: ["quotes"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["quote.detail"],
       });
     },
     onError: (error) => {
@@ -69,6 +72,9 @@ const useQuoteMutate = () => {
       queryClient.invalidateQueries({
         queryKey: ["quotes"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["quote.detail"],
+      });
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to reject");
@@ -80,7 +86,10 @@ const useQuoteMutate = () => {
     onSuccess: () => {
       toast.success("Quote is shared.");
       queryClient.invalidateQueries({
-        queryKey: ["quotes", "quote.detail"],
+        queryKey: ["quotes"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["quote.detail"],
       });
     },
     onError: (error) => {

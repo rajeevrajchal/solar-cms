@@ -2,9 +2,15 @@ import {
   ASSIGN_OWNER_PROJECT,
   ELECTRIC_LOAD,
 } from "@api/types/project-input.type";
+import { STATUS } from "@enum/status.enum";
 import { PROJECTS } from "@model/project";
 import useAxios, { METHOD } from "@plugins/call.axios";
 import { buildQueryString } from "@utils/functions/build-query-string";
+
+export type CHANGE_STATUS = {
+  project_id: string;
+  status: STATUS;
+};
 
 const ProjectService = {
   list: (params: { search?: string; status?: string; tab?: string }) => {
@@ -130,6 +136,15 @@ const ProjectService = {
       });
     }
   },
+
+  change_status: (payload: CHANGE_STATUS) =>
+    useAxios({
+      url: `project/change-status/${payload.project_id}`,
+      method: METHOD.PATCH,
+      data: {
+        status: payload.status,
+      },
+    }),
 };
 
 export default ProjectService;

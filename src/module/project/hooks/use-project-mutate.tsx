@@ -1,4 +1,4 @@
-import ProjectService from "@api/services/project.service";
+import ProjectService, { CHANGE_STATUS } from "@api/services/project.service";
 import { ASSIGN_OWNER_PROJECT } from "@api/types/project-input.type";
 import { PROJECTS } from "@model/project";
 import AppRoute from "@routes/route.constant";
@@ -42,6 +42,23 @@ const useProjectMutate = () => {
     },
   });
 
+  const changeProjectStatus = useMutation({
+    mutationFn: (payload: CHANGE_STATUS) =>
+      ProjectService.change_status(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["projects"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["customer.detail"],
+      });
+      toast.success("Project is created.");
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to create");
+    },
+  });
+
   const deleteProject = useMutation({
     mutationFn: (project_id: string) => ProjectService.delete(project_id),
     onSuccess: () => {
@@ -51,10 +68,10 @@ const useProjectMutate = () => {
       queryClient.invalidateQueries({
         queryKey: ["customer.detail"],
       });
-      toast.success("Project is deleted successfully");
+      toast.success("Project is status changed successfully");
     },
     onError: (error) => {
-      toast.error(error?.message || "Failed to delete");
+      toast.error(error?.message || "Failed to change status");
     },
   });
 
@@ -117,11 +134,9 @@ const useProjectMutate = () => {
 
   const uploadProjectModel = useMutation({
     mutationFn: (payload: any) => {
-      console.log("payload", payload);
       return ProjectService.project_model(payload);
     },
-    onSuccess: (data: any) => {
-      console.log("project-detail", data);
+    onSuccess: () => {
       navigate(AppRoute.projects);
       toast.success("Model uploaded to project successfully");
     },
@@ -152,6 +167,7 @@ const useProjectMutate = () => {
     assignEquipmentInProject,
     uploadProjectModel,
     requestFillProjectLoad,
+    changeProjectStatus,
   };
 };
 
