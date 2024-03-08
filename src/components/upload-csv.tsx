@@ -1,15 +1,17 @@
 import { Button, Group } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { TbFileTypeCsv } from "react-icons/tb";
-import Modal from "./modal/modal";
-import { useFormik } from "formik";
+import * as Yup from "yup";
 import Dropzone from "./dropzone";
+import Modal from "./modal/modal";
 
 interface UploadCSVProps {
   loading?: boolean;
   onSubmit: (values: FileWithPath) => void;
 }
+
 const UploadCSV = (props: UploadCSVProps) => {
   const { loading, onSubmit } = props;
   const [uploadCsv, setUploadCsv] = useState<boolean>(false);
@@ -17,6 +19,11 @@ const UploadCSV = (props: UploadCSVProps) => {
     initialValues: {
       csv: [],
     },
+    validationSchema: Yup.object().shape({
+      csv: Yup.array()
+        .min(1, "Csv file is required")
+        .required("Csv file is required"),
+    }),
     onSubmit: async (values, { resetForm }) => {
       await onSubmit(values?.csv?.[0]);
       setUploadCsv(false);
@@ -52,6 +59,11 @@ const UploadCSV = (props: UploadCSVProps) => {
             showPreview
             setFiles={(files: FileWithPath[]) =>
               uploadCsvFormik.setFieldValue("csv", files)
+            }
+            error={
+              uploadCsvFormik?.errors.csv && uploadCsvFormik?.touched?.csv
+                ? (uploadCsvFormik?.errors.csv as string)
+                : ""
             }
           />
           <Group justify="flex-end">

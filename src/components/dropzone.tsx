@@ -16,9 +16,10 @@ interface DropzonePropsInterface extends Partial<DropzoneProps> {
   setFiles: (files: any) => void;
   files: any;
   showPreview?: boolean;
+  error?: string;
 }
 const Dropzone = (props: DropzonePropsInterface) => {
-  const { setFiles, files, showPreview = false } = props;
+  const { setFiles, files, showPreview = false, error } = props;
 
   const handleRemove = (index: number) => {
     const updatedFiles = [...files];
@@ -47,6 +48,11 @@ const Dropzone = (props: DropzonePropsInterface) => {
           </Text>
         </Group>
       </MDropzone>
+      {error && (
+        <Text size="sm" c="red">
+          {error}
+        </Text>
+      )}
       {showPreview ? (
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           {files.map((file: any, index: number) => {

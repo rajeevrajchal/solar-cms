@@ -1,13 +1,18 @@
 import SearchInput from "@components/search-input";
 import UploadCSV from "@components/upload-csv";
-import useInventoryMutate from "@module/inventory/hooks/use-inventory-mutate";
 import { Button, Flex, Select } from "@mantine/core";
+import useInventoryMutate from "@module/inventory/hooks/use-inventory-mutate";
 import AppRoute from "@routes/route.constant";
 import { IoMdAdd } from "react-icons/io";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { useSearchParams } from "react-router-dom";
 
-const InventoryHeader = () => {
+interface InventoryHeaderProps {
+  enableDownload: boolean;
+}
+
+const InventoryHeader = (props: InventoryHeaderProps) => {
+  const { enableDownload } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const { prase_csv, download_csv } = useInventoryMutate();
 
@@ -79,15 +84,17 @@ const InventoryHeader = () => {
       >
         Add Inventory
       </Button>
-      <Button
-        leftSection={<IoCloudDownloadOutline size={14} />}
-        variant="light"
-        loading={download_csv.isPending}
-        disabled={download_csv.isPending}
-        onClick={() => download_csv.mutate()}
-      >
-        Download CSV
-      </Button>
+      {enableDownload && (
+        <Button
+          leftSection={<IoCloudDownloadOutline size={14} />}
+          variant="light"
+          loading={download_csv.isPending}
+          disabled={download_csv.isPending}
+          onClick={() => download_csv.mutate()}
+        >
+          Download CSV
+        </Button>
+      )}
       <UploadCSV
         loading={prase_csv.isPending}
         onSubmit={(value) => {

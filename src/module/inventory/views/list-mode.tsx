@@ -1,10 +1,11 @@
 import Table from "@components/table";
-import { DataTableColumn } from "mantine-datatable";
-import { Badge, Text } from "@mantine/core";
-import InventoryHeader from "../components/inventory-header";
 import useInventories from "@hook/data/inventory/use-inventories";
-import InventoryListAction from "../components/inventory-list-action";
+import { Badge, Text } from "@mantine/core";
+import { INVENTORY } from "@model/inventory";
 import { formatCurrency } from "@utils/functions/format-currency";
+import { DataTableColumn } from "mantine-datatable";
+import InventoryHeader from "../components/inventory-header";
+import InventoryListAction from "../components/inventory-list-action";
 
 const columns: DataTableColumn[] = [
   {
@@ -120,7 +121,11 @@ const InventoryList = () => {
   return (
     <Table
       label="Inventories"
-      headerContent={<InventoryHeader />}
+      headerContent={
+        <InventoryHeader
+          enableDownload={(inventories as INVENTORY[])?.length > 0}
+        />
+      }
       columns={columns}
       data={inventories || []}
       fetching={loading}
