@@ -2,6 +2,7 @@ import Modal from "@components/modal/modal";
 import { Button, Checkbox, Flex, Stack, TextInput } from "@mantine/core";
 import { useFormik } from "formik";
 import { ReactElement } from "react";
+import * as Yup from "yup";
 
 interface QuoteApproveProps {
   opened: boolean;
@@ -20,6 +21,14 @@ const QuoteApprove = (props: QuoteApproveProps) => {
       payment: "",
       full_payment: false,
     },
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Name for the order is required"),
+      payment: Yup.string().when("full_payment", {
+        is: true,
+        then: (schema) => schema.notRequired(),
+        otherwise: (schema) => schema.required("Payment is required"),
+      }),
+    }),
     onSubmit: (values) => {
       confirm({
         ...values,

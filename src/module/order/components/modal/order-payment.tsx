@@ -21,7 +21,11 @@ const OrderPayment = (props: OrderPaymentProps) => {
       full_payment: false,
     },
     validationSchema: Yup.object().shape({
-      payment: Yup.string().required("Payment is required"),
+      payment: Yup.string().when("full_payment", {
+        is: true,
+        then: (schema) => schema.notRequired(),
+        otherwise: (schema) => schema.required("Payment is required"),
+      }),
     }),
     onSubmit: (values) => {
       confirm(values);
