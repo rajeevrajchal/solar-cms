@@ -1,6 +1,5 @@
-import useProjectPublic from "@module/public/hooks/use-project-public";
 import { Center, Loader, Stack, Text } from "@mantine/core";
-import ElectricLoadUserDetail from "./components/electric-load/user-detail";
+import useProjectPublic from "@module/public/hooks/use-project-public";
 import LoadTable from "../../components/loads/load-table";
 
 const ElectricLoadProject = () => {
@@ -48,7 +47,7 @@ const ElectricLoadProject = () => {
           application; we're eager to assist you!
         </Text>
       </Stack>
-      <ElectricLoadUserDetail customer={project?.customer} />
+      {/* <ElectricLoadUserDetail customer={project?.customer} /> */}
       <LoadTable project_id={project.id} loads={project.electric_load} />
     </Stack>
   );

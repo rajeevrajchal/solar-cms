@@ -1,26 +1,25 @@
+import { ELECTRIC_LOAD } from "@api/types/project-input.type";
+import { STATUS } from "@enum/status.enum";
+import useAuth from "@hook/store/use-auth";
 import {
+  ActionIcon,
+  Button,
+  Group,
   Stack,
   Table,
   Text,
-  Button,
   TextInput,
-  ActionIcon,
-  Group,
 } from "@mantine/core";
-import { useFormik } from "formik";
-import { IoMdAdd, IoMdTrash } from "react-icons/io";
-import { IoSaveOutline } from "react-icons/io5";
-import { GrPowerReset } from "react-icons/gr";
-import { MdOutlineCloudUpload } from "react-icons/md";
-import { RiCustomerService2Fill } from "react-icons/ri";
-import usePublicProjectMutate from "@module/public/hooks/use-public-project-mutation";
-import { ELECTRIC_LOAD } from "@api/types/project-input.type";
-import { useState } from "react";
 import { ELECTRICLOAD } from "@model/electric_load";
 import useProjectMutate from "@module/project/hooks/use-project-mutate";
-import useAuth from "@hook/store/use-auth";
+import usePublicProjectMutate from "@module/public/hooks/use-public-project-mutation";
+import { useFormik } from "formik";
 import { includes } from "lodash";
-import { STATUS } from "@enum/status.enum";
+import { useState } from "react";
+import { GrPowerReset } from "react-icons/gr";
+import { IoMdAdd, IoMdTrash } from "react-icons/io";
+import { IoSaveOutline } from "react-icons/io5";
+import { RiCustomerService2Fill } from "react-icons/ri";
 
 interface LoadTableProps {
   project_id: string;
@@ -124,7 +123,7 @@ const LoadTable = (props: LoadTableProps) => {
           </Text>
           {!readOnly && (
             <Group>
-              <Button
+              {/* <Button
                 variant="light"
                 leftSection={<MdOutlineCloudUpload />}
                 disabled={
@@ -133,7 +132,7 @@ const LoadTable = (props: LoadTableProps) => {
                 }
               >
                 Upload CSV
-              </Button>
+              </Button> */}
               {isLoggedIn && (
                 <Button
                   variant="light"
