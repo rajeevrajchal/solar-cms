@@ -12,7 +12,7 @@ import { USER } from "@model/user";
 import useUserMutate from "@module/user/hooks/use-user-mutate";
 import { useFormik } from "formik";
 import { isEmpty } from "lodash";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface UserCreateFormProps {
   data?: USER;
@@ -23,6 +23,7 @@ const UserCreateForm = (props: UserCreateFormProps) => {
   const { loginUser } = useAuth();
   const navigate = useNavigate();
   const { create, update } = useUserMutate();
+  const { pathname } = useLocation();
 
   const userFormik: any = useFormik({
     initialValues: {
@@ -47,6 +48,8 @@ const UserCreateForm = (props: UserCreateFormProps) => {
     userFormik.resetForm();
     navigate(-1);
   };
+
+  console.log("the path name is", pathname);
 
   return (
     <Stack p="md">
@@ -85,40 +88,37 @@ const UserCreateForm = (props: UserCreateFormProps) => {
         />
         {[USER_ROLE.ADMIN].includes(
           loginUser?.role?.toLowerCase() as USER_ROLE
-        ) && (
-          <Select
-            label="Select Role"
-            mt="xs"
-            styles={{
-              option: {
-                textTransform: "capitalize",
-              },
-            }}
-            withAsterisk
-            value={userFormik.values.role}
-            placeholder="Select Role"
-            onChange={(value) => userFormik.setFieldValue(`role`, value)}
-            data={[
-              {
-                label: "Sale",
-                value: USER_ROLE.SALE.toUpperCase(),
-              },
-              {
-                label: "Engineer",
-                value: USER_ROLE.ENGINEER.toUpperCase(),
-              },
-              {
-                label: "Site Engineer",
-                value: USER_ROLE.WORKER.toUpperCase(),
-              },
-            ]}
-            error={
-              userFormik.touched?.role &&
-              userFormik.errors?.role &&
-              userFormik.errors?.role
-            }
-          />
-        )}
+        ) &&
+          !pathname.includes("my-account") && (
+            <Select
+              label="Select Role"
+              mt="xs"
+              styles={{
+                option: {
+                  textTransform: "capitalize",
+                },
+              }}
+              withAsterisk
+              value={userFormik.values.role}
+              placeholder="Select Role"
+              onChange={(value) => userFormik.setFieldValue(`role`, value)}
+              data={[
+                {
+                  label: "Sale",
+                  value: USER_ROLE.SALE.toUpperCase(),
+                },
+                {
+                  label: "Engineer",
+                  value: USER_ROLE.ENGINEER.toUpperCase(),
+                },
+              ]}
+              error={
+                userFormik.touched?.role &&
+                userFormik.errors?.role &&
+                userFormik.errors?.role
+              }
+            />
+          )}
         <TextInput
           label="Contact"
           placeholder="Mobile Number"

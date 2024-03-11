@@ -3,6 +3,7 @@ import { USER_ROLE } from "@enum/user.role";
 import AuthLayout from "@layout/auth.layout";
 import BlankLayout from "@layout/blank.layout";
 import DashboardLayout from "@layout/dashboard.layout";
+import AppConfig from "@module/app_config";
 import ForgetPassword from "@module/auth/views/forget-password";
 import Login from "@module/auth/views/login";
 import ResetPassword from "@module/auth/views/reset-password";
@@ -129,6 +130,14 @@ const AppRoutes = () => {
           element={
             <RoleRoute allowed_role={[USER_ROLE.ADMIN]}>
               <User />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path={`${AppRoute.app_config}`}
+          element={
+            <RoleRoute allowed_role={[USER_ROLE.ADMIN]}>
+              <AppConfig />
             </RoleRoute>
           }
         />

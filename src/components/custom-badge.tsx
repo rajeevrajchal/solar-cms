@@ -1,5 +1,5 @@
-import { Badge, Tooltip } from "@mantine/core";
 import type { BadgeProps } from "@mantine/core";
+import { Badge, Tooltip } from "@mantine/core";
 
 interface CustomBadgeProps extends BadgeProps {
   tooltip?: string;
@@ -17,7 +17,7 @@ const CustomBadge = (props: CustomBadgeProps) => {
   } = props;
 
   return (
-    <Tooltip label={tooltip} tt="capitalize" className="cursor-pointer">
+    <Tooltip label={String(tooltip)} tt="capitalize" className="cursor-pointer">
       <Badge
         size={size}
         radius={radius}

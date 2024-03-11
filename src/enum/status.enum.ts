@@ -10,14 +10,14 @@ export enum STATUS {
 }
 
 export const STATUS_COLOR: Record<string, string> = {
-  [STATUS.NEW.toUpperCase()]: "#A9A9A9", // Using a grey color as an example
-  [STATUS.ONLINE.toUpperCase()]: "#00FF00", // Green color
-  [STATUS.SITE_SURVEY.toUpperCase()]: "#808080", // Blue color
-  [STATUS.EQUIPMENT_SELECTION.toUpperCase()]: "#808080", // Another grey color as an example
-  [STATUS.DESIGN_IN_PROGRESS.toUpperCase()]: "#C0C0C0", // Silver color
-  [STATUS.CUSTOMER_INQUIRY.toUpperCase()]: "#6495ED", // Cornflower blue color
-  [STATUS.CUSTOMER_READY.toUpperCase()]: "#000080", // Navy blue color
-  [STATUS.INSTALLATION_IN_PROGRESS.toUpperCase()]: "#FFA500",
+  [STATUS.NEW.toUpperCase()]: "#4169E1",
+  [STATUS.ONLINE.toUpperCase()]: "#008080",
+  [STATUS.EQUIPMENT_SELECTION.toUpperCase()]: "#8B4513",
+  [STATUS.SITE_SURVEY.toUpperCase()]: "#008080",
+  [STATUS.DESIGN_IN_PROGRESS.toUpperCase()]: "#FFA500 ",
+  [STATUS.CUSTOMER_INQUIRY.toUpperCase()]: "#FF0000",
+  [STATUS.CUSTOMER_READY.toUpperCase()]: "#A020F0",
+  [STATUS.INSTALLATION_IN_PROGRESS.toUpperCase()]: "#555555",
 };
 
 export const STATUS_NAME: Record<string, string> = {

@@ -1,9 +1,10 @@
+import CustomBadge from "@components/custom-badge";
 import Tab from "@components/tab";
 import { STATUS, STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
-import useProject from "@module/project/hooks/use-project";
+import { USER_ROLE } from "@enum/user.role";
+import useAuth from "@hook/store/use-auth";
 import {
   ActionIcon,
-  Badge,
   Center,
   Flex,
   Group,
@@ -11,22 +12,21 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { IoMdSettings } from "react-icons/io";
-import { MdOutlineElectricBolt, MdOutlinePower } from "react-icons/md";
-import { LuComponent } from "react-icons/lu";
-import ProjectCustomerElectricLoad from "../components/detail/project-customer-electric-load";
-import ProjectInfoDetail from "../components/detail/project-info-detail";
+import useProject from "@module/project/hooks/use-project";
 import { formatDate } from "@utils/functions/format-date";
-import { FaMapMarkedAlt } from "react-icons/fa";
 import { formatNumber } from "@utils/functions/format-number";
-import ProjectListAction from "../components/project-list-action";
-import ProjectEquipment from "../components/detail/project-equipments";
-import ProjectQuote from "../components/detail/project-quote";
-import { IoReceiptOutline } from "react-icons/io5";
 import { includes } from "lodash";
+import { FaMapMarkedAlt } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
+import { IoReceiptOutline } from "react-icons/io5";
+import { LuComponent } from "react-icons/lu";
+import { MdOutlineElectricBolt, MdOutlinePower } from "react-icons/md";
+import ProjectCustomerElectricLoad from "../components/detail/project-customer-electric-load";
+import ProjectEquipment from "../components/detail/project-equipments";
+import ProjectInfoDetail from "../components/detail/project-info-detail";
 import ProjectModel from "../components/detail/project-model";
-import { USER_ROLE } from "@enum/user.role";
-import useAuth from "@hook/store/use-auth";
+import ProjectQuote from "../components/detail/project-quote";
+import ProjectListAction from "../components/project-list-action";
 
 const ProjectDetail = () => {
   const { loginUser } = useAuth();
@@ -59,7 +59,12 @@ const ProjectDetail = () => {
               <Text size="lg" fw="bold">
                 {project?.name}
               </Text>
-              <Badge color={statusColor}>{STATUS_NAME[project.status]}</Badge>
+              <CustomBadge
+                tooltip={String(STATUS_NAME[project.status] || "")}
+                color={statusColor}
+              >
+                {STATUS_NAME[project.status]}
+              </CustomBadge>
             </Group>
 
             {/* project detail */}

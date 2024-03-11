@@ -111,17 +111,19 @@ const UserDetailLayout = (props: UserDetailLayoutProps) => {
                   <Text>{formatDate(user?.created)}</Text>
                 </Group>
 
-                <Button
-                  component="a"
-                  variant={pathname.includes("edit") ? "filled" : "light"}
-                  href={
-                    pathname.includes("my-account")
-                      ? AppRoute.my_account_edit
-                      : AppRoute.user_edit(user?.id)
-                  }
-                >
-                  Edit Profile
-                </Button>
+                {!pathname.includes("edit") && (
+                  <Button
+                    component="a"
+                    variant={pathname.includes("edit") ? "filled" : "light"}
+                    href={
+                      pathname.includes("my-account")
+                        ? AppRoute.my_account_edit
+                        : AppRoute.user_edit(user?.id)
+                    }
+                  >
+                    Edit Profile
+                  </Button>
+                )}
                 {!pathname.includes("my-account") ? (
                   <Button variant="light" color="red">
                     Deactivated

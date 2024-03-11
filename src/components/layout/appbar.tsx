@@ -1,5 +1,6 @@
 import ColorSwitch from "@components/color-switch";
 import Menu from "@components/menu";
+import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
 import {
   ActionIcon,
@@ -66,29 +67,33 @@ const AppBar = (props: AppBarProps) => {
         </Group>
         {loginUser?.id && (
           <Group gap="lg" preventGrowOverflow={false} wrap="nowrap" grow>
-            {/* quick buttons */}
-            <Menu
-              position="bottom-end"
-              trigger={
-                <Button size="xs" leftSection={<FaPlus />}>
-                  Quick Start
-                </Button>
-              }
-              menu={[
-                {
-                  leftSection: <PiProjectorScreenChartLight size={20} />,
-                  children: <Text className="capitalize">Create Project</Text>,
-                  component: "a",
-                  href: AppRoute.create_project,
-                },
-                // {
-                //   leftSection: <MdDesignServices size={20} />,
-                //   children: <Text className="capitalize">For Service</Text>,
-                //   component: "a",
-                //   href: AppRoute.book_services,
-                // },
-              ]}
-            />
+            {(loginUser?.role?.toLowerCase() as USER_ROLE) !==
+              USER_ROLE.ADMIN && (
+              <Menu
+                position="bottom-end"
+                trigger={
+                  <Button size="xs" leftSection={<FaPlus />}>
+                    Quick Start
+                  </Button>
+                }
+                menu={[
+                  {
+                    leftSection: <PiProjectorScreenChartLight size={20} />,
+                    children: (
+                      <Text className="capitalize">Create Project</Text>
+                    ),
+                    component: "a",
+                    href: AppRoute.create_project,
+                  },
+                  // {
+                  //   leftSection: <MdDesignServices size={20} />,
+                  //   children: <Text className="capitalize">For Service</Text>,
+                  //   component: "a",
+                  //   href: AppRoute.book_services,
+                  // },
+                ]}
+              />
+            )}
             {/* profile button */}
             <MMenu shadow="md" width={200} withArrow arrowSize={12}>
               <MMenu.Target>
@@ -123,7 +128,7 @@ const AppBar = (props: AppBarProps) => {
                   {logout.isPending ? (
                     <Loader color="red" size="xs" />
                   ) : (
-                    " Logout"
+                    "Logout"
                   )}
                 </MMenu.Item>
               </MMenu.Dropdown>

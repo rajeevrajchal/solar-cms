@@ -3,7 +3,8 @@ import AppRoute from "@routes/route.constant";
 import { ReactElement } from "react";
 import { AiOutlinePieChart, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
-import { FaHandshake, FaUsersCog } from "react-icons/fa";
+import { FaHandshake } from "react-icons/fa";
+import { GrConfigure } from "react-icons/gr";
 import { LuLayoutList } from "react-icons/lu";
 import { PiUsersThree } from "react-icons/pi";
 import { TbFileInvoice } from "react-icons/tb";
@@ -44,21 +45,21 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Quote",
     key: "quote",
     href: AppRoute.quote,
-    allow: [USER_ROLE.SALE],
+    allow: [USER_ROLE.SALE, USER_ROLE.ENGINEER],
   },
   {
     icon: <FaHandshake size={22} />,
     label: "Order",
     key: "order",
     href: AppRoute.order,
-    allow: [USER_ROLE.SALE],
+    allow: [USER_ROLE.SALE, USER_ROLE.ENGINEER],
   },
   {
     icon: <LuLayoutList size={18} />,
     label: "Inventory",
     key: "inventory",
     href: AppRoute.inventory,
-    allow: [USER_ROLE.ADMIN, USER_ROLE.SALE],
+    allow: "*",
   },
   {
     icon: <TiVendorApple size={18} />,
@@ -82,10 +83,17 @@ export const sidebarMenu: SidebarItem[] = [
     allow: [USER_ROLE.ADMIN],
   },
   {
-    icon: <FaUsersCog size={22} />,
-    label: "Teams",
-    key: "teams",
-    href: AppRoute.team,
+    icon: <GrConfigure size={20} />,
+    label: "App Config",
+    key: "config",
+    href: AppRoute.app_config,
     allow: [USER_ROLE.ADMIN],
   },
+  // {
+  //   icon: <FaUsersCog size={22} />,
+  //   label: "Teams",
+  //   key: "teams",
+  //   href: AppRoute.team,
+  //   allow: [USER_ROLE.ADMIN],
+  // },
 ];

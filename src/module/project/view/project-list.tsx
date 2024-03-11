@@ -37,7 +37,12 @@ const ProjectList = () => {
         const { status } = record;
         const statusColor = STATUS_COLOR[status];
         return (
-          <CustomBadge color={statusColor}>{STATUS_NAME[status]}</CustomBadge>
+          <CustomBadge
+            tooltip={String(STATUS_NAME?.[status] || "")}
+            color={statusColor}
+          >
+            {STATUS_NAME[status]}
+          </CustomBadge>
         );
       },
     },
