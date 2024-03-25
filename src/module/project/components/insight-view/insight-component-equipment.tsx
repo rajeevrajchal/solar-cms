@@ -1,11 +1,11 @@
 import { Stack } from "@mantine/core";
-import ProjectInsightHeader from "./insight-header";
 import { PROJECTS } from "@model/project";
+import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import ComponentEquipmentTable from "./components/equipment/component-equipment-table";
 import ComponentEquipmentGrid from "./components/equipment/component-equipment-grid";
-import useProjectMutate from "@module/project/hooks/use-project-mutate";
+import ComponentEquipmentTable from "./components/equipment/component-equipment-table";
+import ProjectInsightHeader from "./insight-header";
 
 interface InsightComponentEquipmentProps {
   project: PROJECTS;
