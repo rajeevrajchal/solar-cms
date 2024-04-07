@@ -14,166 +14,140 @@ import Order from "@module/order";
 import Projects from "@module/project";
 import ElectricLoadProject from "@module/public/electric-load-project";
 import Quote from "@module/quote";
+import Services from "@module/services";
 import User from "@module/user";
-import UserCreateForm from "@module/user/components/user-create-form";
-import UserDetailLayout from "@module/user/layout/user-detail-layout";
 import Vendor from "@module/vendors";
+import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
 import AuthRoute from "./auth.route";
+import MyAccountRoute from "./my-account-route";
 import RoleRoute from "./role.route";
 import AppRoute from "./route.constant";
+
+type ROUTE = {
+  path: string;
+  component?: () => JSX.Element;
+  layout: ReactElement;
+  isPublic: boolean;
+  isAuth: boolean;
+  children: {
+    path: string;
+    component: () => JSX.Element;
+    allowedRoles: USER_ROLE[] | "*";
+  }[];
+};
+
+const routes: ROUTE[] = [
+  {
+    path: AppRoute.home,
+    layout: <DashboardLayout />,
+    isPublic: false,
+    isAuth: true,
+    component: Home,
+    children: [
+      {
+        path: `${AppRoute.projects}/*`,
+        component: Projects,
+        allowedRoles: "*",
+      },
+      {
+        path: `${AppRoute.services}/*`,
+        component: Services,
+        allowedRoles: "*",
+      },
+      { path: `${AppRoute.quote}/*`, component: Quote, allowedRoles: "*" },
+      { path: `${AppRoute.order}/*`, component: Order, allowedRoles: "*" },
+      {
+        path: `${AppRoute.inventory}/*`,
+        component: Inventory,
+        allowedRoles: "*",
+      },
+      { path: `${AppRoute.vendor}/*`, component: Vendor, allowedRoles: "*" },
+      {
+        path: `${AppRoute.app_config}/*`,
+        component: AppConfig,
+        allowedRoles: "*",
+      },
+      {
+        path: `${AppRoute.customers}/*`,
+        component: Customer,
+        allowedRoles: "*",
+      },
+      {
+        path: `${AppRoute.my_account}/*`,
+        component: MyAccountRoute,
+        allowedRoles: "*",
+      },
+      {
+        path: `${AppRoute.users}/*`,
+        component: User,
+        allowedRoles: [USER_ROLE.ADMIN],
+      },
+    ],
+  },
+  {
+    path: AppRoute.home,
+    layout: <AuthLayout />,
+    isPublic: true,
+    isAuth: false,
+    children: [
+      { path: AppRoute.login, component: Login, allowedRoles: "*" },
+      {
+        path: AppRoute.forget_password,
+        component: ForgetPassword,
+        allowedRoles: "*",
+      },
+      {
+        path: AppRoute.reset_password,
+        component: ResetPassword,
+        allowedRoles: "*",
+      },
+    ],
+  },
+  {
+    path: AppRoute.home,
+    layout: <BlankLayout />,
+    isPublic: true,
+    isAuth: false,
+    children: [
+      {
+        path: "electric_load_public",
+        component: ElectricLoadProject,
+        allowedRoles: "*",
+      },
+    ],
+  },
+];
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* dashboard route */}
-      <Route
-        path={AppRoute.home}
-        element={
-          <AuthRoute isPublic={false} isAuth>
-            <DashboardLayout />
-          </AuthRoute>
-        }
-      >
-        <Route index element={<Home />} />
+      {routes.map((route, index) => (
         <Route
-          path={`${AppRoute.projects}/*`}
+          key={index}
+          path={route.path}
           element={
-            <RoleRoute allowed_role="*">
-              <Projects />
-            </RoleRoute>
+            <AuthRoute isPublic={route.isPublic} isAuth={route.isAuth}>
+              {route.layout}
+            </AuthRoute>
           }
-        />
-        {/* <Route
-          path={`${AppRoute.services}/*`}
-          element={
-            <RoleRoute allowed_role="*">
-              <Services />
-            </RoleRoute>
-          }
-        /> */}
-        <Route
-          path={`${AppRoute.order}/*`}
-          element={
-            <RoleRoute allowed_role="*">
-              <Order />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.inventory}/*`}
-          element={
-            <RoleRoute allowed_role="*">
-              <Inventory />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.vendor}/*`}
-          element={
-            <RoleRoute allowed_role="*">
-              <Vendor />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.quote}/*`}
-          element={
-            <RoleRoute allowed_role="*">
-              <Quote />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.my_account}`}
-          element={
-            <RoleRoute allowed_role="*">
-              <UserDetailLayout />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.my_account}/edit`}
-          element={
-            <UserDetailLayout hasChildren={true}>
-              {(user) => <UserCreateForm data={user} />}
-            </UserDetailLayout>
-          }
-        />
-
-        <Route
-          path={`${AppRoute.inventory}/*`}
-          element={
-            <RoleRoute allowed_role={[USER_ROLE.ADMIN, USER_ROLE.SALE]}>
-              <Inventory />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.vendor}/*`}
-          element={
-            <RoleRoute allowed_role={[USER_ROLE.ADMIN, USER_ROLE.SALE]}>
-              <Vendor />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.customers}/*`}
-          element={
-            <RoleRoute allowed_role="*">
-              <Customer />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.users}/*`}
-          element={
-            <RoleRoute allowed_role={[USER_ROLE.ADMIN]}>
-              <User />
-            </RoleRoute>
-          }
-        />
-        <Route
-          path={`${AppRoute.app_config}`}
-          element={
-            <RoleRoute allowed_role={[USER_ROLE.ADMIN]}>
-              <AppConfig />
-            </RoleRoute>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-
-      {/* auth route */}
-      <Route
-        path={AppRoute.home}
-        element={
-          <AuthRoute isPublic isAuth={false}>
-            <AuthLayout />
-          </AuthRoute>
-        }
-      >
-        <Route path={`${AppRoute.login}`} element={<Login />} />
-        <Route
-          path={`${AppRoute.forget_password}`}
-          element={<ForgetPassword />}
-        />
-        <Route
-          path={`${AppRoute.reset_password}`}
-          element={<ResetPassword />}
-        />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-
-      {/* public route */}
-      <Route path={AppRoute.home} element={<BlankLayout />}>
-        <Route
-          path={`${AppRoute.electric_load_public}`}
-          element={<ElectricLoadProject />}
-        />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
+        >
+          {route.component && <Route index element={<route.component />} />}
+          {route.children &&
+            route.children.map((child, childIndex) => (
+              <Route
+                key={childIndex}
+                path={`${route.path}/${child.path}`}
+                element={
+                  <RoleRoute allowed_role={child.allowedRoles}>
+                    <child.component />
+                  </RoleRoute>
+                }
+              />
+            ))}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      ))}
     </Routes>
   );
 };

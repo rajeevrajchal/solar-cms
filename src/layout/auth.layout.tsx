@@ -34,6 +34,7 @@ const bannerSlider = [
 
 const AuthLayout = () => {
   const { colorScheme } = useMantineColorScheme();
+
   return (
     <Box
       style={{
