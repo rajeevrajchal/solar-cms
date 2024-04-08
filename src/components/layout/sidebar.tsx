@@ -1,17 +1,17 @@
+import logo from "@assets/logo/png/logo_transparent.png";
 import { SidebarItem, sidebarMenu } from "@constant/sidebar";
+import useAuth from "@hook/store/use-auth";
 import {
   AppShell,
   Box,
-  Image,
-  Stack,
-  NavLink,
   Burger,
   Flex,
-  Center,
+  Image,
+  NavLink,
+  Stack,
+  Text,
 } from "@mantine/core";
 import { useLocation } from "react-router-dom";
-import logo from "@assets/logo/png/logo_transparent.png";
-import useAuth from "@hook/store/use-auth";
 
 interface SidebarProps {
   desktopOpened: boolean;
@@ -35,9 +35,9 @@ const Sidebar = (props: SidebarProps) => {
   });
 
   return (
-    <AppShell.Navbar py="xs">
-      <Stack gap="xs">
-        <Box px="md">
+    <AppShell.Navbar>
+      <Stack gap={0}>
+        <Box>
           <Flex
             direction={{ base: "column", sm: "row" }}
             align="flex-end"
@@ -50,17 +50,35 @@ const Sidebar = (props: SidebarProps) => {
               size="sm"
             />
             {desktopOpened ? (
-              <Center w="100%" h={48}>
-                <Image src={logo} h="100%" w="100%" alt="Eco Spark" />
-              </Center>
+              <Box
+                px="md"
+                className="w-full flex items-center justify-start h-[10vh] gap-2"
+              >
+                <Image
+                  src={logo}
+                  h="100%"
+                  w="100%"
+                  alt="Eco Spark"
+                  className="object-contain"
+                />
+                <Text fw="bold" fs="md">
+                  Power-Ease
+                </Text>
+              </Box>
             ) : (
-              <Center w="100%" h={48}>
-                <Image src={logo} h="100%" alt="Eco Spark" />
-              </Center>
+              <div className="w-full h-[10vh]">
+                <Image
+                  src={logo}
+                  h="100%"
+                  w="100%"
+                  alt="Eco Spark"
+                  className="object-contain"
+                />
+              </div>
             )}
           </Flex>
         </Box>
-        <Stack px="md">
+        <Stack px="md" py="xs">
           {getSideMenuViaRole.map((item: SidebarItem, index: number) => (
             <div key={`${item.key}-${index}`}>
               <NavLink

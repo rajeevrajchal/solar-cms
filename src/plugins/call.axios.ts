@@ -37,7 +37,7 @@ export enum METHOD {
 const baseUrl = `${import.meta.env.VITE_API_URL}/api/v1/`;
 
 const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
-  const { getStorageData } = useLocalStorage();
+  const { getStorageData, clearStorage } = useLocalStorage();
   const {
     url,
     method,
@@ -100,7 +100,14 @@ const useAxios = async <T>(props: AxiosAPI): Promise<T> => {
     return isDownload ? (response as any) : (response?.data as T);
   } catch (error: any) {
     const err: any = error as AxiosError<ErrorDataType>;
-    throw new Error(err?.response?.data?.message || err || "");
+    console.log("the err", err?.response?.data?.message);
+    if (err?.response?.data?.message === "invalid_or_expired_token") {
+      clearStorage();
+      window.location.replace("/");
+      return err;
+    } else {
+      throw new Error(err?.response?.data?.message || err || "");
+    }
   }
 };
 
