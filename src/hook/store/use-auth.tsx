@@ -1,3 +1,14 @@
+import AuthService from "@api/services/auth.service";
+import { LOGIN_TYPE } from "@api/types/auth.type";
+import {
+  user_info_key,
+  user_refresh_token_key,
+  user_token_key,
+} from "@constant/ls-key";
+import useLocalStorage from "@hook/utils/use-localstorage";
+import { USER } from "@model/user";
+import AppRoute from "@routes/route.constant";
+import { useMutation } from "@tanstack/react-query";
 import {
   ReactElement,
   createContext,
@@ -5,17 +16,8 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { USER } from "@model/user";
-import useLocalStorage from "@hook/utils/use-localstorage";
-import {
-  user_info_key,
-  user_refresh_token_key,
-  user_token_key,
-} from "@constant/ls-key";
-import { useMutation } from "@tanstack/react-query";
-import AuthService from "@api/services/auth.service";
-import { LOGIN_TYPE } from "@api/types/auth.type";
 
 interface UseAuthProps {
   isLoggedIn: boolean;
@@ -41,6 +43,8 @@ const useAuthData = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const [loginUser, setLoginUser] = useState<USER>({} as USER);
+
+  const navigate = useNavigate();
 
   const clearSession = async () => {
     setIsLoggedIn(false);
@@ -72,6 +76,9 @@ const useAuthData = () => {
 
       setLoginUser({} as USER);
       setIsLoggedIn(false);
+      navigate(AppRoute.login, {
+        replace: true,
+      });
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to logout");

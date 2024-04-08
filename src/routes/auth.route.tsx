@@ -1,6 +1,6 @@
-import { Navigate, useLocation } from "react-router-dom";
-import useAuth from "@hook/store/use-auth";
 import Splash from "@components/splash";
+import useAuth from "@hook/store/use-auth";
+import { Navigate, useLocation } from "react-router-dom";
 import AppRoute from "./route.constant";
 
 interface AuthRouteProps {
@@ -13,18 +13,20 @@ function AuthRoute(props: AuthRouteProps) {
   const { children, isPublic, isAuth } = props;
   const location: {
     state: {
-      from: string;
+      from: {
+        pathname: string;
+      };
     };
   } = useLocation();
 
   const { isLoggedIn, loading } = useAuth();
 
   const privatePathNavigation: string = location.state
-    ? location.state.from
+    ? location.state.from.pathname
     : AppRoute.home;
 
   const publicPathNavigation: string = location.state
-    ? location.state.from
+    ? location.state.from.pathname
     : AppRoute.login;
 
   if (loading) {
