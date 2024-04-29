@@ -1,9 +1,9 @@
 import { QUOTE_STATUS_NAME } from "@enum/quote-status.enum";
 import { STATUS_NAME } from "@enum/status.enum";
 import { Card, Flex, Grid, GridCol, Stack, Text } from "@mantine/core";
-import { map } from "lodash";
 import { BiCategoryAlt } from "react-icons/bi";
 import { TbFileInvoice } from "react-icons/tb";
+import PieChart from "./charts/pie-chart";
 
 const HomeMatrix = () => {
   return (
@@ -23,6 +23,12 @@ const HomeMatrix = () => {
             icon: <TbFileInvoice size={20} />,
             items: QUOTE_STATUS_NAME,
           },
+          {
+            label: "order",
+            key: "order",
+            icon: <TbFileInvoice size={20} />,
+            items: QUOTE_STATUS_NAME,
+          },
         ].map((item, index) => (
           <GridCol span={4} key={`matrix_${index}_${item.key}`}>
             <Card withBorder>
@@ -33,19 +39,8 @@ const HomeMatrix = () => {
                     {item.label}
                   </Text>
                 </Flex>
-                <Stack gap={2}>
-                  {map(item.items, (v, k) => (
-                    <Grid key={`matrix_${index}_${item.key}_status_${k}`}>
-                      <GridCol span={9}>
-                        <Text key={k} className="capitalize">
-                          {v}
-                        </Text>
-                      </GridCol>
-                      <GridCol span={3} className="flex justify-end items-end">
-                        <Text>10</Text>
-                      </GridCol>
-                    </Grid>
-                  ))}
+                <Stack h="30vh" w="100%" justify="center" align="center">
+                  <PieChart />
                 </Stack>
               </Stack>
             </Card>

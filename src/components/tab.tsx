@@ -14,10 +14,11 @@ export type TabItem = {
 interface TabProps {
   tabs: TabItem[];
   initial?: string | null;
+  fullWidth?: boolean;
 }
 
 const Tab = (props: TabProps) => {
-  const { tabs, initial } = props;
+  const { tabs, initial, fullWidth } = props;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get("tab") || tabs[0]?.value;
@@ -41,7 +42,7 @@ const Tab = (props: TabProps) => {
     <Tabs value={activeTab} onChange={changeTab} w="100%">
       <Tabs.List
         style={{
-          width: "fit-content",
+          width: fullWidth ? "100%" : "fit-content",
         }}
       >
         {filter(tabs, (item) => !item.disabled).map((tab) => (
