@@ -1,4 +1,5 @@
 import Table from "@components/table";
+import { Button } from "@mantine/core";
 import { EQUIPMENT } from "@model/equipment";
 import { formatCurrency } from "@utils/functions/format-currency";
 
@@ -66,6 +67,7 @@ const ProjectEquipment = (props: ProjectEquipmentProps) => {
           },
         },
       ]}
+      headerContent={<Button variant="outline">Request Vendor</Button>}
       data={equipment}
     />
   );
