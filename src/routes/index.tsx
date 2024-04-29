@@ -111,7 +111,7 @@ const routes: ROUTE[] = [
     isAuth: false,
     children: [
       {
-        path: "electric_load_public",
+        path: AppRoute.electric_load_public,
         component: ElectricLoadProject,
         allowedRoles: "*",
       },
