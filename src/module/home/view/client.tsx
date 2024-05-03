@@ -10,14 +10,22 @@ const app_mode_is_dev = import.meta.env.VITE_APP_MODE === "dev";
 const ClientHome = () => {
   return (
     <Grid>
-      <Grid.Col span={app_mode_is_dev ? 9 : 12}>
+      <Grid.Col
+        span={{
+          md: app_mode_is_dev ? 9 : 12,
+        }}
+      >
         <Stack gap="md">
           <QuickMenu />
           {app_mode_is_dev && <HomeMatrix />}
         </Stack>
       </Grid.Col>
       {app_mode_is_dev && (
-        <Grid.Col span={3}>
+        <Grid.Col
+          span={{
+            md: 3,
+          }}
+        >
           <Paper withBorder h="100%" p="sm">
             <Text fw="bold">Customer Request</Text>
             <Stack>
