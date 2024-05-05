@@ -72,7 +72,11 @@ const AppBar = (props: AppBarProps) => {
               <Menu
                 position="bottom-end"
                 trigger={
-                  <Button size="xs" leftSection={<FaPlus />}>
+                  <Button
+                    variant="transparent"
+                    size="xs"
+                    leftSection={<FaPlus />}
+                  >
                     Quick Start
                   </Button>
                 }
@@ -85,15 +89,10 @@ const AppBar = (props: AppBarProps) => {
                     component: "a",
                     href: AppRoute.create_project,
                   },
-                  // {
-                  //   leftSection: <MdDesignServices size={20} />,
-                  //   children: <Text className="capitalize">For Service</Text>,
-                  //   component: "a",
-                  //   href: AppRoute.book_services,
-                  // },
                 ]}
               />
             )}
+            <ColorSwitch />
             {/* profile button */}
             <MMenu shadow="md" width={200} withArrow arrowSize={12}>
               <MMenu.Target>
@@ -133,7 +132,6 @@ const AppBar = (props: AppBarProps) => {
                 </MMenu.Item>
               </MMenu.Dropdown>
             </MMenu>
-            <ColorSwitch />
           </Group>
         )}
       </Flex>
