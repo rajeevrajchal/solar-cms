@@ -66,7 +66,7 @@ const AppBar = (props: AppBarProps) => {
           </ActionIcon>
         </Group>
         {loginUser?.id && (
-          <Group gap="lg" preventGrowOverflow={false} wrap="nowrap" grow>
+          <Group gap="md" preventGrowOverflow={false} wrap="nowrap">
             {(loginUser?.role?.toLowerCase() as USER_ROLE) !==
               USER_ROLE.ADMIN && (
               <Menu
@@ -103,16 +103,14 @@ const AppBar = (props: AppBarProps) => {
                 </Center>
               </MMenu.Target>
               <MMenu.Dropdown>
-                <MMenu.Label>
-                  <Paper>
-                    <Text size="sm" className="capitalize">
-                      {loginUser.name}
-                    </Text>
-                    <Text size="sm" className="capitalize">
-                      {loginUser.role}
-                    </Text>
-                  </Paper>
-                </MMenu.Label>
+                <Paper>
+                  <Text size="sm" className="capitalize">
+                    {loginUser.name}
+                  </Text>
+                  <Text size="sm" className="capitalize">
+                    {loginUser.role}
+                  </Text>
+                </Paper>
                 <Divider />
                 <MMenu.Item component="a" href={AppRoute.profile} mt="xs">
                   Profile
