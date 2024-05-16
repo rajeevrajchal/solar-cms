@@ -103,7 +103,7 @@ const AppBar = (props: AppBarProps) => {
                 </Center>
               </MMenu.Target>
               <MMenu.Dropdown>
-                <Paper>
+                <Paper p="sm">
                   <Text size="sm" className="capitalize">
                     {loginUser.name}
                   </Text>
