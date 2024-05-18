@@ -14,7 +14,6 @@ import Order from "@module/order";
 import Projects from "@module/project";
 import ElectricLoadProject from "@module/public/electric-load-project";
 import Quote from "@module/quote";
-import Services from "@module/services";
 import User from "@module/user";
 import Vendor from "@module/vendors";
 import { ReactElement } from "react";
@@ -50,11 +49,11 @@ const routes: ROUTE[] = [
         component: Projects,
         allowedRoles: "*",
       },
-      {
-        path: `${AppRoute.services}/*`,
-        component: Services,
-        allowedRoles: "*",
-      },
+      // {
+      //   path: `${AppRoute.services}/*`,
+      //   component: Services,
+      //   allowedRoles: "*",
+      // },
       { path: `${AppRoute.quote}/*`, component: Quote, allowedRoles: "*" },
       { path: `${AppRoute.order}/*`, component: Order, allowedRoles: "*" },
       {

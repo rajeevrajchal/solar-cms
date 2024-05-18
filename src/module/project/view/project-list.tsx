@@ -1,11 +1,11 @@
 import CustomBadge from "@components/custom-badge";
 import Tab from "@components/tab";
 import Table from "@components/table";
+import { PROJECT_TYPE_NAME } from "@enum/project-type.enum";
 import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
 import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
 import { Button, Stack, Text } from "@mantine/core";
-import { formatNumber } from "@utils/functions/format-number";
 import { DataTableColumn } from "mantine-datatable";
 import { FaUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
@@ -26,6 +26,39 @@ const ProjectList = () => {
       sortable: true,
       textAlign: "left",
       ellipsis: true,
+      width: 200,
+    },
+    {
+      accessor: "customer",
+      title: "Customer",
+      sortable: true,
+      textAlign: "left",
+      ellipsis: true,
+      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.SALE,
+      render: (record: any) => {
+        const { customer } = record;
+        return (
+          <Stack gap={0} align="flex-start">
+            <Text tt="capitalize">{customer.name}</Text>
+            <Text>{customer.email}</Text>
+          </Stack>
+        );
+      },
+    },
+    {
+      accessor: "type",
+      title: "Type",
+      sortable: true,
+      textAlign: "left",
+      ellipsis: true,
+      render: (record: any) => {
+        const { type } = record;
+        return (
+          <CustomBadge tooltip={String(PROJECT_TYPE_NAME?.[type] || "")}>
+            {PROJECT_TYPE_NAME[type]}
+          </CustomBadge>
+        );
+      },
     },
     {
       accessor: "status",
@@ -45,25 +78,6 @@ const ProjectList = () => {
           </CustomBadge>
         );
       },
-    },
-    {
-      accessor: "sun_hour_average",
-      title: "Sun Hour Average",
-      sortable: true,
-      textAlign: "center",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.ENGINEER,
-      render: (record: any) => {
-        return `${formatNumber(record?.sun_hour_average)} hr`;
-      },
-    },
-    {
-      accessor: "total_sun_power_need",
-      title: "Total Sun Power Required",
-      sortable: true,
-      textAlign: "center",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.ENGINEER,
     },
     {
       accessor: "power_out_watt",
@@ -102,24 +116,6 @@ const ProjectList = () => {
           <Text>{reserve_power_for} Days</Text>
         ) : (
           "N/A"
-        );
-      },
-    },
-
-    {
-      accessor: "customer",
-      title: "Customer",
-      sortable: true,
-      textAlign: "left",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.SALE,
-      render: (record: any) => {
-        const { customer } = record;
-        return (
-          <Stack gap={0} align="flex-start">
-            <Text tt="capitalize">{customer.name}</Text>
-            <Text>{customer.email}</Text>
-          </Stack>
         );
       },
     },

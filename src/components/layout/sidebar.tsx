@@ -9,7 +9,6 @@ import {
   Image,
   NavLink,
   Stack,
-  Text,
 } from "@mantine/core";
 import { useLocation } from "react-router-dom";
 
@@ -52,7 +51,7 @@ const Sidebar = (props: SidebarProps) => {
             {desktopOpened ? (
               <Box
                 px="md"
-                className="w-full flex items-center justify-start h-[10vh] gap-2"
+                className="w-full flex items-center justify-center h-[10vh] gap-2"
               >
                 <Image
                   src={logo}
@@ -61,9 +60,6 @@ const Sidebar = (props: SidebarProps) => {
                   alt="Eco Spark"
                   className="object-contain"
                 />
-                <Text fw="bold" fs="md">
-                  Power-Ease
-                </Text>
               </Box>
             ) : (
               <div className="w-full h-[10vh]">

@@ -72,7 +72,7 @@ const AppBar = (props: AppBarProps) => {
                     size="xs"
                     leftSection={<FaPlus />}
                   >
-                    Quick Start
+                    
                   </Button>
                 }
                 menu={[
