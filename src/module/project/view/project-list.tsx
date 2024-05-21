@@ -5,11 +5,9 @@ import { PROJECT_TYPE_NAME } from "@enum/project-type.enum";
 import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
 import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
-import { Button, Stack, Text } from "@mantine/core";
 import { DataTableColumn } from "mantine-datatable";
 import { FaUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
-import { useSearchParams } from "react-router-dom";
 import ProjectListAction from "../components/project-list-action";
 import ProjectListHeader from "../components/project-list-header";
 import useProjects from "../hooks/use-projects";
@@ -17,9 +15,16 @@ import useProjects from "../hooks/use-projects";
 const ProjectList = () => {
   const { loginUser } = useAuth();
   const { loading, projects } = useProjects();
-  const [, setSearchParams] = useSearchParams();
 
   const columns: DataTableColumn[] = [
+    {
+      accessor: "code",
+      title: "ID",
+      sortable: true,
+      textAlign: "left",
+      ellipsis: true,
+      width: 120,
+    },
     {
       accessor: "name",
       title: "Project",
@@ -37,12 +42,7 @@ const ProjectList = () => {
       hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.SALE,
       render: (record: any) => {
         const { customer } = record;
-        return (
-          <Stack gap={0} align="flex-start">
-            <Text tt="capitalize">{customer.name}</Text>
-            <Text>{customer.email}</Text>
-          </Stack>
-        );
+        return customer.name;
       },
     },
     {
@@ -51,6 +51,7 @@ const ProjectList = () => {
       sortable: true,
       textAlign: "left",
       ellipsis: true,
+      width: 100,
       render: (record: any) => {
         const { type } = record;
         return (
@@ -66,6 +67,7 @@ const ProjectList = () => {
       sortable: true,
       textAlign: "left",
       ellipsis: true,
+      width: 100,
       render: (record: any) => {
         const { status } = record;
         const statusColor = STATUS_COLOR[status];
@@ -76,99 +78,6 @@ const ProjectList = () => {
           >
             {STATUS_NAME[status]}
           </CustomBadge>
-        );
-      },
-    },
-    {
-      accessor: "power_out_watt",
-      title: "Watt",
-      sortable: true,
-      textAlign: "center",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.ENGINEER,
-      render: (record: any) => {
-        const { power_out_watt } = record;
-        return power_out_watt ? <Text>{power_out_watt} W</Text> : "N/A";
-      },
-    },
-    {
-      accessor: "power_out_voltage",
-      title: "Voltage",
-      sortable: true,
-      textAlign: "center",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.ENGINEER,
-      render: (record: any) => {
-        const { power_out_voltage } = record;
-        return power_out_voltage ? <Text>{power_out_voltage} V</Text> : "N/A";
-      },
-    },
-    {
-      accessor: "reserve_power_for",
-      title: "Reserve Power",
-      sortable: true,
-      textAlign: "center",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.ENGINEER,
-      render: (record: any) => {
-        const { reserve_power_for } = record;
-        return reserve_power_for ? (
-          <Text>{reserve_power_for} Days</Text>
-        ) : (
-          "N/A"
-        );
-      },
-    },
-    {
-      accessor: "creator",
-      title: "Creator",
-      sortable: true,
-      textAlign: "left",
-      ellipsis: true,
-      render: (record: any) => {
-        const user =
-          loginUser?.id === record?.creator?.id
-            ? "Self"
-            : record?.creator?.name;
-        return (
-          <Button
-            variant="light"
-            radius="lg"
-            size="xs"
-            color={!user ? "red" : "blue"}
-          >
-            {user}
-          </Button>
-        );
-      },
-    },
-    {
-      accessor: "engineer",
-      title: "Engineer",
-      sortable: true,
-      textAlign: "left",
-      ellipsis: true,
-      render: (record: any) => {
-        const user =
-          loginUser?.id === record?.engineer?.id
-            ? "Self"
-            : record?.engineer?.name;
-        const handleAssignClicked = () => {
-          setSearchParams({
-            modal: "assign_engineer",
-          });
-        };
-
-        return (
-          <Button
-            variant="light"
-            radius="lg"
-            size="xs"
-            color={!user ? "red" : "blue"}
-            onClick={user ? () => {} : () => handleAssignClicked()}
-          >
-            {user || "Not Assigned"}
-          </Button>
         );
       },
     },

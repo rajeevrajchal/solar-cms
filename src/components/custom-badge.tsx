@@ -8,7 +8,7 @@ interface CustomBadgeProps extends BadgeProps {
 const CustomBadge = (props: CustomBadgeProps) => {
   const {
     children,
-    size = "md",
+    size = "sm",
     radius = "lg",
     variant = "light",
     color,
@@ -23,8 +23,6 @@ const CustomBadge = (props: CustomBadgeProps) => {
         radius={radius}
         variant={variant}
         color={color}
-        w="150px"
-        py="sm"
         {...rest}
         className="cursor-pointer"
       >
