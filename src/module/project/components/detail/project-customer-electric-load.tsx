@@ -1,14 +1,14 @@
-import Table from "@components/table";
-import { Button, Group, Stack, Text } from "@mantine/core";
-import { ELECTRICLOAD } from "@model/electric_load";
-import { USER } from "@model/user";
 import LoadTable from "@components/loads/load-table";
+import Table from "@components/table";
+import { STATUS } from "@enum/status.enum";
+import { Button, Group, Stack, Text } from "@mantine/core";
+import { ELECTRIC_LOAD } from "@model/electric_load";
+import { USER } from "@model/user";
 import { reduce } from "lodash";
 import { DataTableColumn } from "mantine-datatable";
-import { STATUS } from "@enum/status.enum";
 
-interface ProjectCustomerElectricLoadProps {
-  electric_load: ELECTRICLOAD[];
+interface ProjectCustomerELECTRIC_LOADProps {
+  electric_load: ELECTRIC_LOAD[];
   customer: USER;
   project_id: string;
   status: STATUS;
@@ -52,18 +52,18 @@ const columns: DataTableColumn[] = [
   },
 ];
 
-const getTotal = (load: ELECTRICLOAD[]) =>
+const getTotal = (load: ELECTRIC_LOAD[]) =>
   reduce(
     load,
-    (total: number, item: ELECTRICLOAD) => {
+    (total: number, item: ELECTRIC_LOAD) => {
       total = total + item.watt_per_hour;
       return total;
     },
     0
   );
 
-const ProjectCustomerElectricLoad = (
-  props: ProjectCustomerElectricLoadProps
+const ProjectCustomerELECTRIC_LOAD = (
+  props: ProjectCustomerELECTRIC_LOADProps
 ) => {
   const { electric_load, customer, project_id, status } = props;
 
@@ -98,4 +98,4 @@ const ProjectCustomerElectricLoad = (
   );
 };
 
-export default ProjectCustomerElectricLoad;
+export default ProjectCustomerELECTRIC_LOAD;

@@ -3,10 +3,10 @@ import { Button, Fieldset, Flex, Stack, TextInput } from "@mantine/core";
 import { USER } from "@model/user";
 import { useFormik } from "formik";
 
-interface ElectricLoadUserDetailProps {
+interface ELECTRIC_LOADUserDetailProps {
   customer?: USER;
 }
-const ElectricLoadUserDetail = (props: ElectricLoadUserDetailProps) => {
+const ELECTRIC_LOADUserDetail = (props: ELECTRIC_LOADUserDetailProps) => {
   const { customer } = props;
 
   const userForm = useFormik({
@@ -55,4 +55,4 @@ const ElectricLoadUserDetail = (props: ElectricLoadUserDetailProps) => {
   );
 };
 
-export default ElectricLoadUserDetail;
+export default ELECTRIC_LOADUserDetail;

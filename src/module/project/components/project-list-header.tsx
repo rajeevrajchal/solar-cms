@@ -16,7 +16,7 @@ const ProjectListHeader = () => {
     if (value === "" || value === null) {
       params.delete(key);
     } else {
-      params.set(key, value);
+      params.set(key, value.toLowerCase());
     }
     setSearchParams(params);
   };
@@ -26,7 +26,7 @@ const ProjectListHeader = () => {
     if (value === "" || value === null) {
       params.delete("query");
     } else {
-      params.set("query", value);
+      params.set("query", value.toLowerCase());
     }
     setSearchParams(params);
   };
@@ -55,14 +55,24 @@ const ProjectListHeader = () => {
             value: k,
           };
         })}
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
         clearable
-        value={searchParams.get("p_type") || ""}
+        value={searchParams.get("p_type")?.toUpperCase() || ""}
         onChange={(value: string | null) => handleStatusFilter("p_type", value)}
         style={{
           textTransform: "capitalize",
         }}
       />
       <Select
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
         searchable
         placeholder="Pick status"
         data={map(STATUS_NAME, (v, k) => {
@@ -72,7 +82,7 @@ const ProjectListHeader = () => {
           };
         })}
         clearable
-        value={searchParams.get("status") || ""}
+        value={searchParams.get("status")?.toUpperCase() || ""}
         onChange={(value: string | null) => handleStatusFilter("status", value)}
         style={{
           textTransform: "capitalize",

@@ -96,7 +96,7 @@ const CustomerInfo = (props: CustomerInfoProp) => {
             OR
           </Text>
           <Button onClick={handleContinueAsGuest} variant="light">
-            Create as Guest Customer
+            Anonymous Guest
           </Button>
         </>
       </Flex>
@@ -148,7 +148,7 @@ const CustomerInfo = (props: CustomerInfoProp) => {
         <Fieldset legend="Location">
           <TextInput
             label="Address"
-            placeholder="Customer Name"
+            placeholder="Address"
             name="customer.location"
             value={form.values.customer.location}
             onChange={form.handleChange}

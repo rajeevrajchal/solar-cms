@@ -1,6 +1,6 @@
 import { PROJECT_TYPE } from "@enum/project-type.enum";
 import { STATUS } from "@enum/status.enum";
-import { ELECTRICLOAD } from "./electric_load";
+import { ELECTRIC_LOAD } from "./electric_load";
 import { EQUIPMENT } from "./equipment";
 import { PROJECT_COMPONENT } from "./project-component";
 import { QUOTE } from "./quote";
@@ -82,7 +82,7 @@ export type PROJECTS = {
   equipment: EQUIPMENT[];
   quote: QUOTE[];
 
-  electric_load: ELECTRICLOAD[];
+  electric_load: ELECTRIC_LOAD[];
   component: PROJECT_COMPONENT[];
 
   model: PROJECT_MODEL[];

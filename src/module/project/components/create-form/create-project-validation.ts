@@ -8,12 +8,13 @@ const createProjectValidation = [
       name: Yup.string().required("Name is required"),
     }),
   }),
-  Yup.object().shape({
-    project: Yup.object().shape({
-      estimated_area: Yup.string().required("Area is required"),
-      capacity: Yup.string().required("Project capacity is required"),
-    }),
-  }),
+  // project_info_validation
+  // Yup.object().shape({
+  //   project: Yup.object().shape({
+  //     estimated_area: Yup.string().required("Area is required"),
+  //     capacity: Yup.string().required("Project capacity is required"),
+  //   }),
+  // }),
 ];
 
 export default createProjectValidation;

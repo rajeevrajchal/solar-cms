@@ -12,7 +12,7 @@ import Home from "@module/home";
 import Inventory from "@module/inventory";
 import Order from "@module/order";
 import Projects from "@module/project";
-import ElectricLoadProject from "@module/public/electric-load-project";
+import ELECTRIC_LOADProject from "@module/public/electric-load-project";
 import Quote from "@module/quote";
 import User from "@module/user";
 import Vendor from "@module/vendors";
@@ -111,7 +111,7 @@ const routes: ROUTE[] = [
     children: [
       {
         path: AppRoute.electric_load_public,
-        component: ElectricLoadProject,
+        component: ELECTRIC_LOADProject,
         allowedRoles: "*",
       },
     ],

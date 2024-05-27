@@ -35,17 +35,7 @@ const ProjectForm = (props: ProjectFormProps) => {
         phone: data?.customer?.phone || "",
         location: data?.customer?.location || "",
       },
-      project: {
-        latitude: data?.latitude || 51.505,
-        longitude: data?.longitude || -0.09,
-        location: data?.location || "",
-        panel_info: data?.panel_info || "",
-        battery_type: data?.battery_type || "",
-        cleaning: data?.cleaning || "yes",
-        mark_location_customer: data?.mark_location_customer || false,
-        estimated_area: data?.estimated_area || "",
-        capacity: data?.capacity || "",
-      },
+      project: {},
     },
     validationSchema: createProjectValidation[active],
     onSubmit: (values: any, { setFieldValue }) => {
@@ -61,7 +51,6 @@ const ProjectForm = (props: ProjectFormProps) => {
           ? updateProjectBySale.mutate(
               {
                 ...values.project,
-                cleaning: values.cleaning === "yes",
                 customer_id: values.customer.customer_id,
                 id: data?.id,
               },
@@ -74,7 +63,6 @@ const ProjectForm = (props: ProjectFormProps) => {
           : createProject.mutate(
               {
                 ...values.project,
-                cleaning: values.cleaning === "yes",
                 customer_id: values.customer.customer_id,
               },
               {

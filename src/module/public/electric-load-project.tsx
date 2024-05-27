@@ -2,7 +2,7 @@ import { Center, Loader, Stack, Text } from "@mantine/core";
 import useProjectPublic from "@module/public/hooks/use-project-public";
 import LoadTable from "../../components/loads/load-table";
 
-const ElectricLoadProject = () => {
+const ELECTRIC_LOADProject = () => {
   const { loading, error, project } = useProjectPublic();
 
   if (loading) {
@@ -47,10 +47,10 @@ const ElectricLoadProject = () => {
           application; we're eager to assist you!
         </Text>
       </Stack>
-      {/* <ElectricLoadUserDetail customer={project?.customer} /> */}
+      {/* <ELECTRIC_LOADUserDetail customer={project?.customer} /> */}
       <LoadTable project_id={project.id} loads={project.electric_load} />
     </Stack>
   );
 };
 
-export default ElectricLoadProject;
+export default ELECTRIC_LOADProject;

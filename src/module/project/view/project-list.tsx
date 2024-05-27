@@ -19,7 +19,7 @@ const ProjectList = () => {
   const columns: DataTableColumn[] = [
     {
       accessor: "code",
-      title: "ID",
+      title: "Code",
       sortable: true,
       textAlign: "left",
       ellipsis: true,
@@ -32,18 +32,6 @@ const ProjectList = () => {
       textAlign: "left",
       ellipsis: true,
       width: 200,
-    },
-    {
-      accessor: "customer",
-      title: "Customer",
-      sortable: true,
-      textAlign: "left",
-      ellipsis: true,
-      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.SALE,
-      render: (record: any) => {
-        const { customer } = record;
-        return customer.name;
-      },
     },
     {
       accessor: "type",
@@ -79,6 +67,18 @@ const ProjectList = () => {
             {STATUS_NAME[status]}
           </CustomBadge>
         );
+      },
+    },
+    {
+      accessor: "customer",
+      title: "Customer",
+      sortable: true,
+      textAlign: "left",
+      ellipsis: true,
+      hidden: loginUser?.role?.toLowerCase() !== USER_ROLE.SALE,
+      render: (record: any) => {
+        const { customer } = record;
+        return customer.name;
       },
     },
     {

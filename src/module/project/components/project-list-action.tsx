@@ -75,7 +75,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
 
   const getMenuViaRole: any = [
     {
-      leftSection: <MdEdit />,
+      leftSection: <MdEdit size={22} />,
       children: <Text className="capitalize">Edit</Text>,
       component: "a",
       href: AppRoute.project_edit(project_id),
