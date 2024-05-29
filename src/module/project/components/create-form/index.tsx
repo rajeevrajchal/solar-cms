@@ -35,7 +35,16 @@ const ProjectForm = (props: ProjectFormProps) => {
         phone: data?.customer?.phone || "",
         location: data?.customer?.location || "",
       },
-      project: {},
+      project: {
+        type: "",
+        roof_area: 0,
+        solar_irradiance: 0,
+        shading_factors: 0,
+        electrical_capacity: 0,
+        roof_orientation: "",
+        tilt_angle: 0,
+        panel_type: "",
+      },
     },
     validationSchema: createProjectValidation[active],
     onSubmit: (values: any, { setFieldValue }) => {
