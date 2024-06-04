@@ -1,64 +1,18 @@
-import NotFound from "@components/errors/not-found";
-import { STATUS } from "@enum/status.enum";
-import { Center, Loader, Text } from "@mantine/core";
-import { PROJECTS } from "@model/project";
-import useProject from "@module/project/hooks/use-project";
-import InfoViewSetup from "../components/insight-view/info-view";
-import InsightComponentEquipment from "../components/insight-view/insight-component-equipment";
-import ProjectDesign from "../components/insight-view/project-design";
-
-export const initialProjectInsightComponent = {
-  component_type: "",
-  connection_type: "",
-  nature: "",
-  name: "",
-  voltage: "",
-  amperage: "",
-  loose_connection_factor: "",
-  efficiency: "",
-  aging: "",
-  dod: "",
-  operation_temperature: "",
-  each_item_rating_volts: "",
-  each_item_rating_ampre: "",
-  quantity: "",
-  estimated_area: "",
-};
+import CircularLoader from "@components/loaders/circular";
+import { Stack } from "@mantine/core";
+import useProject from "../hooks/use-project";
 
 const ProjectInsight = () => {
-  const { loading, error, project } = useProject();
-
-  const getView = (project: PROJECTS) => {
-    const status = project?.status.toLowerCase();
-    switch (status) {
-      case STATUS.SITE_SURVEY:
-        return <InfoViewSetup project={project} />;
-      case STATUS.EQUIPMENT_SELECTION:
-        return <InsightComponentEquipment project={project} />;
-      case STATUS.DESIGN_IN_PROGRESS:
-        return <ProjectDesign project={project} />;
-      default:
-        return <NotFound />;
-    }
-  };
+  const { loading } = useProject();
 
   if (loading) {
-    return (
-      <Center>
-        <Loader color="blue" size="xl" type="dots" />
-      </Center>
-    );
+    return <CircularLoader />;
   }
-
-  if (error) {
-    return (
-      <Center>
-        <Text>Page not found</Text>
-      </Center>
-    );
-  }
-
-  return getView(project);
+  return (
+    <Stack>
+      <p>hello</p>
+    </Stack>
+  );
 };
 
 export default ProjectInsight;

@@ -1,4 +1,4 @@
-import logo from "@assets/logo/png/logo_transparent.png";
+import logo from "@assets/logo/png/logo.png";
 import { SidebarItem, sidebarMenu } from "@constant/sidebar";
 import useAuth from "@hook/store/use-auth";
 import {

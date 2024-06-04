@@ -1,6 +1,6 @@
-import { AppShell, Center, Text, Image, Flex } from "@mantine/core";
+import logo from "@assets/logo/png/logo.png";
+import { AppShell, Center, Flex, Image, Text } from "@mantine/core";
 import { Outlet } from "react-router-dom";
-import logo from "@assets/logo/png/logo_transparent.png";
 
 const company = import.meta.env.COMPANY_NAME;
 

@@ -7,7 +7,6 @@ import {
 import { Flex, Loader, Paper, Select, Stack, Text } from "@mantine/core";
 import { EQUIPMENT } from "@model/equipment";
 import { PROJECTS } from "@model/project";
-import ProjectEquipment from "@module/project/components/detail/project-equipments";
 import useProjectForQuote from "@module/project/hooks/use-project-for-quote";
 import { find, isEmpty, map, reduce } from "lodash";
 import { useEffect, useState } from "react";
@@ -144,10 +143,6 @@ const QuoteInfo = (props: QuoteInfoProps) => {
               </Flex>
             </Stack>
           </Stack>
-          <ProjectEquipment
-            label="Equipments"
-            equipment={selectedProject?.equipment || []}
-          />
         </>
       )}
     </Stack>

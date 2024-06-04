@@ -5,6 +5,7 @@ import { PROJECT_TYPE_NAME } from "@enum/project-type.enum";
 import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
 import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
+import { formatCode } from "@utils/functions/format-code";
 import { DataTableColumn } from "mantine-datatable";
 import { FaUser } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
@@ -23,7 +24,11 @@ const ProjectList = () => {
       sortable: true,
       textAlign: "left",
       ellipsis: true,
-      width: 120,
+      width: 80,
+      render: (record: any) => {
+        const { code } = record;
+        return <p>{formatCode(code)}</p>;
+      },
     },
     {
       accessor: "name",

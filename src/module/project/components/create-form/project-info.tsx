@@ -1,7 +1,9 @@
 import { PROJECT_TYPE } from "@enum/project-type.enum";
-import { Fieldset, Select, Stack } from "@mantine/core";
-import { map } from "lodash";
-import SolarProject from "./solar-project";
+import { Fieldset, Stack } from "@mantine/core";
+import BasicProjectInput from "./types/basic-project-input";
+import ProjectGeneralInfo from "./types/project-general-info";
+import ProjectLocation from "./types/project-location";
+import SolarProject from "./types/solar-project";
 
 interface ProjectInfoProps {
   form: any;
@@ -25,27 +27,15 @@ const ProjectInfo = (props: ProjectInfoProps) => {
 
   return (
     <Stack gap="md">
-      <Select
-        searchable
-        styles={{
-          option: {
-            textTransform: "capitalize",
-          },
-        }}
-        className="w-44"
-        placeholder="Select Type"
-        clearable
-        value={form.values.project.type}
-        data={map(PROJECT_TYPE, (v, k) => ({
-          label: k,
-          value: v,
-        }))}
-        onChange={(value) => form.setFieldValue("project.type", value)}
-      />
+      <ProjectGeneralInfo form={form} />
       {form.values.project.type && (
-        <Fieldset legend={form.values.project.type} className="capitalize">
-          {getQuestionComponent(form)}
-        </Fieldset>
+        <>
+          <Fieldset legend={form.values.project.type} className="capitalize">
+            {getQuestionComponent(form)}
+          </Fieldset>
+          <BasicProjectInput form={form} />
+          <ProjectLocation form={form} />
+        </>
       )}
     </Stack>
   );

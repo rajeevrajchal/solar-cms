@@ -22,7 +22,8 @@ const SolarProject = (props: SolarProjectProps) => {
           placeholder="Roof area"
           name="project.roof_area"
           min={0}
-          onChange={form.handleChange}
+          step={0.1}
+          onChange={(value) => form.setFieldValue("project.roof_area", value)}
           value={form.values.project.roof_area}
           withAsterisk
           error={
@@ -47,6 +48,7 @@ const SolarProject = (props: SolarProjectProps) => {
           label="Roof Orientation"
           placeholder="Roof Orientation"
           clearable
+          required
           value={form.values.project.roof_orientation}
           data={map(roof_orientations, (v, k) => ({
             label: v,
@@ -66,7 +68,10 @@ const SolarProject = (props: SolarProjectProps) => {
           label="Solar Irradiance"
           placeholder="Solar Irradiance"
           name="project.solar_irradiance"
-          onChange={form.handleChange}
+          onChange={(value) =>
+            form.setFieldValue("project.solar_irradiance", value)
+          }
+          step={0.1}
           value={form.values.project.solar_irradiance}
           withAsterisk
           error={
@@ -85,7 +90,10 @@ const SolarProject = (props: SolarProjectProps) => {
           label="Shading Factors"
           placeholder="Shading Factors"
           name="project.shading_factors"
-          onChange={form.handleChange}
+          onChange={(value) =>
+            form.setFieldValue("project.shading_factors", value)
+          }
+          step={0.1}
           value={form.values.project.shading_factors}
           withAsterisk
           error={
@@ -101,30 +109,11 @@ const SolarProject = (props: SolarProjectProps) => {
         }}
       >
         <NumberInput
-          label="Electrical Capacity"
-          placeholder="Electrical Capacity"
-          name="project.electrical_capacity"
-          onChange={form.handleChange}
-          value={form.values.project.electrical_capacity}
-          withAsterisk
-          min={0}
-          error={
-            form.touched?.project?.electrical_capacity &&
-            form.errors?.project?.electrical_capacity &&
-            form.errors?.project?.electrical_capacity
-          }
-        />
-      </Grid.Col>
-      <Grid.Col
-        span={{
-          md: 3,
-        }}
-      >
-        <NumberInput
           label="Tilt Angle"
           placeholder="Tilt Angle"
           name="project.tilt_angle"
-          onChange={form.handleChange}
+          step={0.1}
+          onChange={(value) => form.setFieldValue("project.tilt_angle", value)}
           value={form.values.project.tilt_angle}
           withAsterisk
           error={
@@ -146,6 +135,7 @@ const SolarProject = (props: SolarProjectProps) => {
               textTransform: "capitalize",
             },
           }}
+          required
           label="Panel Type"
           placeholder="Panel Type"
           clearable

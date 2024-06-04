@@ -3,6 +3,7 @@ import { ASSIGN_OWNER_PROJECT } from "@api/types/project-input.type";
 import { PROJECTS } from "@model/project";
 import AppRoute from "@routes/route.constant";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CREATE_PROJECT } from "@type/mutate/project-mutate";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -11,14 +12,10 @@ const useProjectMutate = () => {
   const navigate = useNavigate();
 
   const createProject = useMutation({
-    mutationFn: (payload: Partial<PROJECTS>) => ProjectService.create(payload),
+    mutationFn: (payload: Partial<CREATE_PROJECT>) =>
+      ProjectService.create(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["customer.detail"],
-      });
+      navigate(AppRoute.projects);
       toast.success("Project is created.");
     },
     onError: (error) => {
