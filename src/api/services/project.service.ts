@@ -140,10 +140,10 @@ const ProjectService = {
 
   change_status: (payload: CHANGE_STATUS) =>
     useAxios({
-      url: `project/change-status/${payload.project_id}`,
+      url: `project/${payload.project_id}`,
       method: METHOD.PATCH,
       data: {
-        status: payload.status,
+        status: payload.status.toUpperCase(),
       },
     }),
 };

@@ -40,6 +40,8 @@ export type PROJECT_INFO = {
   electrical_capacity?: string;
   solar_irradiance?: number;
   temperature_data?: string;
+  tilt_angle?: number;
+  panel_type?: string;
 
   terrain_elevation?: number;
   terrain_roughness?: number;

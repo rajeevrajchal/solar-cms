@@ -1,4 +1,3 @@
-import LocationInput from "@components/location/location-input";
 import { Fieldset, Grid, NumberInput, Stack } from "@mantine/core";
 
 interface ProjectLocationProps {
@@ -57,7 +56,6 @@ const ProjectLocation = (props: ProjectLocationProps) => {
             />
           </Grid.Col>
         </Grid>
-        <LocationInput />
       </Stack>
     </Fieldset>
   );

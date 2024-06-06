@@ -1,8 +1,8 @@
 import { PROJECT_TYPE } from "@enum/project-type.enum";
 import { Fieldset, Stack } from "@mantine/core";
-import BasicProjectInput from "./types/basic-project-input";
 import ProjectGeneralInfo from "./types/project-general-info";
 import ProjectLocation from "./types/project-location";
+import ProjectOutputInfo from "./types/project-output-info";
 import SolarProject from "./types/solar-project";
 
 interface ProjectInfoProps {
@@ -30,10 +30,13 @@ const ProjectInfo = (props: ProjectInfoProps) => {
       <ProjectGeneralInfo form={form} />
       {form.values.project.type && (
         <>
-          <Fieldset legend={form.values.project.type} className="capitalize">
+          <Fieldset
+            legend={`survey info: ${form.values.project.type}`}
+            className="capitalize"
+          >
             {getQuestionComponent(form)}
           </Fieldset>
-          <BasicProjectInput form={form} />
+          <ProjectOutputInfo form={form} />
           <ProjectLocation form={form} />
         </>
       )}

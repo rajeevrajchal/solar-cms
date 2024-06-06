@@ -1,13 +1,13 @@
 import { Fieldset, Grid, NumberInput } from "@mantine/core";
 
-interface BasicProjectInputProps {
+interface ProjectOutputInfoProps {
   form: any;
 }
 
-const BasicProjectInput = (props: BasicProjectInputProps) => {
+const ProjectOutputInfo = (props: ProjectOutputInfoProps) => {
   const { form } = props;
   return (
-    <Fieldset legend="Basic Info" className="capitalize">
+    <Fieldset legend="Output Info" className="capitalize">
       <Grid>
         <Grid.Col
           span={{
@@ -77,31 +77,9 @@ const BasicProjectInput = (props: BasicProjectInputProps) => {
             }
           />
         </Grid.Col>
-        <Grid.Col
-          span={{
-            md: 3,
-          }}
-        >
-          <NumberInput
-            label="Electrical Capacity"
-            placeholder="electrical capacity"
-            name="project.electrical_capacity"
-            min={0}
-            step={0.1}
-            onChange={(value) =>
-              form.setFieldValue("project.electrical_capacity", value)
-            }
-            value={form.values.project.electrical_capacity}
-            error={
-              form.touched?.project?.electrical_capacity &&
-              form.errors?.project?.electrical_capacity &&
-              form.errors?.project?.electrical_capacity
-            }
-          />
-        </Grid.Col>
       </Grid>
     </Fieldset>
   );
 };
 
-export default BasicProjectInput;
+export default ProjectOutputInfo;

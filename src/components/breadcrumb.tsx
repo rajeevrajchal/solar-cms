@@ -6,20 +6,15 @@ const Breadcrumb = () => {
   const { breadcrumbs } = useBreadcrumb();
 
   return (
-    <Breadcrumbs separatorMargin="xs" fs="xs">
+    <Breadcrumbs separatorMargin="xs" fs="xs" className="flex-wrap">
       {breadcrumbs.map((item, index) => (
-        <Anchor href={item.path} key={index} size="xs">
-          {item.name === "home" ? (
-            <BiHomeAlt />
-          ) : (
-            <span
-              style={{
-                textTransform: "capitalize",
-              }}
-            >
-              {item.name}
-            </span>
-          )}
+        <Anchor
+          href={item.path}
+          key={index}
+          size="xs"
+          className="capitalize max-w-[100px] overflow-hidden whitespace-nowrap text-ellipsis "
+        >
+          {item.name === "home" ? <BiHomeAlt /> : item.name}
         </Anchor>
       ))}
     </Breadcrumbs>
