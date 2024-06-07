@@ -45,14 +45,14 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Quote",
     key: "quote",
     href: AppRoute.quote,
-    allow: [USER_ROLE.SALE, USER_ROLE.ENGINEER],
+    allow: "*",
   },
   {
     icon: <FaHandshake size={22} />,
     label: "Order",
     key: "order",
     href: AppRoute.order,
-    allow: [USER_ROLE.SALE, USER_ROLE.ENGINEER],
+    allow: "*",
   },
   {
     icon: <LuLayoutList size={18} />,
@@ -66,7 +66,7 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Vendors",
     key: "vendor",
     href: AppRoute.vendor,
-    allow: [USER_ROLE.ADMIN, USER_ROLE.SALE],
+    allow: "*",
   },
   {
     icon: <AiOutlineUsergroupAdd size={22} />,
@@ -80,14 +80,14 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Users",
     key: "users",
     href: AppRoute.users,
-    allow: [USER_ROLE.ADMIN],
+    allow: "*",
   },
   {
     icon: <GrConfigure size={20} />,
     label: "App Config",
     key: "config",
     href: AppRoute.app_config,
-    allow: [USER_ROLE.ADMIN],
+    allow: "*",
   },
 
   {
@@ -95,6 +95,6 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Teams",
     key: "teams",
     href: AppRoute.team,
-    allow: [USER_ROLE.ADMIN],
+    allow: "*",
   },
 ];
