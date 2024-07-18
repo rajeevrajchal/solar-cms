@@ -61,7 +61,8 @@ const ProjectInsightHeader = (props: ProjectInsightHeaderProps) => {
         </Flex>
         <Flex
           align="center"
-          gap="lg"
+          rowGap="2"
+          columnGap="lg"
           w="fit-content"
           wrap="wrap"
           className={`${

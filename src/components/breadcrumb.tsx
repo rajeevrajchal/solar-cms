@@ -12,7 +12,7 @@ const Breadcrumb = () => {
           href={item.path}
           key={index}
           size="xs"
-          className="capitalize max-w-[100px] overflow-hidden whitespace-nowrap text-ellipsis "
+          className="capitalize max-w-[100px] md:w-fit md:max-w-fit overflow-hidden whitespace-nowrap text-ellipsis "
         >
           {item.name === "home" ? <BiHomeAlt /> : item.name}
         </Anchor>

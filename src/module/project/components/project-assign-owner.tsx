@@ -2,7 +2,6 @@ import Modal, { ModalProps } from "@components/modal/modal";
 import useEngineers from "@hook/data/users/use-engineer";
 import { Button, Flex, Loader, Select, Stack } from "@mantine/core";
 import { USER } from "@model/user";
-import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import { useFormik } from "formik";
 import { find, map } from "lodash";
 
@@ -15,7 +14,6 @@ interface ProjectAssignMeProps extends Omit<ModalProps, "children"> {
 const ProjectAssignOwner = (props: ProjectAssignMeProps) => {
   const { close, project_id } = props;
   const { loading, users } = useEngineers();
-  const { assignOwnerToProject } = useProjectMutate();
 
   const projectOwnerForm = useFormik({
     initialValues: {
@@ -23,18 +21,10 @@ const ProjectAssignOwner = (props: ProjectAssignMeProps) => {
       owner_role: "",
     },
     onSubmit: (values) => {
-      assignOwnerToProject.mutate(
-        {
-          project_id: project_id,
-          owner_id: values.owner_id,
-          owner_type: values.owner_role,
-        },
-        {
-          onSuccess: () => {
-            close();
-          },
-        }
-      );
+      console.log("values for assign owner for the project", {
+        values,
+        project_id,
+      });
     },
   });
 
@@ -76,17 +66,11 @@ const ProjectAssignOwner = (props: ProjectAssignMeProps) => {
           ]}
         />
         <Flex justify="end" gap="md">
-          <Button
-            variant="subtle"
-            onClick={() => close()}
-            disabled={assignOwnerToProject.isPending}
-          >
+          <Button variant="subtle" onClick={() => close()}>
             Cancel
           </Button>
           <Button
             variant="light"
-            loading={assignOwnerToProject.isPending}
-            disabled={assignOwnerToProject.isPending}
             onClick={() => projectOwnerForm.handleSubmit()}
           >
             Assign User
