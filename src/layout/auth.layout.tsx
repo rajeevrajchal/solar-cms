@@ -12,12 +12,12 @@ import { Outlet } from "react-router-dom";
 
 import banner from "@assets/background/background.svg";
 import dashboard from "@assets/background/dashboard.svg";
-import logo from "@assets/logo/png/logo_transparent.png";
+import logo from "@assets/logo/png/logo.png";
 import ColorSwitch from "@components/color-switch";
 
 const bannerSlider = [
   {
-    label: "Eco Spark",
+    label: "Solar Studio",
     description: `Lorem ipsum dolor sit amet consectetur, adipisicing
                         elit. Pariatur molestiae, vel nulla facilis esse
                         inventore officiis?`,

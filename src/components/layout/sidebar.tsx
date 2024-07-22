@@ -1,4 +1,4 @@
-import logo from "@assets/logo/png/logo_transparent.png";
+import logo from "@assets/logo/png/logo.png";
 import { SidebarItem, sidebarMenu } from "@constant/sidebar";
 import useAuth from "@hook/store/use-auth";
 import {
@@ -9,7 +9,6 @@ import {
   Image,
   NavLink,
   Stack,
-  Text,
 } from "@mantine/core";
 import { useLocation } from "react-router-dom";
 
@@ -52,18 +51,15 @@ const Sidebar = (props: SidebarProps) => {
             {desktopOpened ? (
               <Box
                 px="md"
-                className="w-full flex items-center justify-start h-[10vh] gap-2"
+                className="w-full flex items-center justify-center h-[10vh] gap-2"
               >
                 <Image
                   src={logo}
                   h="100%"
                   w="100%"
-                  alt="Eco Spark"
+                  alt="Solar Studio"
                   className="object-contain"
                 />
-                <Text fw="bold" fs="md">
-                  Power-Ease
-                </Text>
               </Box>
             ) : (
               <div className="w-full h-[10vh]">
@@ -71,7 +67,7 @@ const Sidebar = (props: SidebarProps) => {
                   src={logo}
                   h="100%"
                   w="100%"
-                  alt="Eco Spark"
+                  alt="Solar Studio"
                   className="object-contain"
                 />
               </div>

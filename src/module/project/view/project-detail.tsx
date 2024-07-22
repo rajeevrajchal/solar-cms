@@ -1,260 +1,61 @@
 import CustomBadge from "@components/custom-badge";
+import CircularLoader from "@components/loaders/circular";
 import Tab from "@components/tab";
-import { STATUS, STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
-import { USER_ROLE } from "@enum/user.role";
-import useAuth from "@hook/store/use-auth";
-import {
-  ActionIcon,
-  Center,
-  Flex,
-  Group,
-  Loader,
-  Stack,
-  Text,
-} from "@mantine/core";
-import useProject from "@module/project/hooks/use-project";
-import { formatDate } from "@utils/functions/format-date";
-import { formatNumber } from "@utils/functions/format-number";
-import { includes } from "lodash";
-import { FaMapMarkedAlt } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
-import { IoReceiptOutline } from "react-icons/io5";
-import { LuComponent } from "react-icons/lu";
-import { MdOutlineElectricBolt, MdOutlinePower } from "react-icons/md";
-import ProjectCustomerElectricLoad from "../components/detail/project-customer-electric-load";
-import ProjectEquipment from "../components/detail/project-equipments";
-import ProjectInfoDetail from "../components/detail/project-info-detail";
-import ProjectModel from "../components/detail/project-model";
-import ProjectQuote from "../components/detail/project-quote";
-import ProjectListAction from "../components/project-list-action";
+import { project_type } from "@constant/project-type";
+import { STATUS_COLOR, STATUS_NAME } from "@enum/status.enum";
+import ProjectDetailInfo from "../components/details/project-info";
+import useProject from "../hooks/use-project";
 
 const ProjectDetail = () => {
-  const { loginUser } = useAuth();
-  const { loading, error, project } = useProject();
-
+  const { loading, project } = useProject();
   if (loading) {
-    return (
-      <Center>
-        <Loader color="blue" size="xl" type="dots" />
-      </Center>
-    );
+    return <CircularLoader />;
   }
-
-  if (error) {
-    return (
-      <Center>
-        <Text>Page not found</Text>
-      </Center>
-    );
-  }
-
-  const statusColor = STATUS_COLOR[project.status];
-
   return (
-    <Stack gap="sm">
-      <Flex align="flex-start" justify="space-between" gap="md">
-        <Stack gap="xs">
-          <Stack gap={0}>
-            <Group align="center">
-              <Text size="lg" fw="bold">
-                {project?.name}
-              </Text>
-              <CustomBadge
-                tooltip={String(STATUS_NAME[project.status] || "")}
-                color={statusColor}
-              >
-                {STATUS_NAME[project.status]}
-              </CustomBadge>
-            </Group>
-
-            {/* project detail */}
-            <Group align="center" color="gray" c="gray">
-              <Group gap={4}>
-                <Text tt="capitalize" size="sm">
-                  Customer:
-                </Text>
-                <Text tt="capitalize" size="sm">
-                  {project?.customer?.name}
-                </Text>
-              </Group>
-              <Group gap={4}>
-                <Text tt="capitalize" size="sm">
-                  Created By:
-                </Text>
-                <Text tt="capitalize" size="sm">
-                  {project?.creator?.name}
-                </Text>
-              </Group>
-              {project?.engineer_id && (
-                <Group gap={4}>
-                  <Text tt="capitalize" size="sm">
-                    Engineer Associated:
-                  </Text>
-                  <Text tt="capitalize" size="sm">
-                    {project?.engineer?.name}
-                  </Text>
-                </Group>
-              )}
-              <Group gap={4}>
-                <Text tt="capitalize" size="sm">
-                  Created Date:
-                </Text>
-                <Text tt="capitalize" size="sm">
-                  {formatDate(project.createdAt)}
-                </Text>
-              </Group>
-            </Group>
-          </Stack>
-
-          {/* project detail */}
-          <Flex gap="md" color="gray" c="gray">
-            <Group align="center" gap="xs">
-              <ActionIcon variant="light" aria-label="View on map">
-                <FaMapMarkedAlt />
-              </ActionIcon>
-              <Stack gap={0}>
-                <Text size="sm">{project?.location || "-"}</Text>
-                <Group>
-                  <Group gap={4}>
-                    <Text tt="capitalize" size="sm">
-                      Longitude:
-                    </Text>
-                    <Text tt="capitalize" size="sm">
-                      {formatNumber(project?.longitude) || "n/a"}
-                    </Text>
-                  </Group>
-                  <Group gap={4}>
-                    <Text tt="capitalize" size="sm">
-                      Latitude:
-                    </Text>
-                    <Text tt="capitalize" size="sm">
-                      {formatNumber(project?.latitude) || "n/a"}
-                    </Text>
-                  </Group>
-                </Group>
-              </Stack>
-            </Group>
-
-            {/* power out break */}
-            {project?.power_out_watt && (
-              <Group align="center" gap="xs">
-                <ActionIcon
-                  variant="light"
-                  aria-label="Power out break"
-                  title="Power Out Come"
-                >
-                  <MdOutlinePower size={22} />
-                </ActionIcon>
-                <Stack gap={0}>
-                  <Text size="sm">Power</Text>
-                  <Group>
-                    <Group gap={4}>
-                      <Text tt="capitalize" size="sm">
-                        Watt:
-                      </Text>
-                      <Text tt="capitalize" size="sm">
-                        {formatNumber(project?.power_out_watt)}
-                      </Text>
-                    </Group>
-                    <Group gap={4}>
-                      <Text tt="capitalize" size="sm">
-                        Voltage:
-                      </Text>
-                      <Text tt="capitalize" size="sm">
-                        {formatNumber(project?.power_out_voltage)}
-                      </Text>
-                    </Group>
-                    <Group gap={4}>
-                      <Text tt="capitalize" size="sm">
-                        Reserve:
-                      </Text>
-                      <Text tt="capitalize" size="sm">
-                        {project?.reserve_power_for}
-                      </Text>
-                    </Group>
-                  </Group>
-                </Stack>
-              </Group>
-            )}
-          </Flex>
-        </Stack>
-        <ProjectListAction
-          hideDetail={true}
-          project_user={{
-            creator_id: project.creator_id,
-            engineer_id: project.engineer_id,
-          }}
-          status={project.status}
-          project_id={project.id}
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col">
+        <div className="flex items-center gap-2">
+          <span>{project_type[project.type.toLowerCase()].icon}</span>
+          <p className="font-bold text-lg">{project.name}</p>
+          <CustomBadge
+            tooltip={String(STATUS_NAME?.[project.status] || "")}
+            color={STATUS_COLOR[project.status]}
+          >
+            {STATUS_NAME[project.status]}
+          </CustomBadge>
+        </div>
+        <article className="w-3/4 text-justify text-sm text-gray-400">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
+          corrupti animi illo qui assumenda eligendi a fugit quod quis odio.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni
+          corrupti animi illo qui assumenda eligendi a fugit quod quis odio.
+        </article>
+      </div>
+      <div className="flex items-start justify-between gap-4">
+        <Tab
+          initial="info"
+          tabs={[
+            {
+              label: "Info",
+              value: "info",
+              component: <ProjectDetailInfo />,
+            },
+            {
+              label: "Load",
+              value: "load",
+            },
+            {
+              label: "Equipments",
+              value: "equipments",
+            },
+            {
+              label: "Customers",
+              value: "customer",
+            },
+          ]}
         />
-      </Flex>
-      <Tab
-        tabs={[
-          {
-            label: "Setup",
-            icon: <IoMdSettings />,
-            value: "setup",
-            component: <ProjectInfoDetail project={project} />,
-          },
-          {
-            label: "Load Description",
-            icon: <MdOutlineElectricBolt />,
-            value: "customer-load",
-            component: (
-              <ProjectCustomerElectricLoad
-                electric_load={project?.electric_load ?? []}
-                customer={project?.customer ?? {}}
-                project_id={project?.id}
-                status={project?.status}
-              />
-            ),
-          },
-          {
-            label: "Model (Design)",
-            icon: <LuComponent />,
-            value: "model",
-            disabled:
-              USER_ROLE.ENGINEER !== loginUser.role.toLowerCase() ||
-              project.model.length <= 0 ||
-              includes(
-                [STATUS.NEW, STATUS.SITE_SURVEY, STATUS.EQUIPMENT_SELECTION],
-                project?.status?.toLowerCase()
-              ),
-            component: <ProjectModel models={project.model} />,
-          },
-          {
-            label: "Equipment",
-            icon: <LuComponent />,
-            value: "equipment",
-            component: <ProjectEquipment equipment={project.equipment} />,
-          },
-          {
-            label: "Quote",
-            icon: <IoReceiptOutline />,
-            value: "quote",
-            disabled:
-              includes(
-                [STATUS.NEW, STATUS.SITE_SURVEY, STATUS.EQUIPMENT_SELECTION],
-                project?.status?.toLowerCase()
-              ) || loginUser.role.toLowerCase() !== USER_ROLE.SALE,
-            component: (
-              <ProjectQuote
-                project_id={project.id}
-                quote={
-                  project?.quote?.length > 0
-                    ? {
-                        ...project.quote[0],
-                        project: project,
-                      }
-                    : null
-                }
-              />
-            ),
-          },
-        ]}
-        initial="setup"
-      />
-    </Stack>
+      </div>
+    </div>
   );
 };
 

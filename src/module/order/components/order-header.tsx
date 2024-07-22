@@ -23,6 +23,11 @@ const OrderHeader = () => {
       <SearchInput />
       <Select
         searchable
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
         placeholder="Select Status"
         data={[
           {

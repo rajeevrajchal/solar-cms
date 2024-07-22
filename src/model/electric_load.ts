@@ -1,4 +1,4 @@
-export type ELECTRICLOAD = {
+export type ELECTRIC_LOAD = {
   readonly id: string;
   readonly project_id: string;
 

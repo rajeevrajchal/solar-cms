@@ -1,4 +1,4 @@
-import Splash from "@components/splash";
+import Splash from "@components/loaders/splash";
 import useAuth from "@hook/store/use-auth";
 import { Navigate, useLocation } from "react-router-dom";
 import AppRoute from "./route.constant";

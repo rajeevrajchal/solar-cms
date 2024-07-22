@@ -7,7 +7,7 @@ import ComponentEquipmentGrid from "./components/equipment/component-equipment-g
 import ComponentEquipmentTable from "./components/equipment/component-equipment-table";
 import ProjectInsightHeader from "./insight-header";
 
-interface InsightComponentEquipmentProps {
+interface ProjectEquipmentProps {
   project: PROJECTS;
 }
 const initialEquipment = {
@@ -20,7 +20,7 @@ const initialEquipment = {
   inventory: "",
 };
 
-const InsightComponentEquipment = (props: InsightComponentEquipmentProps) => {
+const ProjectEquipment = (props: ProjectEquipmentProps) => {
   const { project } = props;
   const navigate = useNavigate();
   const { assignEquipmentInProject } = useProjectMutate();
@@ -86,4 +86,4 @@ const InsightComponentEquipment = (props: InsightComponentEquipmentProps) => {
   );
 };
 
-export default InsightComponentEquipment;
+export default ProjectEquipment;

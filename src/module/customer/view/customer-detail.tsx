@@ -3,7 +3,9 @@ import { Card, Center, Grid, Loader, Text } from "@mantine/core";
 import useCustomer from "@module/customer/hooks/use-customer";
 import { FiGrid } from "react-icons/fi";
 
+import { MdHome } from "react-icons/md";
 import CustomerInfo from "../components/detail/customer-info";
+import CustomerMatrix from "../components/detail/customer-matrix";
 import CustomerProject from "../components/detail/customer-project";
 
 const CustomerDetail = () => {
@@ -45,6 +47,12 @@ const CustomerDetail = () => {
           <Tab
             fullWidth
             tabs={[
+              {
+                label: "Metric",
+                icon: <MdHome size={20} />,
+                value: "metric",
+                component: <CustomerMatrix />,
+              },
               {
                 label: "Project",
                 icon: <FiGrid size={20} />,
