@@ -14,7 +14,7 @@ const columns: DataTableColumn[] = [
     sortable: true,
     textAlign: "left",
     ellipsis: true,
-    width: 300,
+    width: 200,
   },
   {
     accessor: "vendor",
@@ -23,7 +23,7 @@ const columns: DataTableColumn[] = [
     textAlign: "left",
     ellipsis: true,
     render: (record: any) => {
-      return record?.vendor?.name;
+      return record?.vendor?.name || "not_connected";
     },
   },
   {

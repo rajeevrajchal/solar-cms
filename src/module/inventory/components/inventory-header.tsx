@@ -36,6 +36,11 @@ const InventoryHeader = (props: InventoryHeaderProps) => {
         placeholder="Choose Vendor"
         data={[]}
         clearable
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
         value={searchParams.get("vendor") || ""}
         onChange={(value: string | null) => handleStatusFilter("vendor", value)}
         style={{
@@ -45,6 +50,11 @@ const InventoryHeader = (props: InventoryHeaderProps) => {
       <Select
         searchable
         placeholder="Choose Type"
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
         data={[
           {
             label: "Panel",

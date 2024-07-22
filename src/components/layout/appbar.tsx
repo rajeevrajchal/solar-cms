@@ -1,12 +1,9 @@
 import ColorSwitch from "@components/color-switch";
-import Menu from "@components/menu";
-import { USER_ROLE } from "@enum/user.role";
 import useAuth from "@hook/store/use-auth";
 import {
   ActionIcon,
   AppShell,
   Avatar,
-  Button,
   Center,
   Divider,
   Flex,
@@ -19,8 +16,6 @@ import {
 import AppRoute from "@routes/route.constant";
 import { getInitialsName } from "@utils/functions/get-initials-name";
 import { BsLayoutSidebarInset } from "react-icons/bs";
-import { FaPlus } from "react-icons/fa";
-import { PiProjectorScreenChartLight } from "react-icons/pi";
 
 interface AppBarProps {
   desktopOpened?: boolean;
@@ -66,13 +61,17 @@ const AppBar = (props: AppBarProps) => {
           </ActionIcon>
         </Group>
         {loginUser?.id && (
-          <Group gap="lg" preventGrowOverflow={false} wrap="nowrap" grow>
-            {(loginUser?.role?.toLowerCase() as USER_ROLE) !==
+          <Group gap="md" preventGrowOverflow={false} wrap="nowrap">
+            {/* {(loginUser?.role?.toLowerCase() as USER_ROLE) !==
               USER_ROLE.ADMIN && (
               <Menu
                 position="bottom-end"
                 trigger={
-                  <Button size="xs" leftSection={<FaPlus />}>
+                  <Button
+                    variant="transparent"
+                    size="xs"
+                    leftSection={<FaPlus />}
+                  >
                     Quick Start
                   </Button>
                 }
@@ -85,15 +84,10 @@ const AppBar = (props: AppBarProps) => {
                     component: "a",
                     href: AppRoute.create_project,
                   },
-                  // {
-                  //   leftSection: <MdDesignServices size={20} />,
-                  //   children: <Text className="capitalize">For Service</Text>,
-                  //   component: "a",
-                  //   href: AppRoute.book_services,
-                  // },
                 ]}
               />
-            )}
+            )} */}
+            <ColorSwitch />
             {/* profile button */}
             <MMenu shadow="md" width={200} withArrow arrowSize={12}>
               <MMenu.Target>
@@ -104,16 +98,14 @@ const AppBar = (props: AppBarProps) => {
                 </Center>
               </MMenu.Target>
               <MMenu.Dropdown>
-                <MMenu.Label>
-                  <Paper>
-                    <Text size="sm" className="capitalize">
-                      {loginUser.name}
-                    </Text>
-                    <Text size="sm" className="capitalize">
-                      {loginUser.role}
-                    </Text>
-                  </Paper>
-                </MMenu.Label>
+                <Paper p="sm">
+                  <Text size="sm" className="capitalize">
+                    {loginUser.name}
+                  </Text>
+                  <Text size="sm" className="capitalize">
+                    {loginUser.role}
+                  </Text>
+                </Paper>
                 <Divider />
                 <MMenu.Item component="a" href={AppRoute.profile} mt="xs">
                   Profile
@@ -133,7 +125,6 @@ const AppBar = (props: AppBarProps) => {
                 </MMenu.Item>
               </MMenu.Dropdown>
             </MMenu>
-            <ColorSwitch />
           </Group>
         )}
       </Flex>

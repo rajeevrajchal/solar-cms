@@ -10,7 +10,6 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import { ELECTRICLOAD } from "@model/electric_load";
 import useProjectMutate from "@module/project/hooks/use-project-mutate";
 import usePublicProjectMutate from "@module/public/hooks/use-public-project-mutation";
 import { useFormik } from "formik";
@@ -23,13 +22,13 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 
 interface LoadTableProps {
   project_id: string;
-  loads: ELECTRICLOAD[];
+  loads: ELECTRIC_LOAD[];
   status?: STATUS;
 }
 const LoadTable = (props: LoadTableProps) => {
   const { project_id, loads, status = STATUS.NEW } = props;
   const { isLoggedIn } = useAuth();
-  const { uploadElectricLoad } = usePublicProjectMutate();
+  const { uploadELECTRIC_LOAD } = usePublicProjectMutate();
   const { requestFillProjectLoad } = useProjectMutate();
   const [readOnly, setReadonly] = useState<boolean>(
     loads.length > 0 ? true : false
@@ -61,7 +60,7 @@ const LoadTable = (props: LoadTableProps) => {
       load_csv: "",
     },
     onSubmit: (values) => {
-      uploadElectricLoad.mutate(
+      uploadELECTRIC_LOAD.mutate(
         {
           project_id: project_id,
           payload: values.load as unknown as ELECTRIC_LOAD[],
@@ -127,7 +126,7 @@ const LoadTable = (props: LoadTableProps) => {
                 variant="light"
                 leftSection={<MdOutlineCloudUpload />}
                 disabled={
-                  uploadElectricLoad.isPending ||
+                  uploadELECTRIC_LOAD.isPending ||
                   requestFillProjectLoad.isPending
                 }
               >
@@ -150,15 +149,15 @@ const LoadTable = (props: LoadTableProps) => {
                     variant="light"
                     color="red"
                     leftSection={<GrPowerReset />}
-                    disabled={uploadElectricLoad.isPending}
+                    disabled={uploadELECTRIC_LOAD.isPending}
                     onClick={() => handleResetForm()}
                   >
                     Reset
                   </Button>
                   <Button
                     leftSection={<IoSaveOutline />}
-                    disabled={uploadElectricLoad.isPending}
-                    loading={uploadElectricLoad.isPending}
+                    disabled={uploadELECTRIC_LOAD.isPending}
+                    loading={uploadELECTRIC_LOAD.isPending}
                     onClick={() => loadForm.handleSubmit()}
                   >
                     Save
@@ -244,7 +243,7 @@ const LoadTable = (props: LoadTableProps) => {
                   <ActionIcon
                     variant="filled"
                     aria-label="Settings"
-                    disabled={uploadElectricLoad.isPending}
+                    disabled={uploadELECTRIC_LOAD.isPending}
                   >
                     <IoMdTrash />
                   </ActionIcon>
@@ -263,7 +262,7 @@ const LoadTable = (props: LoadTableProps) => {
                   variant="subtle"
                   leftSection={<IoMdAdd size={22} />}
                   disabled={
-                    uploadElectricLoad.isPending ||
+                    uploadELECTRIC_LOAD.isPending ||
                     requestFillProjectLoad.isPending
                   }
                 >

@@ -5,6 +5,7 @@ import {
 import { STATUS } from "@enum/status.enum";
 import { PROJECTS } from "@model/project";
 import useAxios, { METHOD } from "@plugins/call.axios";
+import { CREATE_PROJECT } from "@type/mutate/project-mutate";
 import { buildQueryString } from "@utils/functions/build-query-string";
 
 export type CHANGE_STATUS = {
@@ -25,7 +26,7 @@ const ProjectService = {
       method: METHOD.GET,
     });
   },
-  create: (payload: Partial<PROJECTS>) =>
+  create: (payload: Partial<CREATE_PROJECT>) =>
     useAxios({
       url: `project`,
       method: METHOD.POST,
@@ -139,10 +140,10 @@ const ProjectService = {
 
   change_status: (payload: CHANGE_STATUS) =>
     useAxios({
-      url: `project/change-status/${payload.project_id}`,
+      url: `project/${payload.project_id}`,
       method: METHOD.PATCH,
       data: {
-        status: payload.status,
+        status: payload.status.toUpperCase(),
       },
     }),
 };

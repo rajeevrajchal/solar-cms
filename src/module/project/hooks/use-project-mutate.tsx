@@ -1,8 +1,7 @@
 import ProjectService, { CHANGE_STATUS } from "@api/services/project.service";
-import { ASSIGN_OWNER_PROJECT } from "@api/types/project-input.type";
-import { PROJECTS } from "@model/project";
 import AppRoute from "@routes/route.constant";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CREATE_PROJECT } from "@type/mutate/project-mutate";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -11,30 +10,10 @@ const useProjectMutate = () => {
   const navigate = useNavigate();
 
   const createProject = useMutation({
-    mutationFn: (payload: Partial<PROJECTS>) => ProjectService.create(payload),
+    mutationFn: (payload: Partial<CREATE_PROJECT>) =>
+      ProjectService.create(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["customer.detail"],
-      });
-      toast.success("Project is created.");
-    },
-    onError: (error) => {
-      toast.error(error?.message || "Failed to create");
-    },
-  });
-
-  const updateProjectBySale = useMutation({
-    mutationFn: (payload: Partial<PROJECTS>) => ProjectService.update(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["customer.detail"],
-      });
+      navigate(AppRoute.projects);
       toast.success("Project is created.");
     },
     onError: (error) => {
@@ -46,13 +25,10 @@ const useProjectMutate = () => {
     mutationFn: (payload: CHANGE_STATUS) =>
       ProjectService.change_status(payload),
     onSuccess: () => {
+      toast.success("Project status changed.");
       queryClient.invalidateQueries({
-        queryKey: ["projects"],
+        queryKey: ["project.detail"],
       });
-      queryClient.invalidateQueries({
-        queryKey: ["customer.detail"],
-      });
-      toast.success("Project is created.");
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to create");
@@ -72,50 +48,6 @@ const useProjectMutate = () => {
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to change status");
-    },
-  });
-
-  const copyProject = useMutation({
-    mutationFn: (payload: { project_id: string }) =>
-      ProjectService.copy_project(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["customer.detail"],
-      });
-      toast.success("Project is deleted successfully");
-    },
-    onError: (error) => {
-      toast.error(error?.message || "Failed to delete");
-    },
-  });
-
-  const assignOwnerToProject = useMutation({
-    mutationFn: (payload: ASSIGN_OWNER_PROJECT) =>
-      ProjectService.assign_owner_to_project(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["projects"],
-      });
-      toast.success("Project is assigned successfully");
-    },
-    onError: (error) => {
-      toast.error(error?.message || "Failed to assign project");
-    },
-  });
-
-  const projectInsight = useMutation({
-    mutationFn: (payload: any) => ProjectService.project_insight(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["project.detail"],
-      });
-      toast.success("Project is insight filled");
-    },
-    onError: (error) => {
-      toast.error(error?.message || "Failed to filled project insight");
     },
   });
 
@@ -159,11 +91,7 @@ const useProjectMutate = () => {
 
   return {
     createProject,
-    updateProjectBySale,
     deleteProject,
-    assignOwnerToProject,
-    projectInsight,
-    copyProject,
     assignEquipmentInProject,
     uploadProjectModel,
     requestFillProjectLoad,

@@ -1,12 +1,12 @@
 import Tab from "@components/tab";
-import useCustomer from "@module/customer/hooks/use-customer";
 import { Card, Center, Grid, Loader, Text } from "@mantine/core";
+import useCustomer from "@module/customer/hooks/use-customer";
 import { FiGrid } from "react-icons/fi";
 
-import CustomerProject from "../components/detail/customer-project";
-import { TbFileInvoice } from "react-icons/tb";
+import { MdHome } from "react-icons/md";
 import CustomerInfo from "../components/detail/customer-info";
-import CustomerQuote from "../components/detail/customer-quote";
+import CustomerMatrix from "../components/detail/customer-matrix";
+import CustomerProject from "../components/detail/customer-project";
 
 const CustomerDetail = () => {
   const { loading, error, customer } = useCustomer();
@@ -45,7 +45,14 @@ const CustomerDetail = () => {
       <Grid.Col w="full" span={9}>
         <Card withBorder p={0}>
           <Tab
+            fullWidth
             tabs={[
+              {
+                label: "Metric",
+                icon: <MdHome size={20} />,
+                value: "metric",
+                component: <CustomerMatrix />,
+              },
               {
                 label: "Project",
                 icon: <FiGrid size={20} />,
@@ -53,12 +60,6 @@ const CustomerDetail = () => {
                 component: (
                   <CustomerProject project={customer?.project ?? []} />
                 ),
-              },
-              {
-                label: "Quote",
-                icon: <TbFileInvoice size={20} />,
-                value: "quote",
-                component: <CustomerQuote quotes={customer?.quote ?? []} />,
               },
             ]}
           />

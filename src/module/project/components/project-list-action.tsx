@@ -60,8 +60,7 @@ type MODAL_TYPE =
 
 const ProjectListAction = (props: ProjectListActionProps) => {
   const { project_id, project_user, status, hideDetail, hasQuote } = props;
-  const { deleteProject, assignOwnerToProject, changeProjectStatus } =
-    useProjectMutate();
+  const { deleteProject, changeProjectStatus } = useProjectMutate();
   const { loginUser } = useAuth();
   const [activeModal, setActiveModal] = useState<MODAL_TYPE>(null);
 
@@ -75,7 +74,7 @@ const ProjectListAction = (props: ProjectListActionProps) => {
 
   const getMenuViaRole: any = [
     {
-      leftSection: <MdEdit />,
+      leftSection: <MdEdit size={22} />,
       children: <Text className="capitalize">Edit</Text>,
       component: "a",
       href: AppRoute.project_edit(project_id),
@@ -249,18 +248,11 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         opened={activeModal === "assign_me"}
         close={handleMenuClose}
         confirm={() =>
-          assignOwnerToProject.mutate(
-            {
-              project_id: project_id,
-              owner_id: loginUser?.id,
-              owner_type: loginUser?.role,
-            },
-            {
-              onSuccess: () => {
-                handleMenuClose();
-              },
-            }
-          )
+          console.log("values for assign user", {
+            project_id: project_id,
+            owner_id: loginUser?.id,
+            owner_type: loginUser?.role,
+          })
         }
         title="Assign Confirmation"
         description="Are you sure you want to assign this project for your self."

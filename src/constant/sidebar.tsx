@@ -6,7 +6,6 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { FaHandshake, FaUsersCog } from "react-icons/fa";
 import { GrConfigure } from "react-icons/gr";
 import { LuLayoutList } from "react-icons/lu";
-import { MdDesignServices } from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
 import { TbFileInvoice } from "react-icons/tb";
 import { TiVendorApple } from "react-icons/ti";
@@ -34,26 +33,26 @@ export const sidebarMenu: SidebarItem[] = [
     href: AppRoute.projects,
     allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
   },
-  {
-    icon: <MdDesignServices size={22} />,
-    label: "Service",
-    key: "service",
-    href: AppRoute.services,
-    allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
-  },
+  // {
+  //   icon: <MdDesignServices size={22} />,
+  //   label: "Service",
+  //   key: "service",
+  //   href: AppRoute.services,
+  //   allow: [USER_ROLE.ENGINEER, USER_ROLE.SALE],
+  // },
   {
     icon: <TbFileInvoice size={22} />,
     label: "Quote",
     key: "quote",
     href: AppRoute.quote,
-    allow: [USER_ROLE.SALE, USER_ROLE.ENGINEER],
+    allow: "*",
   },
   {
     icon: <FaHandshake size={22} />,
     label: "Order",
     key: "order",
     href: AppRoute.order,
-    allow: [USER_ROLE.SALE, USER_ROLE.ENGINEER],
+    allow: "*",
   },
   {
     icon: <LuLayoutList size={18} />,
@@ -67,7 +66,7 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Vendors",
     key: "vendor",
     href: AppRoute.vendor,
-    allow: [USER_ROLE.ADMIN, USER_ROLE.SALE],
+    allow: "*",
   },
   {
     icon: <AiOutlineUsergroupAdd size={22} />,
@@ -81,14 +80,14 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Users",
     key: "users",
     href: AppRoute.users,
-    allow: [USER_ROLE.ADMIN],
+    allow: "*",
   },
   {
     icon: <GrConfigure size={20} />,
     label: "App Config",
     key: "config",
     href: AppRoute.app_config,
-    allow: [USER_ROLE.ADMIN],
+    allow: "*",
   },
 
   {
@@ -96,6 +95,6 @@ export const sidebarMenu: SidebarItem[] = [
     label: "Teams",
     key: "teams",
     href: AppRoute.team,
-    allow: [USER_ROLE.ADMIN],
+    allow: "*",
   },
 ];

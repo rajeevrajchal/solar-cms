@@ -1,7 +1,6 @@
-import useCustomerMutate from "@module/customer/hooks/use-customer-mutate";
-import { Button, Fieldset, Flex, Stack, TextInput, Text } from "@mantine/core";
+import { Button, Fieldset, Flex, Stack, Text, TextInput } from "@mantine/core";
 import { USER } from "@model/user";
-import createProjectValidation from "@module/project/components/create-form/create-project-validation";
+import useCustomerMutate from "@module/customer/hooks/use-customer-mutate";
 import AppRoute from "@routes/route.constant";
 import { useFormik } from "formik";
 import { isEmpty } from "lodash";
@@ -25,7 +24,6 @@ const CustomerCreateForm = (props: CustomerCreateFormProps) => {
         location: data?.location ?? "",
       },
     },
-    validationSchema: createProjectValidation,
     onSubmit: (values: any) => {
       createCustomer.mutate(values.customer, {
         onSuccess: () => {

@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 const usePublicProjectMutate = () => {
-  const uploadElectricLoad = useMutation({
+  const uploadELECTRIC_LOAD = useMutation({
     mutationFn: ({
       project_id,
       payload,
@@ -21,7 +21,7 @@ const usePublicProjectMutate = () => {
   });
 
   return {
-    uploadElectricLoad,
+    uploadELECTRIC_LOAD,
   };
 };
 

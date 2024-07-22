@@ -1,8 +1,9 @@
 import { Button, CloseButton, Flex, Select, TextInput } from "@mantine/core";
 import { map } from "lodash";
-import { IoMdAdd } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
+import { IoMdAdd } from "react-icons/io";
 
+import { PROJECT_TYPE_NAME } from "@enum/project-type.enum";
 import { STATUS_NAME } from "@enum/status.enum";
 import AppRoute from "@routes/route.constant";
 import { useSearchParams } from "react-router-dom";
@@ -10,12 +11,12 @@ import { useSearchParams } from "react-router-dom";
 const ProjectListHeader = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleStatusFilter = (value: string | null) => {
+  const handleStatusFilter = (key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams);
     if (value === "" || value === null) {
-      params.delete("status");
+      params.delete(key);
     } else {
-      params.set("status", value);
+      params.set(key, value.toLowerCase());
     }
     setSearchParams(params);
   };
@@ -25,7 +26,7 @@ const ProjectListHeader = () => {
     if (value === "" || value === null) {
       params.delete("query");
     } else {
-      params.set("query", value);
+      params.set("query", value.toLowerCase());
     }
     setSearchParams(params);
   };
@@ -47,6 +48,32 @@ const ProjectListHeader = () => {
       />
       <Select
         searchable
+        placeholder="Pick Type"
+        data={map(PROJECT_TYPE_NAME, (v, k) => {
+          return {
+            label: v,
+            value: k,
+          };
+        })}
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
+        clearable
+        value={searchParams.get("p_type")?.toUpperCase() || ""}
+        onChange={(value: string | null) => handleStatusFilter("p_type", value)}
+        style={{
+          textTransform: "capitalize",
+        }}
+      />
+      <Select
+        styles={{
+          option: {
+            textTransform: "capitalize",
+          },
+        }}
+        searchable
         placeholder="Pick status"
         data={map(STATUS_NAME, (v, k) => {
           return {
@@ -55,8 +82,8 @@ const ProjectListHeader = () => {
           };
         })}
         clearable
-        value={searchParams.get("status") || ""}
-        onChange={(value: string | null) => handleStatusFilter(value)}
+        value={searchParams.get("status")?.toUpperCase() || ""}
+        onChange={(value: string | null) => handleStatusFilter("status", value)}
         style={{
           textTransform: "capitalize",
         }}

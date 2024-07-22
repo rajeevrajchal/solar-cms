@@ -7,7 +7,7 @@ const useProjects = () => {
   const [searchParams] = useSearchParams();
 
   const debouncedValue = useDebounce<string>(
-    searchParams.get("search") || "",
+    searchParams.get("query") || "",
     500
   );
 
