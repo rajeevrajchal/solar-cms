@@ -57,7 +57,7 @@ const Sidebar = (props: SidebarProps) => {
                   src={logo}
                   h="100%"
                   w="100%"
-                  alt="Eco Spark"
+                  alt="Solar Studio"
                   className="object-contain"
                 />
               </Box>
@@ -67,7 +67,7 @@ const Sidebar = (props: SidebarProps) => {
                   src={logo}
                   h="100%"
                   w="100%"
-                  alt="Eco Spark"
+                  alt="Solar Studio"
                   className="object-contain"
                 />
               </div>

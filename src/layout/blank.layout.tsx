@@ -23,7 +23,7 @@ const BlankLayout = () => {
           pos="relative"
         >
           <Center h={32}>
-            <Image src={logo} h="100%" alt="Eco Spark" />
+            <Image src={logo} h="100%" alt="Solar Studio" />
           </Center>
         </Flex>
       </AppShell.Header>

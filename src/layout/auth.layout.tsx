@@ -17,7 +17,7 @@ import ColorSwitch from "@components/color-switch";
 
 const bannerSlider = [
   {
-    label: "Eco Spark",
+    label: "Solar Studio",
     description: `Lorem ipsum dolor sit amet consectetur, adipisicing
                         elit. Pariatur molestiae, vel nulla facilis esse
                         inventore officiis?`,

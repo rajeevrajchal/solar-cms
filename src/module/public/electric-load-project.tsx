@@ -39,7 +39,7 @@ const ELECTRIC_LOADProject = () => {
           Hi, {project?.customer?.name}
         </Text>
         <Text>
-          Welcome to Eco Spark! We're delighted you've chosen us for your
+          Welcome to Solar Studio! We're delighted you've chosen us for your
           electric needs. Enclosed is the form for your electric application.
           Take a moment to review and ensure your personal details are accurate
           before submitting. We're here to support you—don't hesitate to reach
