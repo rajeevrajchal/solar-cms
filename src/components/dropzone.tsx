@@ -17,9 +17,10 @@ interface DropzonePropsInterface extends Partial<DropzoneProps> {
   files: any;
   showPreview?: boolean;
   error?: string;
+  maxFiles?: number;
 }
 const Dropzone = (props: DropzonePropsInterface) => {
-  const { setFiles, files, showPreview = false, error } = props;
+  const { setFiles, files, showPreview = false, error, maxFiles = 1 } = props;
 
   const handleRemove = (index: number) => {
     const updatedFiles = [...files];
@@ -27,11 +28,17 @@ const Dropzone = (props: DropzonePropsInterface) => {
     setFiles(updatedFiles);
   };
 
+  console.log("ss", {
+    maxFiles,
+    l: files.length,
+  });
+
   return (
     <Stack>
       <MDropzone
         onDrop={(files) => setFiles(files)}
         {...props}
+        disabled={maxFiles === files.length}
         autoFocus={false}
       >
         <Group
