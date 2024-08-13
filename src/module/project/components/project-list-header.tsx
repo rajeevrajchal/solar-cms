@@ -32,10 +32,11 @@ const ProjectListHeader = () => {
   };
 
   return (
-    <Flex align="center" gap="md">
+    <Flex align="center" gap="md" wrap="wrap">
       <TextInput
         leftSection={<CiSearch />}
         placeholder="Search"
+        className="w-full md:w-fit"
         rightSection={
           searchParams.get("query") ? (
             <CloseButton onClick={() => handleSearch("")} />
@@ -48,6 +49,7 @@ const ProjectListHeader = () => {
       />
       <Select
         searchable
+        className="w-full md:w-fit"
         placeholder="Pick Type"
         data={map(PROJECT_TYPE_NAME, (v, k) => {
           return {
@@ -92,6 +94,7 @@ const ProjectListHeader = () => {
         leftSection={<IoMdAdd size={14} />}
         variant="light"
         component="a"
+        className="w-full md:w-fit"
         href={AppRoute.create_project}
       >
         Create
