@@ -3,6 +3,7 @@ import { STATUS } from "@enum/status.enum";
 import { Stack } from "@mantine/core";
 import ProjectDesign from "../components/insight-view/project-design";
 import ProjectEquipment from "../components/insight-view/project-equipment";
+import ProjectInstallation from "../components/insight-view/project-installation";
 import useProject from "../hooks/use-project";
 
 const ProjectInsight = () => {
@@ -11,6 +12,7 @@ const ProjectInsight = () => {
   const insight_screen: any = {
     [STATUS.DESIGN_IN_PROGRESS]: <ProjectDesign project={project} />,
     [STATUS.EQUIPMENT_SELECTION]: <ProjectEquipment project={project} />,
+    [STATUS.INSTALLATION_IN_PROGRESS]: <ProjectInstallation />,
   };
 
   if (loading) {

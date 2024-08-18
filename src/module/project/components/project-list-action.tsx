@@ -37,6 +37,10 @@ const map_status_name: any = {
     key: "new",
     label: "new",
   },
+  [STATUS.INSTALLATION_IN_PROGRESS.toLowerCase()]: {
+    key: "review_installation",
+    label: "review installation",
+  },
 };
 
 interface ProjectListActionProps {
@@ -56,6 +60,7 @@ type MODAL_TYPE =
   | "delete"
   | "installation"
   | "complete"
+  | "review_installation"
   | null;
 
 const ProjectListAction = (props: ProjectListActionProps) => {
@@ -115,16 +120,11 @@ const ProjectListAction = (props: ProjectListActionProps) => {
         </Text>
       ),
       allow: [USER_ROLE.ENGINEER],
-      href: AppRoute.project_insight(project_id),
+      href: AppRoute.project_insight(project_id, status?.toLowerCase()),
       component: "a",
       disable:
         includes(
-          [
-            STATUS.CUSTOMER_INQUIRY,
-            STATUS.CUSTOMER_READY,
-            STATUS.INSTALLATION_IN_PROGRESS,
-            STATUS.ONLINE,
-          ],
+          [STATUS.CUSTOMER_INQUIRY, STATUS.CUSTOMER_READY, STATUS.ONLINE],
           status.toLowerCase()
         ) || !project_user?.engineer_id,
     },
