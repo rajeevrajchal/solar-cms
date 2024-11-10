@@ -11,9 +11,11 @@ import useProject from "../hooks/use-project";
 
 const ProjectDetail = () => {
   const { loading, project } = useProject();
+
   if (loading) {
     return <CircularLoader />;
   }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col">
