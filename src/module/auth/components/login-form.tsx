@@ -22,8 +22,8 @@ const LoginForm = () => {
 
   const loginForm = useFormik<LOGIN_TYPE>({
     initialValues: {
-      email: "",
-      password: "",
+      email: "engineer@studio.io",
+      password: "123456789",
     },
     validationSchema: loginValidationSchema,
     onSubmit: (values) => {

@@ -41,7 +41,7 @@ const ProjectDesign = (props: ProjectDesignProps) => {
       uploadProjectModel.mutate({
         id: project.id,
         connection: values.connection,
-        models: values.design_file,
+        design_file: values.design_file[0],
       });
     },
   });
@@ -57,7 +57,7 @@ const ProjectDesign = (props: ProjectDesignProps) => {
       />
       <Dropzone
         showPreview
-        maxFiles={4}
+        maxFiles={1}
         accept={{
           "image/*": [".jpg", ".jpeg", ".png"],
           "application/pdf": [],

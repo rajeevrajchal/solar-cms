@@ -1,11 +1,12 @@
 import Table from "@components/table";
 import useInventories from "@hook/data/inventory/use-inventories";
-import { Badge, Text } from "@mantine/core";
+import { Badge, Button, Text } from "@mantine/core";
 import { INVENTORY } from "@model/inventory";
 import { formatCurrency } from "@utils/functions/format-currency";
 import { DataTableColumn } from "mantine-datatable";
 import InventoryHeader from "../components/inventory-header";
 import InventoryListAction from "../components/inventory-list-action";
+import ConnectNot from "@components/connected-not";
 
 const columns: DataTableColumn[] = [
   {
@@ -20,10 +21,15 @@ const columns: DataTableColumn[] = [
     accessor: "vendor",
     title: "Vendor",
     sortable: true,
-    textAlign: "left",
+    textAlign: "center",
     ellipsis: true,
     render: (record: any) => {
-      return record?.vendor?.name || "not_connected";
+      return record?.vendor?.name || <Button
+        size="xs"
+        variant="light"
+        leftSection={<ConnectNot connected={false} />}>
+        Connect
+      </Button>
     },
   },
   {

@@ -12,6 +12,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import ProjectListAction from "../components/project-list-action";
 import ProjectListHeader from "../components/project-list-header";
 import useProjects from "../hooks/use-projects";
+import { formatDate } from "@utils/functions/format-date";
 
 const ProjectList = () => {
   const { loginUser } = useAuth();
@@ -37,6 +38,17 @@ const ProjectList = () => {
       textAlign: "left",
       ellipsis: true,
       width: 200,
+    },
+    {
+      accessor: "start_date",
+      title: "Start Date",
+      sortable: true,
+      textAlign: "left",
+      ellipsis: true,
+      width: 100,
+      render: (record: any) => {
+        return formatDate(record.start_date, "DD MMM, YYYY");
+      }
     },
     {
       accessor: "type",
